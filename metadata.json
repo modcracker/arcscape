@@ -1,6 +1,6 @@
 {
-  "name": "Arcscape Brand Landing Page",
-  "description": "Premium landing page for arcscape.com domain showcase, designed after boobclub.com aesthetic with direct GoDaddy secure checkout integration.",
+  "name": "Arcscape Venture Portal",
+  "description": "A high-end, locked private portal for Arcscape Venture Capital & Incubation Group, featuring detailed directories and compliance standards.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
