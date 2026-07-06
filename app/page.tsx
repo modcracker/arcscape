@@ -910,6 +910,23 @@ const projectsData = [
 
 export default function LandingPage() {
   const [activeView, setActiveView] = useState<ViewType>('portal');
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (activeView !== 'portal') return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth) - 0.5;
+      const y = (e.clientY / window.innerHeight) - 0.5;
+      setMousePosition({ x, y });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [activeView]);
+
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle');
   const [loadingMessage, setLoadingMessage] = useState('');
@@ -1125,30 +1142,54 @@ export default function LandingPage() {
                     </defs>
                     
                     {/* Cloud Shape A - Filled with soft slate/stone gradient and contoured with subtle stroke */}
-                    <path 
-                      d="M100,180 C120,130 180,120 220,150 C250,110 320,110 350,140 C380,90 470,90 500,140 C520,110 570,110 590,140 C620,100 680,100 710,130 C740,80 820,80 850,130 C880,110 930,120 950,160 C980,160 990,200 970,220 C950,240 50,240 20,220 C10,200 50,180 100,180 Z" 
-                      fill="url(#cloudGrad)" 
-                      stroke="#cbd5e1" 
-                      strokeWidth="1"
-                    />
+                    <motion.g
+                      animate={{
+                        x: mousePosition.x * 25,
+                        y: mousePosition.y * 12,
+                      }}
+                      transition={{ type: "spring", stiffness: 60, damping: 25, mass: 0.8 }}
+                    >
+                      <path 
+                        d="M100,180 C120,130 180,120 220,150 C250,110 320,110 350,140 C380,90 470,90 500,140 C520,110 570,110 590,140 C620,100 680,100 710,130 C740,80 820,80 850,130 C880,110 930,120 950,160 C980,160 990,200 970,220 C950,240 50,240 20,220 C10,200 50,180 100,180 Z" 
+                        fill="url(#cloudGrad)" 
+                        stroke="#cbd5e1" 
+                        strokeWidth="1"
+                      />
+                    </motion.g>
                     
                     {/* Cloud Shape B (smaller offset background cloud with dotted line style) */}
-                    <path 
-                      d="M200,120 C230,80 300,70 340,100 C370,60 440,60 470,90 C500,50 570,50 600,90 C620,70 660,75 680,100 C710,60 770,65 800,95 C820,80 860,85 880,110" 
-                      stroke="#94a3b8" 
-                      strokeWidth="1.5" 
-                      strokeLinecap="round" 
-                      strokeDasharray="4,4" 
-                      className="opacity-40" 
-                    />
+                    <motion.g
+                      animate={{
+                        x: mousePosition.x * -12,
+                        y: mousePosition.y * -6,
+                      }}
+                      transition={{ type: "spring", stiffness: 60, damping: 25, mass: 0.8 }}
+                    >
+                      <path 
+                        d="M200,120 C230,80 300,70 340,100 C370,60 440,60 470,90 C500,50 570,50 600,90 C620,70 660,75 680,100 C710,60 770,65 800,95 C820,80 860,85 880,110" 
+                        stroke="#94a3b8" 
+                        strokeWidth="1.5" 
+                        strokeLinecap="round" 
+                        strokeDasharray="4,4" 
+                        className="opacity-40" 
+                      />
+                    </motion.g>
 
                     {/* Cloud Shape C (soft bottom fading clouds) */}
-                    <path 
-                      d="M50,220 C100,190 170,195 220,220 C280,180 360,180 410,215 C460,175 550,180 600,215 C650,180 720,180 770,215 C820,190 880,195 920,220" 
-                      fill="url(#cloudGradB)" 
-                      stroke="#e2e8f0" 
-                      strokeWidth="1.5" 
-                    />
+                    <motion.g
+                      animate={{
+                        x: mousePosition.x * 40,
+                        y: mousePosition.y * 18,
+                      }}
+                      transition={{ type: "spring", stiffness: 60, damping: 25, mass: 0.8 }}
+                    >
+                      <path 
+                        d="M50,220 C100,190 170,195 220,220 C280,180 360,180 410,215 C460,175 550,180 600,215 C650,180 720,180 770,215 C820,190 880,195 920,220" 
+                        fill="url(#cloudGradB)" 
+                        stroke="#e2e8f0" 
+                        strokeWidth="1.5" 
+                      />
+                    </motion.g>
                   </svg>
                 </div>
 

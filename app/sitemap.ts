@@ -4,7 +4,7 @@ import { portfolioAssets } from './other-assets/data';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Use the primary production absolute base URL for precise search engine reference
-  const baseUrl = 'https://arcscape.com';
+  const baseUrl = 'https://www.arcscape.com';
 
   const flagshipRoute = {
     url: baseUrl,

@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://arcscape.com/sitemap.xml',
+    sitemap: 'https://www.arcscape.com/sitemap.xml',
   };
 }
