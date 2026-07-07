@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import { Plus_Jakarta_Sans, Playfair_Display, JetBrains_Mono } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css'; // Global styles
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -67,6 +68,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en" className={`${plusJakartaSans.variable} ${playfairDisplay.variable} ${jetbrainsMono.variable}`}>
       <body suppressHydrationWarning className="bg-[#FFF5F8] text-[#2C1820] antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   );
