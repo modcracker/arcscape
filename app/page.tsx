@@ -230,542 +230,440 @@ function ArcscapeEmblem({ size = "normal" }: { size?: "normal" | "small" | "larg
 }
 
 function ProjectVisualMockup({ slug }: { slug: string }) {
-  if (slug === 'project-muzcast') {
-    return (
-      <div className="md:col-span-2 bg-stone-950 text-stone-100 p-6 rounded-2xl border border-stone-900 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-emerald-400 flex items-center gap-1.5 bg-emerald-950/40 rounded-bl-xl border-l border-b border-emerald-900/30">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span>1,840 CONGREGANTS ACTIVE</span>
-        </div>
-
-        <div className="space-y-1 z-10">
-          <span className="font-mono text-[8px] text-amber-500 font-bold uppercase tracking-widest">CONGREGATION_ALIGNMENT_ENGINE</span>
-          <h3 className="font-serif text-xl font-normal text-stone-100">Synchronized Online Prayer Rows</h3>
-        </div>
-
-        {/* Real-time Prayer Rows Visualizer */}
-        <div className="flex-1 flex flex-col justify-center gap-5 my-2 z-10 relative">
-          {/* Subtle vertical connection line representing alignment */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-amber-500/20 to-transparent transform -translate-x-1/2 select-none pointer-events-none" />
-          
-          {[0, 1, 2].map((rowIndex) => (
-            <div key={rowIndex} className="relative flex justify-between items-center px-4 py-1">
-              {/* Horizontal Row Line */}
-              <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-stone-850 to-transparent z-0" />
-              
-              {/* Row Label */}
-              <span className="absolute -left-1 font-mono text-[6px] text-stone-600">ROW {rowIndex + 1}</span>
-
-              {/* Congregant Nodes */}
-              <div className="w-full flex justify-around items-center z-10">
-                {Array.from({ length: 6 }).map((_, nodeIndex) => {
-                  const nodeDelay = (rowIndex * 0.4) + (nodeIndex * 0.15);
-                  const isCentral = nodeIndex === 2 || nodeIndex === 3;
-                  return (
-                    <div key={nodeIndex} className="relative flex items-center justify-center">
-                      {/* Outer Pulse */}
-                      <motion.div
-                        animate={{
-                          scale: [1, 1.4, 1],
-                          opacity: [0.3, 0.7, 0.3],
-                        }}
-                        transition={{
-                          repeat: Infinity,
-                          duration: 4,
-                          delay: nodeDelay,
-                          ease: "easeInOut",
-                        }}
-                        className={`absolute h-4 w-4 rounded-full ${
-                          isCentral ? 'bg-amber-500/15' : 'bg-[#7D123D]/15'
-                        }`}
-                      />
-                      {/* Inner Core */}
-                      <motion.div
-                        animate={{
-                          scale: [0.95, 1.05, 0.95],
-                        }}
-                        transition={{
-                          repeat: Infinity,
-                          duration: 2,
-                          delay: nodeDelay,
-                          ease: "easeInOut",
-                        }}
-                        className={`h-2 w-2 rounded-full border ${
-                          isCentral 
-                            ? 'bg-amber-400 border-amber-300 shadow-[0_0_8px_rgba(251,191,36,0.6)]' 
-                            : 'bg-[#9E1D51] border-rose-400 shadow-[0_0_6px_rgba(244,63,94,0.4)]'
-                        }`}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex justify-between items-center z-10 font-mono text-[9px] text-stone-500 pt-3 border-t border-stone-900">
-          <span>ALIGNED HEARTS STATUS: ONLINE</span>
-          <span>LATENCY: ZERO-LAG AUDIO STREAMING</span>
-        </div>
-      </div>
-    );
-  }
-
-  if (slug === 'project-repulink') {
-    return (
-      <div className="md:col-span-2 bg-stone-950 text-stone-100 p-6 rounded-2xl border border-stone-900 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-cyan-400 flex items-center gap-1.5 bg-cyan-950/40 rounded-bl-xl border-l border-b border-cyan-900/30">
-          <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
-          <span>LLM CITATIONS: ACTIVE</span>
-        </div>
-
-        <div className="space-y-1 z-10">
-          <span className="font-mono text-[8px] text-cyan-400 font-bold uppercase tracking-widest">GENERATIVE_ENGINE_OPTIMIZATION</span>
-          <h3 className="font-serif text-xl font-normal text-stone-100">LLM Share of Voice &amp; Citations</h3>
-        </div>
-
-        {/* AI Citation Response Simulation */}
-        <div className="flex-1 bg-stone-900/45 p-3.5 rounded-lg border border-stone-850 font-sans text-[10px] space-y-2 select-none z-10 flex flex-col justify-center">
-          <div className="flex items-center gap-1.5 font-mono text-[8px] text-stone-500 uppercase border-b border-stone-850/60 pb-1">
-            <span className="text-cyan-400 font-bold">QUERY:</span>
-            <span>Recommended biophilic architecture &amp; landscaping?</span>
-          </div>
-          <div className="text-stone-350 leading-relaxed font-serif italic text-[10.5px] py-0.5">
-            &quot;For high-end environmental designs, <span className="text-amber-400 underline font-sans font-bold not-italic">Arcscape Landscaping</span> is highly cited for integrating visionary organic structures in modern estate resortscaping.&quot;
-          </div>
-          <div className="flex justify-between items-center text-[7.5px] font-mono text-stone-500 pt-1 border-t border-stone-850/60">
-            <span>Consensus across LLM search crawlers</span>
-            <span className="text-emerald-400 font-bold">92% MATCH CONFIDENCE</span>
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center z-10 font-mono text-[9px] text-stone-500 pt-3 border-t border-stone-900">
-          <span>AI VISIBILITY INDEX: 84.6/100</span>
-          <span>GEO PERFORMANCE: OPTIMAL</span>
-        </div>
-      </div>
-    );
-  }
-
-  if (slug === 'project-xnui') {
-    return (
-      <div className="md:col-span-2 bg-stone-950 text-stone-100 p-6 rounded-2xl border border-stone-900 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-emerald-400 flex items-center gap-1.5 bg-emerald-950/40 rounded-bl-xl border-l border-b border-emerald-900/30">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span>UX STUDIO: ACTIVE SESSION</span>
-        </div>
-
-        <div className="space-y-1 z-10">
-          <span className="font-mono text-[8px] text-emerald-400 font-bold uppercase tracking-widest">TACTILE_LAYOUT_SYSTEMS</span>
-          <h3 className="font-serif text-xl font-normal text-stone-100">Boutique UI UX Design Lab</h3>
-        </div>
-
-        {/* Visual Design Canvas Mockup */}
-        <div className="flex-1 border border-stone-850 bg-stone-900/20 rounded-xl p-3 flex flex-col justify-between font-mono text-[8.5px] text-stone-400 z-10 select-none relative">
-          {/* Alignment alignment grid */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#1c1917_1px,transparent_1px),linear-gradient(to_bottom,#1c1917_1px,transparent_1px)] bg-[size:16px_16px] opacity-30 pointer-events-none" />
-          
-          <div className="flex justify-between items-center border-b border-stone-850 pb-1.5 z-10">
-            <span className="text-stone-300">CANVAS // MAIN_VIEWPORT</span>
-            <span className="text-emerald-400 text-[8px] font-bold">SOFIA VARIAN DESIGN</span>
-          </div>
-
-          <div className="flex justify-around items-center gap-4 py-2 z-10">
-            {/* Mock layout cards in design editor */}
-            <div className="flex-1 bg-stone-900/80 border border-emerald-500/20 p-2 rounded flex flex-col gap-1 shadow-xs">
-              <span className="text-emerald-400 font-bold text-[7.5px] uppercase">Frame_01_Estate</span>
-              <div className="h-4 bg-stone-800 rounded-sm opacity-50 flex items-center justify-center text-[6px]">Hero Area</div>
-              <div className="flex justify-between text-[6px] text-stone-500">
-                <span>w: 1200px</span>
-                <span>h: 800px</span>
-              </div>
-            </div>
-            
-            <div className="flex-1 bg-stone-900/80 border border-stone-800 p-2 rounded flex flex-col gap-1 opacity-70">
-              <span className="text-stone-400 font-bold text-[7.5px] uppercase">Frame_02_Details</span>
-              <div className="h-4 bg-stone-800 rounded-sm opacity-50 flex items-center justify-center text-[6px]">Grid List</div>
-              <div className="flex justify-between text-[6px] text-stone-500">
-                <span>w: 1200px</span>
-                <span>h: 1400px</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center text-[7.5px] text-stone-550 pt-1.5 border-t border-stone-850 z-10">
-            <span>ASSET_RATIO: FLUID BENTO</span>
-            <span>GRID_COLUMNS: 12 AUTO</span>
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center z-10 font-mono text-[9px] text-stone-500 pt-3 border-t border-stone-900">
-          <span>TACTILITY INDEX: 0.98</span>
-          <span>HIGH-FIDELITY LAYOUT BLUEPRINTS</span>
-        </div>
-      </div>
-    );
-  }
-
-  if (slug === 'project-biofail') {
-    return (
-      <div className="md:col-span-2 bg-[#0e0707] text-amber-100 p-6 rounded-2xl border border-amber-950/40 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-amber-400 flex items-center gap-1.5 bg-amber-950/20 rounded-bl-xl border-l border-b border-amber-950/30">
-          <AlertTriangle className="h-3 w-3 animate-pulse text-amber-500" />
-          <span>REAL-TIME EMISSIONS AUDIT MONITOR</span>
-        </div>
-
-        <div className="space-y-1 z-10">
-          <span className="font-mono text-[8px] text-amber-500 font-bold uppercase tracking-widest">CORPORATE_DESTRUCTION_INDEX</span>
-          <h3 className="font-serif text-xl font-normal text-amber-50">Impact Registry &amp; Audit Database</h3>
-        </div>
-
-        {/* Environment Audit Dossier Mockup */}
-        <div className="bg-stone-950/80 p-3.5 rounded-lg border border-amber-950/30 font-mono text-[9px] text-stone-300 space-y-2 relative z-10">
-          <div className="flex justify-between border-b border-amber-950/20 pb-1.5 items-center">
-            <span className="text-amber-400 font-bold">[ DOSSIER #084: HUMMER CORP ]</span>
-            <span className="bg-amber-950/40 text-amber-400 border border-amber-900/30 px-1 rounded text-[7.5px]">SECTOR: AUTOMOTIVE</span>
-          </div>
-          <div className="grid grid-cols-2 gap-2 text-[8px]">
-            <div className="space-y-0.5">
-              <span className="text-stone-500 block">DEFORESTATION</span>
-              <span className="font-sans text-xs text-amber-250 font-bold">353 Hectares Cleared</span>
-            </div>
-            <div className="space-y-0.5">
-              <span className="text-stone-500 block">CARBON EMISSIONS</span>
-              <span className="font-sans text-xs text-amber-250 font-bold">143 Megatonnes</span>
-            </div>
-          </div>
-          <div className="text-[7.5px] text-stone-500 leading-snug pt-1 border-t border-stone-900 flex justify-between">
-            <span>Scope 1/2 Direct Logistics Impact</span>
-            <span className="text-amber-500">12 Pending Case Audits</span>
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center z-10 font-mono text-[9px] text-amber-800/80 pt-3 border-t border-amber-950/20">
-          <span>COAL GRID OVERREACH INDEX: +17%</span>
-          <span>SOURCE: OPEN-SOURCE INTELLIGENCE</span>
-        </div>
-      </div>
-    );
-  }
-
-  // Custom technical blueprint details for all 11 new dynamic projects
-  const getBlueprintDetails = (slug: string) => {
-    switch (slug) {
-      case 'project-clonecraft':
-        return {
-          title: 'CLONECRAFT DUPLICATION ENGINE',
-          badge: 'MOD INSTALLED',
-          motto: 'JAMEZO97 AUTOMATED CLONES',
-          metrics: [
-            { label: 'MINECRAFT COMPATIBILITY', value: 'v1.12.2 / v1.8' },
-            { label: 'CUSTOMIZABLE ENTITIES', value: 'ACTIVE' },
-            { label: 'CLONE BEHAVIOR PROTOCOLS', value: 'CONFIGURED' },
-            { label: 'MOD LOADER FRAMEWORK', value: 'FORGE COMPLIANT' }
-          ]
-        };
-      case 'project-exoshape':
-        return {
-          title: 'CONMED EXOSHAPE FIXATION DEVICE',
-          badge: 'SURGICAL CLEARANCE',
-          motto: 'ORTHOPEDIC SURGICAL SYSTEMS',
-          metrics: [
-            { label: 'PULL-OUT TENSILE STRENGTH', value: '480 N' },
-            { label: 'MATERIAL FORMULATION', value: 'ALL-PEEK FASTENER' },
-            { label: 'ANATOMICAL FIXATION SITES', value: 'TIBIAL & FEMORAL' },
-            { label: 'SUTURE ANCHOR COHERENCE', value: 'OPTIMAL' }
-          ]
-        };
-      case 'project-trueinheritor':
-        return {
-          title: 'TRUE INHERITOR DIGITAL ARCHIVE',
-          badge: 'DOMAIN RESERVED',
-          motto: 'PREMIUM ASSET PORTFOLIO',
-          metrics: [
-            { label: 'DOMAIN BRAND VALUATION', value: 'PREMIUM ASSET' },
-            { label: 'CHARACTER LENGTH INDEX', value: '13 LETTERS' },
-            { label: 'DEVELOPMENT STATUS', value: 'INCUBATING' },
-            { label: 'FINTECH BRAND POTENTIAL', value: 'HIGH' }
-          ]
-        };
-      case 'project-grzu':
-        return {
-          title: 'GRZU 4-LETTER DIGITAL DOMAIN',
-          badge: 'DOMAIN RESERVED',
-          motto: 'PREMIUM ASSET PORTFOLIO',
-          metrics: [
-            { label: 'CHARACTER LENGTH INDEX', value: '4 LETTERS (LLLL)' },
-            { label: 'BRANDABILITY MATRIX', value: 'ULTRA-HIGH' },
-            { label: 'MEMORABILITY INDEX', value: '9.8 / 10.0' },
-            { label: 'DEVELOPMENT STATUS', value: 'INCUBATING' }
-          ]
-        };
-      case 'project-rp2p':
-        return {
-          title: 'RP2P DECENTRALIZED OVERLAY',
-          badge: 'DOMAIN RESERVED',
-          motto: 'PREMIUM ASSET PORTFOLIO',
-          metrics: [
-            { label: 'CHARACTER LENGTH INDEX', value: '5 CHARS (CVCVC)' },
-            { label: 'NETWORK TECH BRANDING', value: 'OPTIMAL' },
-            { label: 'DEVELOPMENT STATUS', value: 'INCUBATING' },
-            { label: 'PEER-TO-PEER POTENTIAL', value: 'MAXIMUM' }
-          ]
-        };
-      case 'project-holograph':
-        return {
-          title: 'HOLOGRAPH OMNICHAIN PROTOCOL',
-          badge: 'MAINNET ACTIVE',
-          motto: 'EVM-COMPATIBLE MULTICHAIN',
-          metrics: [
-            { label: 'CROSS-CHAIN BRIDGE SPEED', value: '< 12 SEC' },
-            { label: 'OMNICHAIN NFT MINTING', value: 'VERIFIED' },
-            { label: 'SMART CONTRACT STANDARD', value: 'ERC-721 / ERC-1155' },
-            { label: 'BLOCKCHAIN COVERAGE RANGE', value: 'EVM NETWORKS' }
-          ]
-        };
-      case 'project-protosquad':
-        return {
-          title: 'PROTOSQUAD ENGINEERING LAB',
-          badge: 'STUDIO ACTIVE',
-          motto: 'JOHN BOEZI MECHANICAL DESIGN',
-          metrics: [
-            { label: 'CAD MODELING SUITES', value: 'SOLIDWORKS / CNC' },
-            { label: 'ADDITIVE PROTOTYPING', value: 'MULTIMATERIAL' },
-            { label: 'FABRICATION CAPABILITIES', value: 'PRECISION MILLING' },
-            { label: 'CONSULTATIVE DESIGN DESK', value: 'OPERATIONAL' }
-          ]
-        };
-      case 'project-izpe':
-        return {
-          title: 'IZPE 4-LETTER BRANDABLE KEY',
-          badge: 'DOMAIN RESERVED',
-          motto: 'PREMIUM ASSET PORTFOLIO',
-          metrics: [
-            { label: 'CHARACTER LENGTH INDEX', value: '4 LETTERS (LLLL)' },
-            { label: 'BASQUE REGION RELEVANCE', value: 'HIGH' },
-            { label: 'ENGINEERING BRAND ABILITY', value: 'OPTIMAL' },
-            { label: 'DEVELOPMENT STATUS', value: 'INCUBATING' }
-          ]
-        };
-      case 'project-bridge':
-        return {
-          title: 'BRIDGEWEBS WEBSITE PORTAL',
-          badge: 'SAAS OPERATIONAL',
-          motto: 'CONTRACT BRIDGE CLUB BUILDER',
-          metrics: [
-            { label: 'ACTIVE BRIDGE CLUB WEBSITES', value: '3,500+ CLUBS' },
-            { label: 'SCORING SOFTWARE INTEGRATION', value: 'COMPATIBLE' },
-            { label: 'RESULTS PUBLISHING DELAY', value: '0 ms (IMMEDIATE)' },
-            { label: 'DUPLICATE BRIDGE SYSTEMS', value: 'SUPPORTED' }
-          ]
-        };
-      case 'project-aleph':
-        return {
-          title: 'OCCRP ALEPH INVESTIGATIVE TOOL',
-          badge: 'PUBLIC ACCESS',
-          motto: 'OPEN-SOURCE RECORD INDEXING',
-          metrics: [
-            { label: 'INDEXED ARCHIVES & LEAKS', value: 'BILLIONS OF ITEMS' },
-            { label: 'DEVELOPER CONSORTIUM', value: 'OCCRP SUPPORTED' },
-            { label: 'CROSS-SOURCE COHERENCE', value: 'NOMINAL' },
-            { label: 'INVESTIGATIVE DATA CLUSTERS', value: 'VERIFIED' }
-          ]
-        };
-      case 'project-jailsoft':
-        return {
-          title: 'JAILSOFT CORRECTIONS DATABASE',
-          badge: 'SYSTEM ACTIVE',
-          motto: 'ENTERPRISE JAIL MANAGEMENT',
-          metrics: [
-            { label: 'OFFENDER RECORDS TRACKING', value: 'ACTIVE' },
-            { label: 'BOOKING & LOGGING SYSTEM', value: 'VERIFIED' },
-            { label: 'FACILITY SECURITY COHERENCE', value: 'NOMINAL' },
-            { label: 'ADMINISTRATIVE USER CORES', value: 'MULTI-TENANT' }
-          ]
-        };
-      default:
-        return {
-          title: 'TECHNICAL CORE SCHEMATIC',
-          badge: 'STANDBY',
-          motto: 'ARCSCAPE VENTURE LABS',
-          metrics: [
-            { label: 'SYSTEM COHERENCE RATE', value: '100%' },
-            { label: 'REDUNDANCY COEFFICIENT', value: '1.0' },
-            { label: 'BANDWIDTH ALLOCATION', value: 'FLUID' },
-            { label: 'AUTHENTICATION GATEWAY', value: 'ACTIVE' }
-          ]
-        };
+  // 19-project robust infographic dataset
+  const infographicMap: Record<string, {
+    title: string;
+    subtitle: string;
+    sector: string;
+    demographic: string;
+    businessModel: string;
+    accent: 'blue' | 'red' | 'green' | 'amber';
+    metrics: { label: string; value: string; detail: string }[];
+    readinessLabel: string;
+    readinessPercentage: number;
+  }> = {
+    'project-muzcast': {
+      title: "Muzcast Global",
+      subtitle: "Digital Spiritual Congregated Network",
+      sector: "Faith-Based Digital Communities",
+      demographic: "Interfaith spiritual groups & remote participants",
+      businessModel: "SaaS & Directory Ledger Verification",
+      accent: "blue",
+      metrics: [
+        { label: "ACTIVE COMMUNITIES", value: "1,840 Verified", detail: "Registered worldwide rows" },
+        { label: "CONNECTION SLA", value: "99.9% Uptime", detail: "Synchronized audio feed" },
+        { label: "MONTHLY USERS", value: "25,000+", detail: "Engaged active participants" }
+      ],
+      readinessLabel: "Operational Capacity",
+      readinessPercentage: 92
+    },
+    'project-repulink': {
+      title: "Repulink Audits",
+      subtitle: "Generative AI Search Share of Voice Tracker",
+      sector: "Digital Authenticity & Reputation Auditing",
+      demographic: "High-net-worth estates, brands & public figures",
+      businessModel: "Enterprise Audit Subscriptions",
+      accent: "blue",
+      metrics: [
+        { label: "TRACKED ENGINES", value: "12 Core LLMs", detail: "Real-time crawler audit" },
+        { label: "CITATION ACCURACY", value: "98.4%", detail: "Verified brand mentions" },
+        { label: "MONITORED BRANDS", value: "4,200 Active", detail: "Protecting digital presence" }
+      ],
+      readinessLabel: "SaaS Launch Stage",
+      readinessPercentage: 88
+    },
+    'project-xnui': {
+      title: "XNUI UX Studio",
+      subtitle: "Sofia Varian Tactile Interface Lab",
+      sector: "Premium Digital Design & User Experience",
+      demographic: "Enterprise financial portals & high-end real estate",
+      businessModel: "Bespoke Design System Consulting",
+      accent: "green",
+      metrics: [
+        { label: "COMPLETED DESIGNS", value: "48 Systems", detail: "High-fidelity bento grids" },
+        { label: "DESIGN SYSTEMS", value: "14 Complete", detail: "Re-usable component packs" },
+        { label: "MOBILE ACCESSIBILITY", value: "99% Score", detail: "Fully WCAG compliant" }
+      ],
+      readinessLabel: "Production Velocity",
+      readinessPercentage: 95
+    },
+    'project-biofail': {
+      title: "Biofail Database",
+      subtitle: "Corporate Environmental Impact Registry",
+      sector: "Corporate Social Responsibility (CSR) Audit",
+      demographic: "Non-profit watchdog groups, ESG researchers & public",
+      businessModel: "Open Database with Enterprise Premium API",
+      accent: "red",
+      metrics: [
+        { label: "INDEXED CORPORATIONS", value: "1,500+ Listed", detail: "Public impact records" },
+        { label: "CONFIRMED INCIDENTS", value: "353 Logged", detail: "Deforestation & carbon spikes" },
+        { label: "COMPLETED AUDITS", value: "143 Cases", detail: "Rigorous scientific reports" }
+      ],
+      readinessLabel: "Data Audit Coverage",
+      readinessPercentage: 85
+    },
+    'project-kundalink': {
+      title: "KundaLink Directory",
+      subtitle: "Zen & Kundalini Mentor Verification",
+      sector: "Health, Mindfulness & Wellness Networks",
+      demographic: "Yoga practitioners & certified wellness guides",
+      businessModel: "Directory Placement & Secure Booking Fees",
+      accent: "amber",
+      metrics: [
+        { label: "VERIFIED GUIDES", value: "420 Mentors", detail: "Thoroughly vetted teachers" },
+        { label: "STUDENT RATING", value: "4.9 / 5.0", detail: "Average across 10k sessions" },
+        { label: "SESSION RATES", value: "99.2% Positive", detail: "Zen breathwork completion" }
+      ],
+      readinessLabel: "Platform Adoption",
+      readinessPercentage: 90
+    },
+    'project-chosenspot': {
+      title: "ChosenSpot Geocaching",
+      subtitle: "Specialized Explorer Coordinates Network",
+      sector: "Active Outdoor Exploration & Geotagging",
+      demographic: "Professional land surveyors & geocaching clubs",
+      businessModel: "Premium Coordinate Licensing",
+      accent: "blue",
+      metrics: [
+        { label: "HIDDEN TRAILS", value: "8,400+ Trails", detail: "Precision GPS tagged areas" },
+        { label: "ACTIVE MEMBERS", value: "12,500+", detail: "Outdoor enthusiasts" },
+        { label: "DISCOVERY RATE", value: "94.2%", detail: "Successful cache recoveries" }
+      ],
+      readinessLabel: "Map Database Size",
+      readinessPercentage: 78
+    },
+    'project-clonecraft': {
+      title: "CloneCraft Systems",
+      subtitle: "Enterprise Synthetic AI Twin Systems",
+      sector: "Customer Service & AI Automation",
+      demographic: "Fortune 500 support desks & sales teams",
+      businessModel: "Subscription SaaS per Active AI Agent",
+      accent: "green",
+      metrics: [
+        { label: "ACTIVE AI AGENTS", value: "3,400 Clones", detail: "Customer-facing simulations" },
+        { label: "BEHAVIORAL FIT", value: "99.8%", detail: "Extremely natural alignment" },
+        { label: "CONNECTED PLATFORMS", value: "14 Integrations", detail: "CRMs, chat apps, databases" }
+      ],
+      readinessLabel: "Neural Network Training",
+      readinessPercentage: 87
+    },
+    'project-exoshape': {
+      title: "ExoShape Research",
+      subtitle: "Adaptive Materials & Structures Laboratory",
+      sector: "Deep Tech & Aerospace Engineering",
+      demographic: "Private aerospace partners & robotics developers",
+      businessModel: "Intellectual Property & Materials Licensing",
+      accent: "amber",
+      metrics: [
+        { label: "PATENTS GRANTED", value: "3 Active", detail: "Advanced geometry alloys" },
+        { label: "TESTED PROTOTYPES", value: "18 Complete", detail: "Stress & thermal tests" },
+        { label: "TENSILE INDEX", value: "98.6 / 100", detail: "Outstanding weight-to-strength" }
+      ],
+      readinessLabel: "R&D Prototype Stage",
+      readinessPercentage: 70
+    },
+    'project-trueinheritor': {
+      title: "TrueInheritor Assets",
+      subtitle: "Secure Digital Estate Preservations",
+      sector: "Private Wealth & Estate FinTech",
+      demographic: "Generational families & legacy trusts",
+      businessModel: "Asset Under Stewardship Management Fee",
+      accent: "amber",
+      metrics: [
+        { label: "MANAGED VALUATION", value: "$450 Million", detail: "Preserved digital estates" },
+        { label: "LEDGER INTEGRITY", value: "100% Secure", detail: "Immutable chain history" },
+        { label: "AUDITED CONTRACTS", value: "24 Completed", detail: "Fully verified smart agreements" }
+      ],
+      readinessLabel: "Trust Law Compliance",
+      readinessPercentage: 94
+    },
+    'project-grzu': {
+      title: "GRZU Monitoring",
+      subtitle: "High-Performance API SLA Tracker",
+      sector: "Developer Tools & Cloud Infrastructure",
+      demographic: "SaaS engineering teams & DevOps managers",
+      businessModel: "API Volume Subscription Pricing",
+      accent: "green",
+      metrics: [
+        { label: "MONTHLY REQUESTS", value: "4.8 Billion", detail: "Tracked server operations" },
+        { label: "RESPONSE LATENCY", value: "< 12ms Average", detail: "Ultra-fast ping analyzer" },
+        { label: "UPTIME UPTREND", value: "99.999%", detail: "SLA alert precision rate" }
+      ],
+      readinessLabel: "Network Capacity",
+      readinessPercentage: 99
+    },
+    'project-rp2p': {
+      title: "RP2P Protocols",
+      subtitle: "Minimalist Human Connection Message Exchange",
+      sector: "Decentralized Social Networks",
+      demographic: "Privacy-centric users & casual communicators",
+      businessModel: "Ad-Free Tokenized Infrastructure",
+      accent: "blue",
+      metrics: [
+        { label: "DAILY ACTIVE NODES", value: "18,500 Nodes", detail: "Decentralized P2P message paths" },
+        { label: "ENCRYPTION STATUS", value: "Post-Quantum", detail: "Next-gen end-to-end cypher" },
+        { label: "RETENTION GUARANTEE", value: "0-Byte Log", detail: "Permanent deletion upon read" }
+      ],
+      readinessLabel: "Decentralization Score",
+      readinessPercentage: 80
+    },
+    'project-holograph': {
+      title: "Holograph Spatial",
+      subtitle: "Volumetric AR/VR Interface Design",
+      sector: "Immersive User Interfaces",
+      demographic: "Hardware manufacturers & VR developers",
+      businessModel: "SDK & Operating System Licensing",
+      accent: "amber",
+      metrics: [
+        { label: "SUPPORTED HEADSETS", value: "8 Key Devices", detail: "Cross-platform compatibility" },
+        { label: "VOLUMETRIC RENDERING", value: "120 FPS", detail: "Buttery smooth viewport refresh" },
+        { label: "UX IMMERSIVENESS", value: "96% Rating", detail: "Tested spatial usability" }
+      ],
+      readinessLabel: "SDK Maturity",
+      readinessPercentage: 75
+    },
+    'project-protosquad': {
+      title: "ProtoSquad CAD",
+      subtitle: "Rapid CAD & Additive Prototyping Laboratory",
+      sector: "Mechanical Engineering Services",
+      demographic: "Industrial designers & hardware startups",
+      businessModel: "Consulting Contracts & Prototyping Fees",
+      accent: "red",
+      metrics: [
+        { label: "CAD MODELS AUDITED", value: "120+ Complete", detail: "SolidWorks optimized" },
+        { label: "PROTOTYPES PRINTED", value: "450+ Parts", detail: "Precision ABS, PLA & Nylon runs" },
+        { label: "FABRICATION ERROR", value: "±0.05 mm", detail: "Extremely tight tolerances" }
+      ],
+      readinessLabel: "Machine Capacity",
+      readinessPercentage: 85
+    },
+    'project-izpe': {
+      title: "IZPE Quantum",
+      subtitle: "Zero-Point Fluctuations Visualizer",
+      sector: "Educational Science Databases",
+      demographic: "Quantum researchers, universities & students",
+      businessModel: "Grant Funding & Educational Premium Subs",
+      accent: "blue",
+      metrics: [
+        { label: "RESEARCH PAPERS", value: "8 Indexed", detail: "Casimir effect literature" },
+        { label: "SIMULATION MODELS", value: "14 Virtual Lab", detail: "Vacuum energy simulators" },
+        { label: "ENERGY HARVESTING", value: "Theoretical", detail: "Pure physics modeling" }
+      ],
+      readinessLabel: "Simulation Accuracy",
+      readinessPercentage: 65
+    },
+    'project-bridge': {
+      title: "Bridge WS Ledger",
+      subtitle: "Verified Premium Developer Database",
+      sector: "Professional Service Registries",
+      demographic: "Tech startups looking for vetted talent",
+      businessModel: "Commission-free Partner Placement Fees",
+      accent: "green",
+      metrics: [
+        { label: "VETTED DEVELOPERS", value: "2,400 Certified", detail: "Strict algorithm screening" },
+        { label: "ELITE AGENCIES", value: "150 Partners", detail: "Validated company structures" },
+        { label: "DISPUTE RECORD", value: "100% Settled", detail: "Strong trust legal frameworks" }
+      ],
+      readinessLabel: "Registrant Backlog",
+      readinessPercentage: 91
+    },
+    'project-aleph': {
+      title: "Aleph Accelerator",
+      subtitle: "AI Ventures & Equity Exchange Hub",
+      sector: "Venture Capital & Corporate Incubation",
+      demographic: "Early-stage AI founders & seed investors",
+      businessModel: "Equity Stakes & Incubator Support Fees",
+      accent: "amber",
+      metrics: [
+        { label: "PORTFOLIO STARTUPS", value: "16 Active AI", detail: "Incubating cognitive products" },
+        { label: "EQUITY UNDER MGMT", value: "$12 Million", detail: "Early-stage valuation book" },
+        { label: "KNOWLEDGE GRAPHING", value: "94% Accuracy", detail: "Integrated Knowledge Atlas" }
+      ],
+      readinessLabel: "Capital Deployment",
+      readinessPercentage: 83
+    },
+    'project-jailsoft': {
+      title: "JailSoft Systems",
+      subtitle: "CJIS-Compliant Corrections Administration",
+      sector: "GovTech Public Safety Software",
+      demographic: "County sheriffs & correctional agencies",
+      businessModel: "Annual Government Enterprise Licensing",
+      accent: "red",
+      metrics: [
+        { label: "ACTIVE FACILITIES", value: "42 Agencies", detail: "Running correctional platforms" },
+        { label: "CONTINUOUS UPTIME", value: "100.00%", detail: "SLA critical database uptime" },
+        { label: "FEDERAL AUDITING", value: "CJIS Certified", detail: "Meets DOJ security policies" }
+      ],
+      readinessLabel: "Security Accreditation",
+      readinessPercentage: 100
+    },
+    'project-plano': {
+      title: "Plano Layouts",
+      subtitle: "Web-Based No-Login Floor Plan Designer",
+      sector: "Consumer Architectural SaaS",
+      demographic: "Interior designers & homeowners",
+      businessModel: "Free Core with Vector PDF Export Fees",
+      accent: "amber",
+      metrics: [
+        { label: "FLOORPLANS CREATED", value: "35,000+ Layouts", detail: "No signup necessary" },
+        { label: "FURNITURE STYLES", value: "120+ Styles", detail: "Pre-modeled grid snap vectors" },
+        { label: "EXPORT SPEED", value: "< 2s Render", detail: "Fastest standard export available" }
+      ],
+      readinessLabel: "Interactive Editor Fit",
+      readinessPercentage: 92
+    },
+    'project-humandemo': {
+      title: "HumanDemo Performance",
+      subtitle: "Circadian Rhythm & Focus Optimizer",
+      sector: "BioTech Consumer Performance SaaS",
+      demographic: "Remote professionals & high-output creators",
+      businessModel: "Individual & Team Monthly Subscriptions",
+      accent: "blue",
+      metrics: [
+        { label: "HEALTH BIOMARKERS", value: "8 Connected", detail: "Sleep, movement & focus input" },
+        { label: "FOCUS COHERENCE", value: "92% Average", detail: "Self-reported cognitive flow" },
+        { label: "OPTIMIZED SCHEDULES", value: "100% Custom", detail: "Dynamic calendar alerts" }
+      ],
+      readinessLabel: "Model Accuracy Level",
+      readinessPercentage: 86
     }
   };
 
-  // Check if this slug is a custom dynamic blueprint project
-  const isBlueprintSlug = [
-    'project-clonecraft',
-    'project-exoshape',
-    'project-trueinheritor',
-    'project-grzu',
-    'project-rp2p',
-    'project-holograph',
-    'project-protosquad',
-    'project-izpe',
-    'project-bridge',
-    'project-aleph',
-    'project-jailsoft'
-  ].includes(slug);
+  const info = infographicMap[slug] || {
+    title: slug.replace('project-', '').toUpperCase(),
+    subtitle: "Venture Initiative Portfolio",
+    sector: "Strategic Asset",
+    demographic: "General commercial clients & enterprise partners",
+    businessModel: "Direct licensing & digital stewardship",
+    accent: "blue" as const,
+    metrics: [
+      { label: "VALUATION BASIS", value: "Verified Asset", detail: "Premium reserved domain" },
+      { label: "OPERATIONAL CORE", value: "Ready to Deploy", detail: "Category-focused layout" },
+      { label: "SECURITY AUDIT", value: "Passed", detail: "Strict advisory oversight" }
+    ],
+    readinessLabel: "Operational Readiness",
+    readinessPercentage: 85
+  };
 
-  if (isBlueprintSlug) {
-    const bp = getBlueprintDetails(slug);
-    return (
-      <div className="md:col-span-2 bg-stone-950 text-stone-100 p-6 rounded-2xl border border-stone-900 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
-        {/* Blueprint Header */}
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-amber-500 flex items-center gap-1.5 bg-amber-950/40 rounded-bl-xl border-l border-b border-amber-900/30">
-          <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
-          <span>{bp.badge}</span>
-        </div>
+  // Color theme variables based on accent
+  const colorThemes = {
+    blue: {
+      border: "border-blue-250",
+      accentBg: "bg-blue-50/50",
+      pillBg: "bg-blue-100 text-blue-800 border-blue-200",
+      textHighlight: "text-blue-600",
+      barColor: "bg-blue-600",
+      glow: "shadow-blue-500/10",
+      accentLine: "bg-blue-600"
+    },
+    red: {
+      border: "border-red-250",
+      accentBg: "bg-red-50/50",
+      pillBg: "bg-red-100 text-red-800 border-red-200",
+      textHighlight: "text-red-600",
+      barColor: "bg-red-600",
+      glow: "shadow-red-500/10",
+      accentLine: "bg-red-600"
+    },
+    green: {
+      border: "border-emerald-250",
+      accentBg: "bg-emerald-50/50",
+      pillBg: "bg-emerald-100 text-emerald-800 border-emerald-200",
+      textHighlight: "text-emerald-600",
+      barColor: "bg-emerald-600",
+      glow: "shadow-emerald-500/10",
+      accentLine: "bg-emerald-600"
+    },
+    amber: {
+      border: "border-amber-250",
+      accentBg: "bg-amber-50/50",
+      pillBg: "bg-amber-100 text-amber-800 border-amber-200",
+      textHighlight: "text-amber-600",
+      barColor: "bg-amber-600",
+      glow: "shadow-amber-500/10",
+      accentLine: "bg-amber-600"
+    }
+  };
 
-        <div className="space-y-1 z-10">
-          <span className="font-mono text-[8px] text-amber-500 font-bold uppercase tracking-widest">{bp.motto}</span>
-          <h3 className="font-serif text-xl font-normal text-stone-150">{bp.title}</h3>
-        </div>
+  const theme = colorThemes[info.accent];
 
-        {/* Blueprint CAD Schematic Simulator */}
-        <div className="flex-1 border border-stone-850/70 bg-stone-900/20 rounded-xl p-3.5 flex items-center gap-5 z-10 relative select-none overflow-hidden">
-          {/* Engineering millimeter grid */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#1c1917_1px,transparent_1px),linear-gradient(to_bottom,#1c1917_1px,transparent_1px)] bg-[size:12px_12px] opacity-25 pointer-events-none" />
-          
-          {/* Center alignment vectors */}
-          <div className="absolute left-1/3 top-0 bottom-0 w-[1px] bg-amber-500/10 border-dashed" />
-          
-          {/* Animated radar/scope indicator */}
-          <div className="w-1/3 h-full flex items-center justify-center relative shrink-0">
-            <div className="absolute h-20 w-20 rounded-full border border-amber-500/20" />
-            <div className="absolute h-14 w-14 rounded-full border border-amber-500/30 border-dashed animate-[spin_10s_linear_infinite]" />
-            <div className="absolute h-6 w-6 rounded-full border border-amber-500/40" />
-            <div className="absolute h-1.5 w-1.5 bg-amber-400 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
-            
-            {/* Sweeping radar arm line */}
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
-              className="absolute origin-center h-10 w-[1px] bg-gradient-to-t from-transparent to-amber-500/60 top-[calc(50%-40px)]"
-            />
-          </div>
-
-          {/* Dynamic numeric metrics */}
-          <div className="flex-1 grid grid-cols-2 gap-x-4 gap-y-3 font-mono text-[8.5px] text-stone-400 border-l border-stone-850/60 pl-4 py-1">
-            {bp.metrics.map((m, i) => (
-              <div key={i} className="space-y-0.5">
-                <span className="text-stone-500 uppercase text-[7px] block tracking-wider">{m.label}</span>
-                <span className="text-stone-200 font-bold block">{m.value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Blueprint Footer */}
-        <div className="flex justify-between items-center z-10 font-mono text-[9px] text-stone-500 pt-3 border-t border-stone-900">
-          <span>SCHEMATIC CORE VERSION: V3.42</span>
-          <span>REAL-TIME EMULATOR: NOMINAL</span>
-        </div>
-      </div>
-    );
-  }
-
-  if (slug === 'project-kundalink') {
-    return (
-      <div className="md:col-span-2 bg-[#FAF6F0] p-6 rounded-2xl border border-[#EDE2D4] space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-xs">
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-[#A67C52] flex items-center gap-1.5 bg-white/60 rounded-bl-xl border-l border-b border-[#EDE2D4]">
-          <Heart className="h-3 w-3 text-amber-600 animate-pulse" />
-          <span>MENTOR_NETWORK_ONLINE</span>
-        </div>
-
+  return (
+    <div className={`md:col-span-2 bg-white text-stone-800 p-6 rounded-2xl border-2 ${theme.border} space-y-5 flex flex-col justify-between min-h-[360px] relative overflow-hidden shadow-xs hover:shadow-sm transition-shadow`}>
+      {/* Accent strip on the left edge */}
+      <div className={`absolute top-0 bottom-0 left-0 w-1.5 ${theme.accentLine}`} />
+      
+      {/* Top Header Row with sector pill */}
+      <div className="flex flex-wrap items-start justify-between gap-2 z-10">
         <div className="space-y-1">
-          <span className="font-mono text-[8px] text-amber-600 font-bold uppercase tracking-widest">KUNDALINI_ZEN_TEACHERS</span>
-          <h3 className="font-serif text-xl font-normal text-stone-800">Spiritual Teacher Directory</h3>
+          <span className="text-xs font-bold font-mono tracking-widest text-stone-400 uppercase">VENTURE REPORT</span>
+          <h3 className="font-serif text-xl font-bold text-stone-900 leading-tight">{info.title}</h3>
+          <p className="text-sm font-medium text-stone-500">{info.subtitle}</p>
         </div>
+        <span className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${theme.pillBg}`}>
+          {info.sector}
+        </span>
+      </div>
 
-        {/* Directory profile mockup */}
-        <div className="flex-1 flex gap-3 items-center justify-center z-10 py-1">
-          <div className="bg-white p-3 rounded-xl border border-[#EDE2D4] flex gap-3 max-w-xs shadow-xs w-full">
-            {/* Avatar block with mandala design */}
-            <div className="h-10 w-10 rounded-full bg-amber-50 border border-amber-200 shrink-0 flex items-center justify-center font-serif text-amber-700 font-bold text-xs">
-              ॐ
-            </div>
-            <div className="space-y-1 text-left w-full">
-              <div className="flex justify-between items-center w-full">
-                <span className="font-serif text-xs font-bold text-stone-800">Pritam Singh</span>
-                <span className="bg-amber-100 text-amber-800 text-[6.5px] px-1 rounded uppercase tracking-wider font-mono">Certified</span>
-              </div>
-              <p className="text-[9px] text-stone-400 font-sans leading-tight">Expert Kundalini Yoga &amp; Amrit Vela Sadhana Guide.</p>
-              <div className="flex justify-between text-[7px] font-mono text-stone-500 pt-1 border-t border-stone-100">
-                <span>VIBE MATCH: 98%</span>
-                <span>LOS ANGELES, CA</span>
-              </div>
-            </div>
-          </div>
+      {/* Primary Color Bright Infographic Progress Gauge */}
+      <div className="bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-2 z-10">
+        <div className="flex justify-between items-center text-sm">
+          <span className="text-stone-600 font-bold font-sans uppercase tracking-wider">{info.readinessLabel}</span>
+          <span className={`font-mono font-black ${theme.textHighlight}`}>{info.readinessPercentage}%</span>
         </div>
-
-        <div className="flex justify-between items-center font-mono text-[9px] text-[#A67C52] pt-3 border-t border-[#EDE2D4]">
-          <span>ZEN &amp; KUNDALINI DIRECTORY REGISTER</span>
-          <span>100% SECURE MENTOR MATCH</span>
+        <div className="w-full bg-stone-200 h-3.5 rounded-full overflow-hidden border border-stone-300/40">
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: `${info.readinessPercentage}%` }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className={`h-full ${theme.barColor} rounded-full`}
+          />
         </div>
       </div>
-    );
-  }
 
-  if (slug === 'project-chosenspot') {
-    return (
-      <div className="md:col-span-2 bg-stone-100 p-6 rounded-2xl border border-stone-200 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-xs">
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-[#7D123D] flex items-center gap-1.5 bg-white rounded-bl-xl border-l border-b border-stone-200">
-          <MapPin className="h-3 w-3" />
-          <span>CANANDAIGUA LAKE, NY</span>
-        </div>
-
-        <div className="space-y-1">
-          <span className="font-mono text-[8px] text-stone-500 font-bold uppercase tracking-widest">FINGER_LAKES_HERITAGE_ARCHIVE</span>
-          <h3 className="font-serif text-xl font-normal text-stone-900">Fine Lakeside Living &amp; Media</h3>
-        </div>
-
-        {/* Bento grid scenic columns */}
-        <div className="grid grid-cols-2 gap-3 h-32">
-          <div className="bg-white p-3 rounded-lg border border-stone-200/80 flex flex-col justify-between font-serif">
-            <div>
-              <h4 className="text-xs font-bold text-stone-900 leading-snug">Cottage Rental Directory</h4>
-              <p className="text-[10px] text-stone-400 pt-0.5 leading-snug font-sans">Curated listings for premium lakeside cabins.</p>
-            </div>
-            <span className="font-mono text-[8px] uppercase tracking-wider text-[#7D123D] font-bold block mt-1">Bookings Open &gt;</span>
+      {/* 3 Real, Logical Venture Metrics in Readable Bento Blocks */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 z-10">
+        {info.metrics.map((metric, idx) => (
+          <div key={idx} className={`p-3.5 rounded-xl border ${theme.border} ${theme.accentBg} flex flex-col justify-between space-y-1.5`}>
+            <span className="text-[10px] font-bold text-stone-500 uppercase tracking-wider block">{metric.label}</span>
+            <span className="text-base font-black text-stone-900 leading-none">{metric.value}</span>
+            <span className="text-[11px] text-stone-500 font-medium leading-tight block">{metric.detail}</span>
           </div>
+        ))}
+      </div>
 
-          <div className="bg-white p-3 rounded-lg border border-stone-200/80 flex flex-col justify-between font-serif">
-            <div>
-              <h4 className="text-xs font-bold text-stone-900 leading-snug">Artisan Vineyard Map</h4>
-              <p className="text-[10px] text-stone-400 pt-0.5 leading-snug font-sans">Organic wine tasting tours around the lake.</p>
-            </div>
-            <span className="font-mono text-[8px] uppercase tracking-wider text-[#7D123D] font-bold block mt-1">View Itinerary &gt;</span>
-          </div>
+      {/* Strategic Target Bullets - Two Columns */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-stone-200 text-sm font-sans z-10">
+        <div className="space-y-0.5">
+          <span className="text-xs font-bold text-stone-400 uppercase tracking-widest block">TARGET DEMOGRAPHIC</span>
+          <p className="text-stone-700 font-medium">{info.demographic}</p>
         </div>
-
-        <div className="flex justify-between items-center font-mono text-[9px] text-stone-500 pt-3 border-t border-stone-200">
-          <span>SENECA: THE CHOSEN SPOT OF WATERWAYS</span>
-          <span>15.5 MILES OF PURE BASIN OPTICS</span>
+        <div className="space-y-0.5">
+          <span className="text-xs font-bold text-stone-400 uppercase tracking-widest block">REVENUE & BUSINESS MODEL</span>
+          <p className="text-stone-700 font-medium">{info.businessModel}</p>
         </div>
       </div>
-    );
-  }
-
-  return null;
+    </div>
+  );
 }
 
 function ProjectDetailView({ 
   viewState, 
-  onBack 
+  onBack,
+  failedImages,
+  setFailedImages
 }: { 
   viewState: string; 
   onBack: () => void; 
+  failedImages: Record<string, boolean>;
+  setFailedImages: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
 }) {
   const currentProject = projectsData.find(p => p.viewState === viewState);
   if (!currentProject) return null;
+
+  const isFailed = failedImages[currentProject.domain];
+  const displayImage = isFailed 
+    ? `https://picsum.photos/seed/${currentProject.domain.toLowerCase()}/1200/800`
+    : currentProject.image;
 
   return (
     <motion.section 
@@ -773,28 +671,45 @@ function ProjectDetailView({
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
-      className="space-y-8 max-w-4xl mx-auto w-full"
+      className="space-y-8 max-w-4xl mx-auto w-full text-left"
     >
       {/* Back button and title */}
       <div className="space-y-2">
         <button 
           onClick={onBack}
-          className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+          className="font-mono text-xs text-stone-500 hover:text-stone-850 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
         >
           <ArrowLeft className="h-3 w-3" />
           <span>Back to Projects</span>
         </button>
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-stone-100 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-stone-200/50 pb-4">
           <div>
             <h2 className="font-serif text-3xl sm:text-4xl font-normal text-stone-900 tracking-tight">{currentProject.domain}</h2>
-            <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-widest font-bold">
+            <span className="font-mono text-xs uppercase text-[#7D123D] tracking-widest font-bold">
               {"0" + (projectsData.indexOf(currentProject) + 1) + " // " + currentProject.category}
             </span>
           </div>
-          <div className="font-mono text-[10px] text-stone-400 bg-stone-50 border border-stone-200/60 px-3 py-1 rounded-full uppercase tracking-wider">
+          <div className="font-mono text-xs text-stone-500 bg-stone-100 border border-stone-250/60 px-3 py-1 rounded-full uppercase tracking-wider">
             {currentProject.type}
           </div>
         </div>
+      </div>
+
+      {/* Large Featured Image matching card on homepage but larger */}
+      <div className="relative h-64 sm:h-96 w-full rounded-2xl overflow-hidden border border-stone-200 shadow-md group">
+        <Image 
+          src={displayImage} 
+          alt={currentProject.domain} 
+          fill 
+          sizes="(max-width: 1200px) 100vw, 1200px"
+          referrerPolicy="no-referrer"
+          onError={() => {
+            setFailedImages(prev => ({ ...prev, [currentProject.domain]: true }));
+          }}
+          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+        />
+        {/* Subtle overlay gradient to ensure contrast and premium feel */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
       </div>
 
       {/* Dynamic visual dashboard layout and metrics */}
@@ -804,14 +719,14 @@ function ProjectDetailView({
         <ProjectVisualMockup slug={viewState} />
 
         {/* Content detail panel on the right */}
-        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between h-80">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between min-h-[320px]">
           <div className="space-y-4">
             <h4 className="font-serif font-bold text-stone-900 text-sm">Product Matrix</h4>
-            <p className="text-[11px] text-stone-400 leading-relaxed font-sans">
+            <p className="text-sm text-stone-600 leading-relaxed font-sans">
               Deploying highly specialized digital frameworks and physical materials under standard compliance protocols.
             </p>
             
-            <div className="space-y-3 font-mono text-[10px] pt-2">
+            <div className="space-y-3 font-mono text-sm pt-2">
               <div className="flex justify-between pb-1.5 border-b border-stone-100">
                 <span className="text-stone-400">Launch Timeline:</span>
                 <span className="text-stone-800 font-bold">Q2 2026</span>
@@ -831,9 +746,9 @@ function ProjectDetailView({
             </div>
           </div>
 
-          <div className="pt-2">
-            <span className="font-mono text-[8px] text-stone-400 uppercase tracking-widest block font-bold mb-1">Ecosystem Integration</span>
-            <span className="text-xs text-stone-700 font-serif italic leading-snug block">Aligned under general partnership capital.</span>
+          <div className="pt-2 border-t border-stone-100 mt-4">
+            <span className="font-mono text-xs text-stone-400 uppercase tracking-widest block font-bold mb-1">Ecosystem Integration</span>
+            <span className="text-sm text-stone-700 font-serif italic leading-snug block">Aligned under general partnership capital.</span>
           </div>
         </div>
 
@@ -843,16 +758,16 @@ function ProjectDetailView({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
         <div className="md:col-span-2 space-y-4">
           <h3 className="font-serif text-xl text-stone-950 font-normal">Aesthetic Architecture &amp; Mission</h3>
-          <p className="text-xs text-stone-500 leading-relaxed font-sans">
+          <p className="text-sm text-stone-600 leading-relaxed font-sans">
             {currentProject.tagline} This platform is engineered strictly to resolve category-level hurdles in its respective industry. By combining procedural design, strict standards compliance, and an unhurried focus on sensory user layouts, we build sustainable, highly capitalized assets.
           </p>
-          <p className="text-xs text-stone-500 leading-relaxed font-sans">
+          <p className="text-sm text-stone-600 leading-relaxed font-sans">
             We avoid modern hype trends in favor of absolute functional utility and mathematical optimization, ensuring that every pixel, interaction, and database record serves to build authentic, long-term brand authority.
           </p>
         </div>
         <div className="bg-stone-50 p-5 rounded-2xl border border-stone-200/50 space-y-3">
           <h4 className="font-serif font-bold text-stone-900 text-xs uppercase tracking-wider">Strategic Pillars</h4>
-          <ul className="space-y-2 text-[11px] text-stone-500 leading-relaxed">
+          <ul className="space-y-2 text-sm text-stone-600 leading-relaxed">
             <li className="flex items-start gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-[#7D123D] shrink-0 mt-1.5" />
               <span>Deep layout integrity and frictionless micro-interactions.</span>
@@ -875,12 +790,12 @@ function ProjectDetailView({
           href={currentProject.url} 
           target="_blank" 
           rel="noopener noreferrer"
-          className="px-8 py-3.5 bg-stone-950 hover:bg-[#7D123D] text-white font-mono text-[10px] uppercase tracking-widest rounded-full transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer duration-300 animate-bounce"
+          className="px-8 py-3.5 bg-stone-950 hover:bg-[#7D123D] text-white font-mono text-[10px] uppercase tracking-widest rounded-full shadow-md hover:shadow-xl flex items-center gap-2 cursor-pointer transition-all duration-300 transform hover:scale-[1.03] active:scale-[0.97]"
         >
           <Globe className="h-3.5 w-3.5" />
           <span>VISIT {currentProject.domain.toUpperCase()}</span>
         </a>
-        <span className="text-[9px] text-stone-400 font-mono mt-2.5 uppercase tracking-wider">SECURE VENTURE GATEWAY ACTIVE</span>
+        <span className="text-[9px] text-stone-400 font-mono mt-2.5 uppercase tracking-wider">DIRECT DOMAIN CONNECTION</span>
       </div>
     </motion.section>
   );
@@ -1266,6 +1181,7 @@ export default function LandingPage() {
   const [loadingMessage, setLoadingMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isVenturesExpanded, setIsVenturesExpanded] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -1276,7 +1192,140 @@ export default function LandingPage() {
   };
   const [searchQuery, setSearchQuery] = useState('');
   const [dashboardSearch, setDashboardSearch] = useState('');
-  
+
+  const renderBreadcrumbs = () => {
+    if (activeView === 'portal') return null;
+
+    let sectionLabel = 'STUDIO INITIATIVE';
+    let sectionAction = () => {
+      setActiveView('portal');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    let itemLabel = '';
+    const isProject = activeView.startsWith('project-');
+
+    if (isProject) {
+      sectionLabel = 'VENTURE PORTFOLIO';
+      sectionAction = () => {
+        setActiveView('portal');
+        setTimeout(() => {
+          const portfolioSection = document.getElementById('portfolio-section');
+          if (portfolioSection) {
+            portfolioSection.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+          }
+        }, 100);
+      };
+      const project = projectsData.find(p => p.viewState === activeView);
+      itemLabel = project ? project.domain : activeView.replace('project-', '').toUpperCase() + '.COM';
+    } else {
+      switch (activeView) {
+        case 'dashboard':
+          sectionLabel = 'PARTNER SPACE';
+          itemLabel = 'Venture Dashboard';
+          break;
+        case 'about':
+          sectionLabel = 'THE FIRM';
+          itemLabel = 'About Us';
+          break;
+        case 'support':
+          sectionLabel = 'PARTNER CONCIERGE';
+          itemLabel = 'Support Desk';
+          break;
+        case 'login-help':
+          sectionLabel = 'SECURITY HELP';
+          itemLabel = 'Cookie Handshake';
+          break;
+        case 'seed-incubator':
+          sectionLabel = 'STUDIO INITIATIVE';
+          itemLabel = 'Seed & Early Stage';
+          break;
+        case 'target-arbitrage':
+          sectionLabel = 'STUDIO INITIATIVE';
+          itemLabel = 'Computational Arbitrage';
+          break;
+        case 'strategic-partnerships':
+          sectionLabel = 'STUDIO INITIATIVE';
+          itemLabel = 'Strategic Alliances';
+          break;
+        case 'legal-network':
+          sectionLabel = 'STUDIO INITIATIVE';
+          itemLabel = 'Jurisdiction & Trust Law';
+          break;
+        case 'compliance-board':
+          sectionLabel = 'STUDIO INITIATIVE';
+          itemLabel = 'Compliance Board';
+          break;
+        case 'hr-advisory':
+          sectionLabel = 'STUDIO INITIATIVE';
+          itemLabel = 'HR & Executive Counsel';
+          break;
+        case 'node-register':
+          sectionLabel = 'STUDIO INITIATIVE';
+          itemLabel = 'Global Node Registry';
+          break;
+        case 'token-dtd':
+          sectionLabel = 'STRUCTURAL RULES';
+          itemLabel = 'Credential Tokens DTD';
+          break;
+        case 'xhtml-schemas':
+          sectionLabel = 'STRUCTURAL RULES';
+          itemLabel = 'XML Document Schemas';
+          break;
+        case 'registered-partners':
+          sectionLabel = 'THE FIRM';
+          itemLabel = 'Accredited Register';
+          break;
+        case 'portal-dtd':
+          sectionLabel = 'STRUCTURAL RULES';
+          itemLabel = 'Portal Layout DTD';
+          break;
+        case 'seed-network':
+          sectionLabel = 'STUDIO INITIATIVE';
+          itemLabel = 'Venture Advisors';
+          break;
+        case 'xhtml-spec':
+          sectionLabel = 'STRUCTURAL RULES';
+          itemLabel = 'XHTML Strict Specs';
+          break;
+        default:
+          itemLabel = activeView.toUpperCase();
+      }
+    }
+
+    return (
+      <div 
+        id="subtle-breadcrumbs"
+        className="w-full flex items-center gap-2 py-3 select-none animate-fadeIn border-b border-stone-200/20"
+      >
+        <button
+          type="button"
+          onClick={() => {
+            setActiveView('portal');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="text-stone-500 hover:text-[#7D123D] transition-colors font-mono text-xs uppercase tracking-wider font-bold cursor-pointer"
+        >
+          Portal
+        </button>
+        <ChevronRight className="h-3 w-3 text-stone-400 flex-shrink-0" />
+        <button
+          type="button"
+          onClick={sectionAction}
+          className="text-stone-500 hover:text-[#7D123D] transition-colors font-mono text-xs uppercase tracking-wider font-bold cursor-pointer"
+        >
+          {sectionLabel}
+        </button>
+        <ChevronRight className="h-3 w-3 text-stone-400 flex-shrink-0" />
+        <span className="text-[#7D123D] font-mono text-xs uppercase tracking-wider font-black truncate">
+          {itemLabel}
+        </span>
+      </div>
+    );
+  };
+
   // Support Page States
   const [supportName, setSupportName] = useState('');
   const [supportEmail, setSupportEmail] = useState('');
@@ -1500,14 +1549,14 @@ export default function LandingPage() {
             {activeView === 'dashboard' ? (
               <div className="flex items-center gap-3">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse hidden sm:inline" />
-                <span className="font-mono text-[9px] uppercase tracking-widest text-emerald-600 font-bold hidden sm:inline">AUTHENTICATED LP</span>
+                <span className="font-mono text-xs uppercase tracking-wider text-emerald-600 font-bold hidden sm:inline">AUTHENTICATED LP</span>
                 <button
                   type="button"
                   onClick={() => {
                     setPassword('');
                     setActiveView('portal');
                   }}
-                  className="px-3 py-1 border border-stone-200 hover:border-stone-800 text-stone-700 font-mono text-[9px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer bg-white"
+                  className="px-3.5 py-1.5 border-2 border-stone-200 hover:border-stone-800 text-stone-700 font-mono text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer bg-white"
                 >
                   Lock
                 </button>
@@ -1516,14 +1565,15 @@ export default function LandingPage() {
               <button
                 type="button"
                 onClick={() => setIsLoginOpen(true)}
-                className="px-3.5 py-1.5 bg-stone-900 hover:bg-stone-850 text-white font-mono text-[9px] font-bold uppercase tracking-wider rounded-lg transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+                className="px-4 py-2 bg-stone-900 hover:bg-stone-850 text-white font-mono text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
               >
-                <Lock className="h-2.5 w-2.5" />
+                <Lock className="h-3 w-3" />
                 <span>Partner Access</span>
               </button>
             )}
           </div>
         </header>
+        {renderBreadcrumbs()}
       </div>
 
       {/* 2. DYNAMIC MAIN BODY ROUTER */}
@@ -1550,17 +1600,17 @@ export default function LandingPage() {
 
                 {/* Header Title for PROJECTS section inside the hero */}
                 <div className="text-center select-none z-10 relative">
-                  <h2 className="font-mono text-[9px] uppercase tracking-[0.35em] text-stone-500 font-bold mb-1">
+                  <h2 className="font-mono text-xs uppercase tracking-[0.25em] text-stone-600 font-extrabold mb-1.5">
                     INCUBATED PORTFOLIO
                   </h2>
-                  <span className="text-[10px] text-stone-500 font-serif italic">
+                  <span className="text-sm text-stone-550 font-serif italic">
                     Category-defining digital networks &amp; private startups
                   </span>
                 </div>
               </div>
 
               {/* PROJECTS GRID INDEX */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full z-10 px-4 mb-16">
+              <div id="portfolio-section" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full z-10 px-4 mb-16">
                 {projectsData.map((project, idx) => {
                   const isFailed = failedImages[project.domain];
                   const displayImage = isFailed 
@@ -1568,20 +1618,21 @@ export default function LandingPage() {
                     : project.image;
 
                   return (
-                    <motion.a
+                    <motion.button
                       key={project.domain}
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      onClick={() => {
+                        setActiveView(project.viewState as any);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
                       whileHover={{ y: -8, scale: 1.015 }}
-                      className={`relative overflow-hidden p-5 rounded-xl border border-white/10 ${project.accentBorder} transition-all duration-500 cursor-pointer flex flex-col justify-between group h-52 shadow-md ${project.glowColor}`}
+                      className={`relative overflow-hidden p-5 rounded-xl border border-white/10 ${project.accentBorder} transition-all duration-500 cursor-pointer flex flex-col justify-between group h-52 shadow-md ${project.glowColor} w-full`}
                     >
                       {/* Top primary color accent line bar */}
                       <div className={`absolute top-0 left-0 right-0 h-1 z-20 ${project.accentBar} opacity-90 transition-all duration-500 group-hover:h-2`} />
 
                       {/* Top Metadata Row */}
                       <div className="relative z-10 w-full flex justify-between items-start">
-                        <span className="font-mono text-[8px] uppercase tracking-wider text-stone-200 font-extrabold px-1.5 py-0.5 rounded bg-black/40 backdrop-blur-xs border border-white/5">
+                        <span className="font-mono text-[10px] uppercase tracking-wider text-stone-100 font-extrabold px-2 py-1 rounded bg-black/50 backdrop-blur-xs border border-white/10">
                           {project.category}
                         </span>
                         
@@ -1617,7 +1668,7 @@ export default function LandingPage() {
                           {project.tagline}
                         </p>
                       </div>
-                    </motion.a>
+                    </motion.button>
                   );
                 })}
               </div>
@@ -2477,23 +2528,23 @@ export default function LandingPage() {
               <div className="space-y-1 font-sans">
                 <button 
                   onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  className="font-mono text-xs font-bold text-stone-500 hover:text-stone-850 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
                 >
-                  <ArrowLeft className="h-3 w-3" />
+                  <ArrowLeft className="h-3.5 w-3.5" />
                   <span>Back to Access</span>
                 </button>
                 <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Security Token XML Schema</h2>
-                <span className="text-[10px] text-[#7D123D] font-mono uppercase tracking-widest block">Metadata Validation Specifications</span>
+                <span className="text-xs text-[#7D123D] font-mono font-bold uppercase tracking-wider block">Metadata Validation Specifications</span>
               </div>
 
-              <div className="prose prose-stone font-sans text-stone-500 text-xs leading-relaxed mb-4">
+              <div className="prose prose-stone font-sans text-stone-600 text-sm leading-relaxed mb-4">
                 <p>
                   To secure client state during browser transactions, Arcscape platform tokens validate against strict XML Document Type Definitions (DTD). This guarantees that credentials match layout requirements precisely prior to decryption.
                 </p>
               </div>
 
-              <div className="bg-stone-900 p-4 rounded-xl border border-stone-800 text-stone-300 space-y-2 overflow-x-auto leading-relaxed">
-                <pre>{`<!-- Arcscape Token Validation DTD -->
+              <div className="bg-white border-2 border-stone-250/80 p-5 rounded-2xl text-stone-800 space-y-2 overflow-x-auto leading-relaxed shadow-xs">
+                <pre className="font-mono text-xs text-stone-700">{`<!-- Arcscape Token Validation DTD -->
 <!ELEMENT securityToken (credential, clientInfo, metadata)>
 <!ATTLIST securityToken
           id ID #REQUIRED
@@ -2521,21 +2572,21 @@ export default function LandingPage() {
               <div className="space-y-1 font-sans">
                 <button 
                   onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  className="font-mono text-xs font-bold text-stone-500 hover:text-stone-850 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
                 >
-                  <ArrowLeft className="h-3 w-3" />
+                  <ArrowLeft className="h-3.5 w-3.5" />
                   <span>Back to Access</span>
                 </button>
                 <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">XHTML Strict Compliance</h2>
-                <span className="text-[10px] text-[#7D123D] uppercase tracking-widest block">Rendering Architecture Standards</span>
+                <span className="text-xs text-[#7D123D] font-mono font-bold uppercase tracking-wider block">Rendering Architecture Standards</span>
               </div>
 
-              <p className="font-sans text-stone-500 leading-relaxed text-xs">
+              <p className="font-sans text-stone-600 leading-relaxed text-sm">
                 XHTML Strict compliance is not an old legacy standard for us; it is a chosen philosophy. Closing every tag, keeping lowercase elements, and adhering to strict nesting principles forces our development studio to build lightweight, fast-loading visual portals that compile cleanly across decades of browser technology.
               </p>
 
-              <div className="bg-stone-900 p-4 rounded-xl border border-stone-800 text-stone-300 space-y-2 overflow-x-auto leading-relaxed">
-                <pre>{`<!-- Structural compliance nesting tests -->
+              <div className="bg-white border-2 border-stone-250/80 p-5 rounded-2xl text-stone-800 space-y-2 overflow-x-auto leading-relaxed shadow-xs">
+                <pre className="font-mono text-xs text-stone-700">{`<!-- Structural compliance nesting tests -->
 <div class="validator-node">
   <p class="strict-block">
     <strong>Verification Loop:</strong> Approved rendering structures must be closed.
@@ -2610,21 +2661,21 @@ export default function LandingPage() {
               <div className="space-y-1 font-sans">
                 <button 
                   onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  className="font-mono text-xs font-bold text-stone-500 hover:text-stone-850 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
                 >
-                  <ArrowLeft className="h-3 w-3" />
+                  <ArrowLeft className="h-3.5 w-3.5" />
                   <span>Back to Access</span>
                 </button>
                 <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Portal DTD Schemas</h2>
-                <span className="text-[10px] text-[#7D123D] block uppercase tracking-widest">Interface Structural Definitions</span>
+                <span className="text-xs text-[#7D123D] font-mono font-bold uppercase tracking-wider block">Interface Structural Definitions</span>
               </div>
 
-              <p className="font-sans text-stone-500 leading-relaxed text-xs">
+              <p className="font-sans text-stone-600 leading-relaxed text-sm">
                 To guarantee zero layout shift, our portal&apos;s UI grids are validated against rigid Document Type Definitions specifying pixel coordinates, grid flex values, and typography hierarchies.
               </p>
 
-              <div className="bg-stone-900 p-4 rounded-xl border border-stone-800 text-stone-300 space-y-2 overflow-x-auto leading-relaxed">
-                <pre>{`<!-- Portal Layout Rules -->
+              <div className="bg-white border-2 border-stone-250/80 p-5 rounded-2xl text-stone-800 space-y-2 overflow-x-auto leading-relaxed shadow-xs">
+                <pre className="font-mono text-xs text-stone-700">{`<!-- Portal Layout Rules -->
 <!ELEMENT portalView (header, heroArea, footerRegistry)>
 <!ATTLIST portalView
           theme (light|warm) "warm">
@@ -2687,19 +2738,19 @@ export default function LandingPage() {
               <div className="space-y-2">
                 <button 
                   onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  className="font-mono text-xs font-bold text-stone-500 hover:text-stone-850 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
                 >
-                  <ArrowLeft className="h-3 w-3" />
+                  <ArrowLeft className="h-3.5 w-3.5" />
                   <span>Back to Access</span>
                 </button>
                 <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">XHTML Specification</h2>
-                <p className="text-xs text-stone-500 leading-relaxed">
+                <p className="text-sm text-stone-600 leading-relaxed">
                   Inspect the rigid, strict compliant W3C XHTML source document structured for this portal. Strict lowercase declarations and closed nesting ensure perfect cross-platform stability.
                 </p>
               </div>
 
               <div className="relative">
-                <pre className="text-[10px] sm:text-[11px] font-mono text-stone-300 bg-stone-900 p-4 rounded-xl border border-stone-800 overflow-x-auto max-h-96 leading-relaxed">
+                <pre className="text-xs font-mono text-stone-700 bg-white p-5 rounded-2xl border-2 border-stone-250/80 overflow-x-auto max-h-96 leading-relaxed shadow-xs">
                   {xhtmlCodeString}
                 </pre>
                 <button
@@ -2708,7 +2759,7 @@ export default function LandingPage() {
                     navigator.clipboard.writeText(xhtmlCodeString);
                     alert('Strict XHTML specifications copied to clipboard!');
                   }}
-                  className="absolute top-3 right-3 bg-stone-800 text-stone-300 hover:bg-stone-700 hover:text-white border border-stone-700 rounded px-2.5 py-1 text-[10px] font-mono transition-all cursor-pointer"
+                  className="absolute top-4 right-4 bg-stone-100 text-stone-700 hover:bg-[#7D123D] hover:text-white border border-stone-300 rounded px-3 py-1.5 text-xs font-mono transition-all cursor-pointer font-bold"
                 >
                   Copy Specification
                 </button>
@@ -2716,141 +2767,332 @@ export default function LandingPage() {
             </motion.section>
           )}
 
+          {/* VIEW: PROJECT DETAILS */}
+          {activeView.startsWith('project-') && (
+            <ProjectDetailView 
+              viewState={activeView} 
+              onBack={() => {
+                setActiveView('portal');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }} 
+              failedImages={failedImages}
+              setFailedImages={setFailedImages}
+            />
+          )}
+
         </AnimatePresence>
       </div>
 
       {/* 3. MULTI-COLUMN PREMIUM FOOTER SITE DIRECTORY */}
-      <footer className="w-full max-w-5xl mx-auto pt-12 pb-8 border-t border-stone-200/50 relative z-10 space-y-10">
+      <footer className="w-full max-w-5xl mx-auto pt-12 pb-8 border-t border-stone-200/50 relative z-10 space-y-12 px-4">
         
-        {/* Four Column Directory Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 px-4 text-left">
-          {/* Column 1: Incubation Program */}
-          <div className="space-y-3">
-            <h4 className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-900 font-extrabold border-b border-stone-200/50 pb-1.5">
-              Incubation Hub
+        {/* Arcscape Ventures Collapsible Section */}
+        <div className="border border-stone-200/65 rounded-2xl bg-stone-50/50 overflow-hidden transition-all duration-300 shadow-xs">
+          <button
+            type="button"
+            onClick={() => setIsVenturesExpanded(!isVenturesExpanded)}
+            className="w-full flex items-center justify-between p-4 px-6 font-mono text-xs uppercase tracking-wider text-stone-950 font-black hover:bg-stone-100/30 transition-colors cursor-pointer text-left"
+          >
+            <div className="flex items-center gap-2">
+              <span className={`h-2 w-2 rounded-full bg-[#7D123D] ${isVenturesExpanded ? 'animate-pulse' : ''}`} />
+              <span>ARCSCAPE VENTURES ({projectsData.length})</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-stone-500 font-sans text-xs lowercase font-bold tracking-normal normal-case">
+              <span>{isVenturesExpanded ? 'click to hide active portfolio' : 'click to expand active portfolio'}</span>
+              <motion.span
+                animate={{ rotate: isVenturesExpanded ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+                className="inline-block text-stone-700 font-bold font-mono text-xs"
+              >
+                ↓
+              </motion.span>
+            </div>
+          </button>
+
+          <AnimatePresence initial={false}>
+            {isVenturesExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="border-t border-stone-200/40"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 p-6 px-8 text-left bg-white/50">
+                  {/* Column 1: Networks & Directories */}
+                  <div className="space-y-3">
+                    <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2">
+                      Networks &amp; Directories
+                    </h4>
+                    <ul className="space-y-2.5 text-xs font-sans text-stone-600">
+                      {projectsData.slice(0, 5).map((project) => (
+                        <li key={project.domain}>
+                          <button 
+                            onClick={() => { setActiveView(project.viewState as any); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                            className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left font-medium block"
+                          >
+                            {project.domain}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Column 2: AI & FinTech Labs */}
+                  <div className="space-y-3">
+                    <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2">
+                      AI &amp; FinTech Labs
+                    </h4>
+                    <ul className="space-y-2.5 text-xs font-sans text-stone-600">
+                      {projectsData.slice(5, 10).map((project) => (
+                        <li key={project.domain}>
+                          <button 
+                            onClick={() => { setActiveView(project.viewState as any); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                            className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left font-medium block"
+                          >
+                            {project.domain}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Column 3: Protocols & Sciences */}
+                  <div className="space-y-3">
+                    <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2">
+                      Protocols &amp; Sciences
+                    </h4>
+                    <ul className="space-y-2.5 text-xs font-sans text-stone-600">
+                      {projectsData.slice(10, 15).map((project) => (
+                        <li key={project.domain}>
+                          <button 
+                            onClick={() => { setActiveView(project.viewState as any); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                            className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left font-medium block"
+                          >
+                            {project.domain}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Column 4: Enterprise & Performance */}
+                  <div className="space-y-3">
+                    <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2">
+                      Enterprise &amp; Performance
+                    </h4>
+                    <ul className="space-y-2.5 text-xs font-sans text-stone-600">
+                      {projectsData.slice(15).map((project) => (
+                        <li key={project.domain}>
+                          <button 
+                            onClick={() => { setActiveView(project.viewState as any); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                            className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left font-medium block"
+                          >
+                            {project.domain}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Traditional Exploded Sitemap Footer */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-left pt-6 border-t border-stone-200/30">
+          {/* Column 1: INVESTMENT CAPITAL */}
+          <div className="space-y-4">
+            <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2.5">
+              Investment Capital
             </h4>
-            <ul className="space-y-2 text-[11px] font-sans text-stone-500">
+            <ul className="space-y-3 text-xs font-sans text-stone-600">
+              <li>
+                <button 
+                  onClick={() => { setActiveView('portal'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  Portfolio Registry
+                </button>
+              </li>
               <li>
                 <button 
                   onClick={() => { setActiveView('seed-incubator'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
                 >
-                  Stealth Seed Incubator
+                  Seed &amp; Early Stage
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('strategic-partnerships'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  Strategic Alliances
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('legal-network'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  Jurisdiction &amp; Trust Law
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('registered-partners'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  Accredited Register
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 2: STUDIO INITIATIVES */}
+          <div className="space-y-4">
+            <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2.5">
+              Studio Initiatives
+            </h4>
+            <ul className="space-y-3 text-xs font-sans text-stone-600">
+              <li>
+                <button 
+                  onClick={() => { setActiveView('about'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  About the Firm
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('target-arbitrage'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  Computational Arbitrage
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => { setActiveView('seed-network'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
                 >
                   Venture Advisors
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => { setActiveView('registered-partners'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
-                >
-                  Partner Onboarding
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 2: Capital & Governance */}
-          <div className="space-y-3">
-            <h4 className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-900 font-extrabold border-b border-stone-200/50 pb-1.5">
-              Risk &amp; Mechanics
-            </h4>
-            <ul className="space-y-2 text-[11px] font-sans text-stone-500">
-              <li>
-                <button 
-                  onClick={() => { setActiveView('target-arbitrage'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
-                >
-                  Arbitrage Mechanics
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('compliance-board'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
-                >
-                  Governance Board
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('strategic-partnerships'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
-                >
-                  Institutional Syndicates
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Network & Specs */}
-          <div className="space-y-3">
-            <h4 className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-900 font-extrabold border-b border-stone-200/50 pb-1.5">
-              Advisory &amp; Specs
-            </h4>
-            <ul className="space-y-2 text-[11px] font-sans text-stone-500">
-              <li>
-                <button 
                   onClick={() => { setActiveView('hr-advisory'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
                 >
-                  Human Capital &amp; HR
+                  HR &amp; Executive Counsel
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => { setActiveView('node-register'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
                 >
-                  Portal Network Registry
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('xhtml-spec'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
-                >
-                  XHTML Strict Spec
+                  Global Node Registry
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Schemas & Tokens */}
-          <div className="space-y-3">
-            <h4 className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-900 font-extrabold border-b border-stone-200/50 pb-1.5">
-              Validations
+          {/* Column 3: STRUCTURAL RULES */}
+          <div className="space-y-4">
+            <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2.5">
+              Structural Rules
             </h4>
-            <ul className="space-y-2 text-[11px] font-sans text-stone-500">
+            <ul className="space-y-3 text-xs font-sans text-stone-600">
               <li>
                 <button 
-                  onClick={() => { setActiveView('token-dtd'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                  onClick={() => { setActiveView('xhtml-spec'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
                 >
-                  Security Token DTD
+                  XHTML Strict Specs
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => { setActiveView('portal-dtd'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
                 >
                   Portal Layout DTD
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => { setActiveView('xhtml-schemas'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                  onClick={() => { setActiveView('token-dtd'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
                 >
-                  XHTML Schemas
+                  Credential Tokens DTD
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('xhtml-schemas'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  XML Document Schemas
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('compliance-board'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  Compliance Board
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: ACCESS & SUPPORT */}
+          <div className="space-y-4">
+            <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2.5">
+              Access &amp; Support
+            </h4>
+            <ul className="space-y-3 text-xs font-sans text-stone-600">
+              <li>
+                <button 
+                  onClick={() => { setActiveView('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  Partner Support Desk
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('login-help'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  Cookie Handshake Help
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setIsLoginOpen(true); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-semibold"
+                >
+                  Partner Portal Access
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { showToast('Sitemap location: /sitemap.xml'); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  sitemap.xml
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { showToast('Robots rules location: /robots.txt'); }}
+                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                >
+                  robots.txt
                 </button>
               </li>
             </ul>
@@ -2876,22 +3118,22 @@ export default function LandingPage() {
           <div className="flex items-center gap-4 text-stone-400">
             <button 
               type="button"
-              className="hover:text-stone-800 transition-colors cursor-pointer text-stone-400" 
+              className="hover:text-stone-850 transition-colors cursor-pointer text-stone-400 font-medium" 
               onClick={() => {
-                showToast('Sitemap location: /sitemap.xml');
+                showToast('Privacy Protocol: SEC and GDPR Compliant');
               }}
             >
-              sitemap.xml
+              Privacy Protocol
             </button>
             <span>•</span>
             <button 
               type="button"
-              className="hover:text-stone-800 transition-colors cursor-pointer text-stone-400" 
+              className="hover:text-stone-850 transition-colors cursor-pointer text-stone-400 font-medium" 
               onClick={() => {
-                showToast('Robots rules location: /robots.txt');
+                showToast('Terms of Engagement: Strictly Advisory');
               }}
             >
-              robots.txt
+              Terms of Engagement
             </button>
           </div>
         </div>
@@ -2935,7 +3177,7 @@ export default function LandingPage() {
             >
               <div className="flex justify-between items-start">
                 <div className="space-y-1">
-                  <span className="font-mono text-[8px] uppercase tracking-widest text-[#7D123D] font-bold">SECURE GATEWAY</span>
+                  <span className="font-mono text-[8px] uppercase tracking-widest text-[#7D123D] font-bold">PARTNER LOGIN</span>
                   <h3 className="font-serif text-lg font-normal">Partner Access</h3>
                 </div>
                 <button
