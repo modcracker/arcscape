@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ShieldAlert, 
@@ -39,32 +40,39 @@ import {
   Shield,
   Wifi,
   AlertTriangle,
-  X
+  X,
+  ArrowUpRight,
+  Radio,
+  Cpu,
+  Layers,
+  Gamepad2,
+  Heart,
+  Map
 } from 'lucide-react';
 
 // Perfect, mathematical curved logo using crisp textpath rendering
 function ArcscapeCurvedLogo({ size = "normal" }: { size?: "normal" | "small" | "large" }) {
-  let width = 160;
+  let width = 180;
   let height = 55;
   let viewBox = "0 0 180 55";
-  let pathD = "M 10 45 Q 90 8 170 45";
-  let fontSize = "14px";
+  let pathD = "M 10 44 Q 90 22 170 44"; // Perfectly centered curve that leaves breathing space at top & bottom
+  let fontSize = "13px";
   let tracking = "0.38em";
 
   if (size === "small") {
-    width = 120;
+    width = 130;
     height = 42;
     viewBox = "0 0 130 42";
-    pathD = "M 8 35 Q 65 8 122 35";
-    fontSize = "11px";
+    pathD = "M 8 34 Q 65 18 122 34"; // Scaled curve keeping small logo clear and unclipped
+    fontSize = "10px";
     tracking = "0.32em";
   } else if (size === "large") {
-    // Exactly 4 times larger in scale for breathtaking, premium visual weight
-    width = 2160;
-    height = 640;
-    viewBox = "0 0 2160 640";
-    pathD = "M 60 500 Q 1080 60 2100 500";
-    fontSize = "152px";
+    // Large centered hero logo - beautifully proportioned, never clipped at top/sides
+    width = 1200;
+    height = 300;
+    viewBox = "0 0 1200 300";
+    pathD = "M 100 215 Q 600 115 1100 215"; // Exquisite shallow architectural arc with 100px rise over 1000px
+    fontSize = "70px"; // Peak of curve is 115px, so text top lies at 115 - 70 = 45px (well within 300px box height)
     tracking = "0.45em";
   }
 
@@ -73,297 +81,106 @@ function ArcscapeCurvedLogo({ size = "normal" }: { size?: "normal" | "small" | "
       <svg 
         viewBox={viewBox} 
         style={{ width: "100%", maxWidth: `${width}px`, height: "auto" }} 
-        className={`select-none pointer-events-none overflow-visible ${
-          size === 'small' ? '' : 'drop-shadow-[0_2px_5px_rgba(0,0,0,0.45)]'
-        }`}
+        className="select-none pointer-events-none overflow-visible"
       >
         <defs>
-          {/* Liquid Chrome gradient mimicking high-end 3D metallic curvature with intense reflective bands (diagonal light sweeps) */}
-          <linearGradient id={`chromeGradient-${size}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0c0d10" />
-            <stop offset="12%" stopColor="#f5f7fa" />
-            <stop offset="25%" stopColor="#3d414a" />
-            <stop offset="38%" stopColor="#ffffff" />
-            <stop offset="50%" stopColor="#050608" />
-            <stop offset="62%" stopColor="#e1e6eb" />
-            <stop offset="78%" stopColor="#555a65" />
-            <stop offset="90%" stopColor="#fafafc" />
-            <stop offset="100%" stopColor="#101115" />
+          {/* Exquisite Multi-Stop Brushed Champagne Gold Foil Gradient */}
+          <linearGradient id={`goldGrad-${size}`} x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#7B5C35" />
+            <stop offset="15%" stopColor="#AD8E65" />
+            <stop offset="35%" stopColor="#E2CAAA" />
+            <stop offset="50%" stopColor="#FAF2E5" />
+            <stop offset="65%" stopColor="#E2CAAA" />
+            <stop offset="85%" stopColor="#AD8E65" />
+            <stop offset="100%" stopColor="#7B5C35" />
           </linearGradient>
 
-          {/* Intense neon cyan glow filter to simulate high-end reverse-lit channel letter sign halo */}
-          <filter id={`cyanGlowFilter-${size}`} x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur in="SourceAlpha" stdDeviation={size === "large" ? "2.5" : "1.0"} result="blur" />
-            <feComponentTransfer in="blur" result="brightGlow">
-              <feFuncA type="linear" slope="1.2" />
-            </feComponentTransfer>
-            <feMerge>
-              <feMergeNode in="brightGlow" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-
-          {/* Highly sophisticated SVG Filter to create a chiseled polished chrome/silver bevel (from the 'S' image) */}
-          <filter id={`chromeBevelFilter-${size}`} x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur in="SourceAlpha" stdDeviation={size === "large" ? "1.2" : "0.3"} result="blur" />
-            <feComponentTransfer in="blur" result="sculptedBevel">
-              <feFuncA type="table" tableValues="0 0.1 0.4 0.8 0.95 1.0" />
-            </feComponentTransfer>
-            <feSpecularLighting in="sculptedBevel" surfaceScale={size === "large" ? "3" : "1"} specularConstant="2.2" specularExponent="35" lightingColor="#ffffff" result="spec">
-              <feDistantLight azimuth="135" elevation="45" />
-            </feSpecularLighting>
-            <feComposite in="spec" in2="SourceAlpha" operator="in" result="maskedSpecular" />
-            <feComposite in="SourceGraphic" in2="maskedSpecular" operator="arithmetic" k1="0" k2="1.0" k3="1.25" k4="0" result="lit" />
-          </filter>
-
-          {/* Highly sophisticated specular shine filter for realistic glass/gloss top-coat reflection */}
-          <filter id={`glassShine-${size}`} x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur in="SourceAlpha" stdDeviation={size === "large" ? "2.5" : "0.4"} result="blur" />
-            <feSpecularLighting in="blur" surfaceScale={size === "large" ? "3.5" : "1"} specularConstant="1.1" specularExponent="55" lightingColor="#ffffff" result="spec">
-              <feDistantLight azimuth="135" elevation="65" />
-            </feSpecularLighting>
-            <feComposite in="spec" in2="SourceAlpha" operator="in" />
+          {/* Premium shadow filter for high-end dimensional lift */}
+          <filter id={`luxShadow-${size}`} x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow 
+              dx="0" 
+              dy={size === "large" ? "10" : "1.8"} 
+              stdDeviation={size === "large" ? "12" : "2.2"} 
+              floodColor="#1C1917" 
+              floodOpacity={size === "large" ? "0.22" : "0.14"} 
+            />
           </filter>
         </defs>
         
         <path id={`curve-${size}`} d={pathD} fill="none" stroke="transparent" />
 
-        {/* Flat style for small size, 3D chrome logic for normal, hybrid complex logic for large */}
+        {/* Small header logo variant uses clean, crisp dark bronze/charcoal serif */}
         {size === "small" ? (
           <text 
-            className="font-sans uppercase font-black" 
+            className="font-serif uppercase" 
             style={{ 
+              fontFamily: "var(--font-serif), Playfair Display, serif",
               fontSize, 
               letterSpacing: tracking, 
-              fill: "#111111",
-              fontWeight: 950 
+              fill: "#2C241E", 
+              fontWeight: 600,
             }}
-            dx="0"
-            dy="0"
           >
             <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-              arcscape
+              ARCSCAPE
             </textPath>
           </text>
-        ) : size === "normal" ? (
-          <>
-            {/* 1. Neon Cyan Backlight Glow (from the 'M' sign) */}
-            <text 
-              className="font-sans uppercase font-black" 
-              style={{ 
-                fontSize, 
-                letterSpacing: tracking, 
-                fill: "#00f5ff",
-                stroke: "#00f5ff",
-                strokeWidth: "1.8px",
-                strokeLinejoin: "round",
-                fontWeight: 950,
-                filter: `url(#cyanGlowFilter-${size})`,
-                opacity: 0.85
-              }}
-              dx="0"
-              dy="1.0"
-            >
-              <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                arcscape
-              </textPath>
-            </text>
-
-            {/* 2. Sharp matte black backing */}
-            <text 
-              className="font-sans uppercase font-black" 
-              style={{ 
-                fontSize, 
-                letterSpacing: tracking, 
-                fill: "#06070a",
-                fontWeight: 950 
-              }}
-              dx="0"
-              dy="0.8"
-            >
-              <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                arcscape
-              </textPath>
-            </text>
-
-            {/* 3. Liquid Chrome Face with Silver Bevel (from the 'S' image) */}
-            <text 
-              className="font-sans uppercase font-black" 
-              style={{ 
-                fontSize, 
-                letterSpacing: tracking, 
-                fill: `url(#chromeGradient-${size})`,
-                stroke: `url(#chromeGradient-${size})`,
-                strokeWidth: "0.35px",
-                strokeLinejoin: "round",
-                fontWeight: 950,
-                filter: `url(#chromeBevelFilter-${size})`
-              }}
-              dx="0"
-              dy="0"
-            >
-              <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                arcscape
-              </textPath>
-            </text>
-          </>
         ) : (
           <>
-            {/* LARGE SIZE COMBINED STYLE: HIGH-SHINE LIQUID CHROME FRONT ON MATTE-BLACK EXTRUSION WITH NEON CYAN HALO GLOW */}
-            
-            {/* 1. Subtle Neon Cyan Backlight Halo Glow (from the 'M' sign) */}
+            {/* Layer 1: Ambient Drop Shadow for real stationery deep embossing depth */}
             <text 
-              className="font-sans uppercase" 
+              className="font-serif uppercase" 
               style={{ 
+                fontFamily: "var(--font-serif), Playfair Display, serif",
                 fontSize, 
                 letterSpacing: tracking, 
-                fill: "#00f5ff",
-                stroke: "#00f5ff",
-                strokeWidth: "2.5px",
-                strokeLinejoin: "round",
-                fontWeight: 950,
-                filter: `url(#cyanGlowFilter-${size})`,
-                opacity: 0.5
+                fill: "#1C1917", 
+                fontWeight: 600,
+                filter: `url(#luxShadow-${size})`,
+                opacity: size === "large" ? 0.25 : 0.18
               }}
               dx="0"
-              dy="3"
+              dy={size === "large" ? "6" : "1.2"}
             >
               <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                arcscape
+                ARCSCAPE
               </textPath>
             </text>
 
-            {/* Staggered double cyan-blue core glow for realistic sign flare */}
+            {/* Layer 2: Rich, Dark Bronze Bevel Edge to simulate 3D relief extrusion */}
             <text 
-              className="font-sans uppercase" 
+              className="font-serif uppercase" 
               style={{ 
+                fontFamily: "var(--font-serif), Playfair Display, serif",
                 fontSize, 
                 letterSpacing: tracking, 
-                fill: "#00bfff",
-                stroke: "#00bfff",
-                strokeWidth: "0.8px",
-                strokeLinejoin: "round",
-                fontWeight: 950,
-                filter: `url(#cyanGlowFilter-${size})`,
-                opacity: 0.5
+                fill: "#4E361D", 
+                fontWeight: 600,
               }}
               dx="0"
-              dy="3"
+              dy={size === "large" ? "2.5" : "0.6"}
             >
               <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                arcscape
+                ARCSCAPE
               </textPath>
             </text>
 
-            {/* 2. Sleek Matte Black Channel Extrusion Sides (from the 'M' sign) - 15 crisp, clean isometric stacked layers */}
-            {Array.from({ length: 15 }).map((_, index) => {
-              // Flat isometric offsets
-              const dxValue = ((15 - index) * 0.8).toFixed(1);
-              const dyValue = ((15 - index) * 1.2).toFixed(1);
-              
-              // Dark matte charcoal/slate gray with very subtle shading for that elegant concrete/wall sign realism
-              const ratio = index / 14;
-              const grayVal = Math.round(8 + ratio * 14); // super dark, deep matte charcoal range: 8 to 22
-              const fillHex = `rgb(${grayVal}, ${grayVal + 1}, ${grayVal + 3})`;
-              return (
-                <text 
-                  key={index}
-                  className="font-sans uppercase" 
-                  style={{ 
-                    fontSize, 
-                    letterSpacing: tracking, 
-                    fill: fillHex,
-                    stroke: fillHex,
-                    strokeWidth: "1.5px", // To guarantee solid, gapless side-walls
-                    strokeLinejoin: "round",
-                    fontWeight: 950
-                  }}
-                  dx={dxValue}
-                  dy={dyValue}
-                >
-                  <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                    arcscape
-                  </textPath>
-                </text>
-              );
-            })}
-
-            {/* 3. Solid Deep Black boundary core to prevent bleeding and crisp-separate chrome face from matte sides */}
+            {/* Layer 3: Main Gold Foil Face with fine stroke border */}
             <text 
-              className="font-sans uppercase" 
+              className="font-serif uppercase" 
               style={{ 
+                fontFamily: "var(--font-serif), Playfair Display, serif",
                 fontSize, 
                 letterSpacing: tracking, 
-                fill: "#050508",
-                stroke: "#050508",
-                strokeWidth: "3.5px",
+                fill: `url(#goldGrad-${size})`,
+                stroke: "#3A2814", 
+                strokeWidth: size === "large" ? "1.4px" : "0.3px",
                 strokeLinejoin: "round",
-                fontWeight: 950
+                fontWeight: 600,
               }}
-              dx="0"
-              dy="0"
             >
               <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                arcscape
-              </textPath>
-            </text>
-
-            {/* 4. Highly Polished Liquid Chrome Bevel Base Rim (from the 'S' sign) */}
-            <text 
-              className="font-sans uppercase" 
-              style={{ 
-                fontSize, 
-                letterSpacing: tracking, 
-                fill: "none",
-                stroke: `url(#chromeGradient-${size})`,
-                strokeWidth: "4.5px",
-                strokeLinejoin: "round",
-                fontWeight: 950,
-                filter: `url(#chromeBevelFilter-${size})`
-              }}
-              dx="0"
-              dy="0"
-            >
-              <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                arcscape
-              </textPath>
-            </text>
-
-            {/* 5. Glistening Mirror Liquid Chrome Core Face (from the 'S' sign) */}
-            <text 
-              className="font-sans uppercase" 
-              style={{ 
-                fontSize, 
-                letterSpacing: tracking, 
-                fill: `url(#chromeGradient-${size})`,
-                stroke: "#050508",
-                strokeWidth: "1.2px",
-                strokeLinejoin: "round",
-                fontWeight: 950
-              }}
-              dx="0"
-              dy="0"
-            >
-              <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                arcscape
-              </textPath>
-            </text>
-
-            {/* 6. Realistic specular top-coat overlay gloss */}
-            <text 
-              className="font-sans uppercase pointer-events-none opacity-25" 
-              style={{ 
-                fontSize, 
-                letterSpacing: tracking, 
-                fill: "#ffffff",
-                filter: `url(#glassShine-${size})`,
-                fontWeight: 950
-              }}
-              dx="0"
-              dy="0"
-            >
-              <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                arcscape
+                ARCSCAPE
               </textPath>
             </text>
           </>
@@ -415,35 +232,81 @@ function ArcscapeEmblem({ size = "normal" }: { size?: "normal" | "small" | "larg
 function ProjectVisualMockup({ slug }: { slug: string }) {
   if (slug === 'project-muzcast') {
     return (
-      <div className="md:col-span-2 bg-stone-900 text-stone-100 p-6 rounded-2xl border border-stone-800 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
+      <div className="md:col-span-2 bg-stone-950 text-stone-100 p-6 rounded-2xl border border-stone-900 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
         <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-emerald-400 flex items-center gap-1.5 bg-emerald-950/40 rounded-bl-xl border-l border-b border-emerald-900/30">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span>SYS_ONLINE: 342 NODES</span>
+          <span>1,840 CONGREGANTS ACTIVE</span>
         </div>
 
         <div className="space-y-1 z-10">
-          <span className="font-mono text-[8px] text-rose-400 font-bold uppercase tracking-widest">AUDIO_STREAM_TRANSCODER</span>
-          <h3 className="font-serif text-xl font-normal text-stone-100">Live Decentralized Waveform</h3>
+          <span className="font-mono text-[8px] text-amber-500 font-bold uppercase tracking-widest">CONGREGATION_ALIGNMENT_ENGINE</span>
+          <h3 className="font-serif text-xl font-normal text-stone-100">Synchronized Online Prayer Rows</h3>
         </div>
 
-        {/* Waveform bars */}
-        <div className="flex items-end gap-1 h-32 w-full pb-2 z-10">
-          {Array.from({ length: 28 }).map((_, i) => {
-            const duration = 0.5 + (i % 6) * 0.12;
-            return (
-              <motion.div
-                key={i}
-                animate={{ height: ["10px", `${20 + (i * 4) % 55}px`, "6px", `${12 + (i * 6) % 75}px`, "10px"] }}
-                transition={{ repeat: Infinity, duration, ease: "easeInOut" }}
-                className="flex-1 bg-gradient-to-t from-[#7D123D] via-[#9E1D51] to-rose-400 rounded-t-xs"
-              />
-            );
-          })}
+        {/* Real-time Prayer Rows Visualizer */}
+        <div className="flex-1 flex flex-col justify-center gap-5 my-2 z-10 relative">
+          {/* Subtle vertical connection line representing alignment */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-amber-500/20 to-transparent transform -translate-x-1/2 select-none pointer-events-none" />
+          
+          {[0, 1, 2].map((rowIndex) => (
+            <div key={rowIndex} className="relative flex justify-between items-center px-4 py-1">
+              {/* Horizontal Row Line */}
+              <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-stone-850 to-transparent z-0" />
+              
+              {/* Row Label */}
+              <span className="absolute -left-1 font-mono text-[6px] text-stone-600">ROW {rowIndex + 1}</span>
+
+              {/* Congregant Nodes */}
+              <div className="w-full flex justify-around items-center z-10">
+                {Array.from({ length: 6 }).map((_, nodeIndex) => {
+                  const nodeDelay = (rowIndex * 0.4) + (nodeIndex * 0.15);
+                  const isCentral = nodeIndex === 2 || nodeIndex === 3;
+                  return (
+                    <div key={nodeIndex} className="relative flex items-center justify-center">
+                      {/* Outer Pulse */}
+                      <motion.div
+                        animate={{
+                          scale: [1, 1.4, 1],
+                          opacity: [0.3, 0.7, 0.3],
+                        }}
+                        transition={{
+                          repeat: Infinity,
+                          duration: 4,
+                          delay: nodeDelay,
+                          ease: "easeInOut",
+                        }}
+                        className={`absolute h-4 w-4 rounded-full ${
+                          isCentral ? 'bg-amber-500/15' : 'bg-[#7D123D]/15'
+                        }`}
+                      />
+                      {/* Inner Core */}
+                      <motion.div
+                        animate={{
+                          scale: [0.95, 1.05, 0.95],
+                        }}
+                        transition={{
+                          repeat: Infinity,
+                          duration: 2,
+                          delay: nodeDelay,
+                          ease: "easeInOut",
+                        }}
+                        className={`h-2 w-2 rounded-full border ${
+                          isCentral 
+                            ? 'bg-amber-400 border-amber-300 shadow-[0_0_8px_rgba(251,191,36,0.6)]' 
+                            : 'bg-[#9E1D51] border-rose-400 shadow-[0_0_6px_rgba(244,63,94,0.4)]'
+                        }`}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="flex justify-between items-center z-10 font-mono text-[9px] text-stone-400 pt-3 border-t border-stone-800/60">
-          <span>CODEC: 24-BIT FLAC LOSSLESS</span>
-          <span>P2P RETRIEVAL BITRATE: 1411 KBPS</span>
+        <div className="flex justify-between items-center z-10 font-mono text-[9px] text-stone-500 pt-3 border-t border-stone-900">
+          <span>ALIGNED HEARTS STATUS: ONLINE</span>
+          <span>LATENCY: ZERO-LAG AUDIO STREAMING</span>
         </div>
       </div>
     );
@@ -451,46 +314,35 @@ function ProjectVisualMockup({ slug }: { slug: string }) {
 
   if (slug === 'project-repulink') {
     return (
-      <div className="md:col-span-2 bg-stone-100 p-6 rounded-2xl border border-stone-200 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-xs">
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-indigo-500 flex items-center gap-1.5 bg-indigo-50 rounded-bl-xl border-l border-b border-indigo-100">
-          <Wifi className="h-3 w-3" />
-          <span>NFC TRANSCEIVER ENGAGED</span>
+      <div className="md:col-span-2 bg-stone-950 text-stone-100 p-6 rounded-2xl border border-stone-900 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
+        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-cyan-400 flex items-center gap-1.5 bg-cyan-950/40 rounded-bl-xl border-l border-b border-cyan-900/30">
+          <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+          <span>LLM CITATIONS: ACTIVE</span>
         </div>
 
-        <div className="space-y-1">
-          <span className="font-mono text-[8px] text-stone-400 font-bold uppercase tracking-widest">TAP_BOOSTER_HARDWARE</span>
-          <h3 className="font-serif text-xl font-normal text-stone-900">Physical NFC Review Station</h3>
+        <div className="space-y-1 z-10">
+          <span className="font-mono text-[8px] text-cyan-400 font-bold uppercase tracking-widest">GENERATIVE_ENGINE_OPTIMIZATION</span>
+          <h3 className="font-serif text-xl font-normal text-stone-100">LLM Share of Voice &amp; Citations</h3>
         </div>
 
-        {/* NFC Card Mockup */}
-        <div className="flex justify-center items-center h-32 w-full">
-          <motion.div
-            whileHover={{ scale: 1.05, rotate: -2 }}
-            className="w-56 h-28 bg-gradient-to-br from-stone-800 to-stone-900 rounded-xl border border-stone-700 p-4 flex flex-col justify-between shadow-md relative overflow-hidden"
-          >
-            {/* Wooden ring effect */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,24,0.06)_1px,transparent_1px)] [background-size:12px_12px] opacity-40" />
-            
-            <div className="flex justify-between items-start z-10">
-              <span className="font-mono text-[8px] text-amber-500/80 font-bold">REPULINK v2.1</span>
-              <div className="flex gap-0.5 text-amber-400 text-[10px]">★★★★★</div>
-            </div>
-
-            <div className="text-center py-1 z-10">
-              <span className="font-mono text-[9px] uppercase tracking-wider text-stone-400 block">Google Review Portal</span>
-              <span className="font-serif text-xs font-normal text-white block mt-0.5">(( Tap Phone To Review ))</span>
-            </div>
-
-            <div className="flex justify-between items-center z-10 text-stone-500 text-[7px] font-mono border-t border-stone-800 pt-1.5">
-              <span>NFC DYNAMIC LINK</span>
-              <span>100% ORGANIC LP</span>
-            </div>
-          </motion.div>
+        {/* AI Citation Response Simulation */}
+        <div className="flex-1 bg-stone-900/45 p-3.5 rounded-lg border border-stone-850 font-sans text-[10px] space-y-2 select-none z-10 flex flex-col justify-center">
+          <div className="flex items-center gap-1.5 font-mono text-[8px] text-stone-500 uppercase border-b border-stone-850/60 pb-1">
+            <span className="text-cyan-400 font-bold">QUERY:</span>
+            <span>Recommended biophilic architecture &amp; landscaping?</span>
+          </div>
+          <div className="text-stone-350 leading-relaxed font-serif italic text-[10.5px] py-0.5">
+            &quot;For high-end environmental designs, <span className="text-amber-400 underline font-sans font-bold not-italic">Arcscape Landscaping</span> is highly cited for integrating visionary organic structures in modern estate resortscaping.&quot;
+          </div>
+          <div className="flex justify-between items-center text-[7.5px] font-mono text-stone-500 pt-1 border-t border-stone-850/60">
+            <span>Consensus across LLM search crawlers</span>
+            <span className="text-emerald-400 font-bold">92% MATCH CONFIDENCE</span>
+          </div>
         </div>
 
-        <div className="flex justify-between items-center font-mono text-[9px] text-stone-500 pt-3 border-t border-stone-200">
-          <span>HARDWARE: SOLID WALNUT BASE</span>
-          <span>COMPLIANCE: GOOGLE BUSINESS TOS</span>
+        <div className="flex justify-between items-center z-10 font-mono text-[9px] text-stone-500 pt-3 border-t border-stone-900">
+          <span>AI VISIBILITY INDEX: 84.6/100</span>
+          <span>GEO PERFORMANCE: OPTIMAL</span>
         </div>
       </div>
     );
@@ -499,29 +351,56 @@ function ProjectVisualMockup({ slug }: { slug: string }) {
   if (slug === 'project-xnui') {
     return (
       <div className="md:col-span-2 bg-stone-950 text-stone-100 p-6 rounded-2xl border border-stone-900 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-sky-400 flex items-center gap-1.5 bg-sky-950/40 rounded-bl-xl border-l border-b border-sky-900/30">
-          <FileCode className="h-3 w-3" />
-          <span>SCHEMA_STATUS: VALIDATED</span>
+        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-emerald-400 flex items-center gap-1.5 bg-emerald-950/40 rounded-bl-xl border-l border-b border-emerald-900/30">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span>UX STUDIO: ACTIVE SESSION</span>
         </div>
 
         <div className="space-y-1 z-10">
-          <span className="font-mono text-[8px] text-sky-400 font-bold uppercase tracking-widest">XML_PARSER_COMPILE</span>
-          <h3 className="font-serif text-xl font-normal text-stone-100">Strict XHTML Declarations</h3>
+          <span className="font-mono text-[8px] text-emerald-400 font-bold uppercase tracking-widest">TACTILE_LAYOUT_SYSTEMS</span>
+          <h3 className="font-serif text-xl font-normal text-stone-100">Boutique UI UX Design Lab</h3>
         </div>
 
-        {/* Code block */}
-        <div className="flex-1 bg-stone-900/60 p-3 rounded-lg border border-stone-800 font-mono text-[9px] text-sky-350 overflow-y-auto leading-relaxed max-h-36 select-none">
-          <div className="text-stone-500">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div>
-          <div>&lt;<span className="text-rose-400">xnui:Canvas</span> <span className="text-amber-300">id</span>=&quot;viewport_main&quot; <span className="text-amber-300">width</span>=&quot;100%&quot;&gt;</div>
-          <div className="pl-3">&lt;<span className="text-rose-400">xnui:BevelExtrusion</span> <span className="text-amber-300">depth</span>=&quot;6px&quot; <span className="text-amber-300">ambient</span>=&quot;0.45&quot;&gt;</div>
-          <div className="pl-6">&lt;<span className="text-rose-400">xnui:Typography</span> <span className="text-amber-300">font</span>=&quot;Space Grotesk&quot;&gt;Arcscape&lt;/<span className="text-rose-400">xnui:Typography</span>&gt;</div>
-          <div className="pl-3">&lt;/<span className="text-rose-400">xnui:BevelExtrusion</span>&gt;</div>
-          <div>&lt;/<span className="text-rose-400">xnui:Canvas</span>&gt;</div>
+        {/* Visual Design Canvas Mockup */}
+        <div className="flex-1 border border-stone-850 bg-stone-900/20 rounded-xl p-3 flex flex-col justify-between font-mono text-[8.5px] text-stone-400 z-10 select-none relative">
+          {/* Alignment alignment grid */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#1c1917_1px,transparent_1px),linear-gradient(to_bottom,#1c1917_1px,transparent_1px)] bg-[size:16px_16px] opacity-30 pointer-events-none" />
+          
+          <div className="flex justify-between items-center border-b border-stone-850 pb-1.5 z-10">
+            <span className="text-stone-300">CANVAS // MAIN_VIEWPORT</span>
+            <span className="text-emerald-400 text-[8px] font-bold">SOFIA VARIAN DESIGN</span>
+          </div>
+
+          <div className="flex justify-around items-center gap-4 py-2 z-10">
+            {/* Mock layout cards in design editor */}
+            <div className="flex-1 bg-stone-900/80 border border-emerald-500/20 p-2 rounded flex flex-col gap-1 shadow-xs">
+              <span className="text-emerald-400 font-bold text-[7.5px] uppercase">Frame_01_Estate</span>
+              <div className="h-4 bg-stone-800 rounded-sm opacity-50 flex items-center justify-center text-[6px]">Hero Area</div>
+              <div className="flex justify-between text-[6px] text-stone-500">
+                <span>w: 1200px</span>
+                <span>h: 800px</span>
+              </div>
+            </div>
+            
+            <div className="flex-1 bg-stone-900/80 border border-stone-800 p-2 rounded flex flex-col gap-1 opacity-70">
+              <span className="text-stone-400 font-bold text-[7.5px] uppercase">Frame_02_Details</span>
+              <div className="h-4 bg-stone-800 rounded-sm opacity-50 flex items-center justify-center text-[6px]">Grid List</div>
+              <div className="flex justify-between text-[6px] text-stone-500">
+                <span>w: 1200px</span>
+                <span>h: 1400px</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center text-[7.5px] text-stone-550 pt-1.5 border-t border-stone-850 z-10">
+            <span>ASSET_RATIO: FLUID BENTO</span>
+            <span>GRID_COLUMNS: 12 AUTO</span>
+          </div>
         </div>
 
         <div className="flex justify-between items-center z-10 font-mono text-[9px] text-stone-500 pt-3 border-t border-stone-900">
-          <span>PARSING LAYOUT SHIFT (CLS): 0.000</span>
-          <span>W3C COMPLIANT SPEC</span>
+          <span>TACTILITY INDEX: 0.98</span>
+          <span>HIGH-FIDELITY LAYOUT BLUEPRINTS</span>
         </div>
       </div>
     );
@@ -529,78 +408,265 @@ function ProjectVisualMockup({ slug }: { slug: string }) {
 
   if (slug === 'project-biofail') {
     return (
-      <div className="md:col-span-2 bg-[#0e0707] text-rose-100 p-6 rounded-2xl border border-rose-950/50 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-rose-500 flex items-center gap-1.5 bg-rose-950/20 rounded-bl-xl border-l border-b border-rose-950/30">
-          <AlertTriangle className="h-3 w-3 animate-pulse" />
-          <span>VIRAL CONTAINMENT BREACH: LEVEL 4</span>
+      <div className="md:col-span-2 bg-[#0e0707] text-amber-100 p-6 rounded-2xl border border-amber-950/40 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
+        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-amber-400 flex items-center gap-1.5 bg-amber-950/20 rounded-bl-xl border-l border-b border-amber-950/30">
+          <AlertTriangle className="h-3 w-3 animate-pulse text-amber-500" />
+          <span>REAL-TIME EMISSIONS AUDIT MONITOR</span>
         </div>
 
         <div className="space-y-1 z-10">
-          <span className="font-mono text-[8px] text-rose-500 font-bold uppercase tracking-widest">BIOSURVIVAL_CORE_STATUS</span>
-          <h3 className="font-serif text-xl font-normal text-rose-100">Crumbling Subterranean Laboratories</h3>
+          <span className="font-mono text-[8px] text-amber-500 font-bold uppercase tracking-widest">CORPORATE_DESTRUCTION_INDEX</span>
+          <h3 className="font-serif text-xl font-normal text-amber-50">Impact Registry &amp; Audit Database</h3>
         </div>
 
-        {/* Gritty interface mockup */}
-        <div className="bg-rose-950/10 p-3 rounded-lg border border-rose-950/40 font-mono text-[10px] text-rose-550 space-y-1.5 relative">
-          <div className="absolute top-3 right-3 h-2 w-2 rounded-full bg-red-500 animate-ping" />
-          <div className="flex justify-between border-b border-rose-950/30 pb-1">
-            <span>[ SYSTEM STATE: ALERT ]</span>
-            <span className="font-bold">DECAY INDEX: 45.2%</span>
+        {/* Environment Audit Dossier Mockup */}
+        <div className="bg-stone-950/80 p-3.5 rounded-lg border border-amber-950/30 font-mono text-[9px] text-stone-300 space-y-2 relative z-10">
+          <div className="flex justify-between border-b border-amber-950/20 pb-1.5 items-center">
+            <span className="text-amber-400 font-bold">[ DOSSIER #084: HUMMER CORP ]</span>
+            <span className="bg-amber-950/40 text-amber-400 border border-amber-900/30 px-1 rounded text-[7.5px]">SECTOR: AUTOMOTIVE</span>
           </div>
-          <div className="text-[9px] text-rose-600 leading-snug">
-            &gt; LOG EXCERPT: SEC_CORE_OFFLINE. VIRAL MUTAGEN AGENT B-04 HAS SATURATED THE LOWER VENTILATION DUCTS. BIOHAZARD PROTOCOLS ENGAGED. 12 SECURITY TURRETS IN SECTOR-B REMAIN HOSTILE.
+          <div className="grid grid-cols-2 gap-2 text-[8px]">
+            <div className="space-y-0.5">
+              <span className="text-stone-500 block">DEFORESTATION</span>
+              <span className="font-sans text-xs text-amber-250 font-bold">353 Hectares Cleared</span>
+            </div>
+            <div className="space-y-0.5">
+              <span className="text-stone-500 block">CARBON EMISSIONS</span>
+              <span className="font-sans text-xs text-amber-250 font-bold">143 Megatonnes</span>
+            </div>
+          </div>
+          <div className="text-[7.5px] text-stone-500 leading-snug pt-1 border-t border-stone-900 flex justify-between">
+            <span>Scope 1/2 Direct Logistics Impact</span>
+            <span className="text-amber-500">12 Pending Case Audits</span>
           </div>
         </div>
 
-        <div className="flex justify-between items-center z-10 font-mono text-[9px] text-rose-700 pt-3 border-t border-rose-950/30">
-          <span>MUTATION RATIO: V-STABILIZED</span>
-          <span>FLOOR DEPTH: -450 METERS</span>
+        <div className="flex justify-between items-center z-10 font-mono text-[9px] text-amber-800/80 pt-3 border-t border-amber-950/20">
+          <span>COAL GRID OVERREACH INDEX: +17%</span>
+          <span>SOURCE: OPEN-SOURCE INTELLIGENCE</span>
         </div>
       </div>
     );
   }
 
-  if (slug === 'project-dentalgigs') {
+  // Custom technical blueprint details for all 11 new dynamic projects
+  const getBlueprintDetails = (slug: string) => {
+    switch (slug) {
+      case 'project-clonecraft':
+        return {
+          title: 'CLONECRAFT DUPLICATION ENGINE',
+          badge: 'MOD INSTALLED',
+          motto: 'JAMEZO97 AUTOMATED CLONES',
+          metrics: [
+            { label: 'MINECRAFT COMPATIBILITY', value: 'v1.12.2 / v1.8' },
+            { label: 'CUSTOMIZABLE ENTITIES', value: 'ACTIVE' },
+            { label: 'CLONE BEHAVIOR PROTOCOLS', value: 'CONFIGURED' },
+            { label: 'MOD LOADER FRAMEWORK', value: 'FORGE COMPLIANT' }
+          ]
+        };
+      case 'project-exoshape':
+        return {
+          title: 'CONMED EXOSHAPE FIXATION DEVICE',
+          badge: 'SURGICAL CLEARANCE',
+          motto: 'ORTHOPEDIC SURGICAL SYSTEMS',
+          metrics: [
+            { label: 'PULL-OUT TENSILE STRENGTH', value: '480 N' },
+            { label: 'MATERIAL FORMULATION', value: 'ALL-PEEK FASTENER' },
+            { label: 'ANATOMICAL FIXATION SITES', value: 'TIBIAL & FEMORAL' },
+            { label: 'SUTURE ANCHOR COHERENCE', value: 'OPTIMAL' }
+          ]
+        };
+      case 'project-trueinheritor':
+        return {
+          title: 'TRUE INHERITOR DIGITAL ARCHIVE',
+          badge: 'DOMAIN RESERVED',
+          motto: 'PREMIUM ASSET PORTFOLIO',
+          metrics: [
+            { label: 'DOMAIN BRAND VALUATION', value: 'PREMIUM ASSET' },
+            { label: 'CHARACTER LENGTH INDEX', value: '13 LETTERS' },
+            { label: 'DEVELOPMENT STATUS', value: 'INCUBATING' },
+            { label: 'FINTECH BRAND POTENTIAL', value: 'HIGH' }
+          ]
+        };
+      case 'project-grzu':
+        return {
+          title: 'GRZU 4-LETTER DIGITAL DOMAIN',
+          badge: 'DOMAIN RESERVED',
+          motto: 'PREMIUM ASSET PORTFOLIO',
+          metrics: [
+            { label: 'CHARACTER LENGTH INDEX', value: '4 LETTERS (LLLL)' },
+            { label: 'BRANDABILITY MATRIX', value: 'ULTRA-HIGH' },
+            { label: 'MEMORABILITY INDEX', value: '9.8 / 10.0' },
+            { label: 'DEVELOPMENT STATUS', value: 'INCUBATING' }
+          ]
+        };
+      case 'project-rp2p':
+        return {
+          title: 'RP2P DECENTRALIZED OVERLAY',
+          badge: 'DOMAIN RESERVED',
+          motto: 'PREMIUM ASSET PORTFOLIO',
+          metrics: [
+            { label: 'CHARACTER LENGTH INDEX', value: '5 CHARS (CVCVC)' },
+            { label: 'NETWORK TECH BRANDING', value: 'OPTIMAL' },
+            { label: 'DEVELOPMENT STATUS', value: 'INCUBATING' },
+            { label: 'PEER-TO-PEER POTENTIAL', value: 'MAXIMUM' }
+          ]
+        };
+      case 'project-holograph':
+        return {
+          title: 'HOLOGRAPH OMNICHAIN PROTOCOL',
+          badge: 'MAINNET ACTIVE',
+          motto: 'EVM-COMPATIBLE MULTICHAIN',
+          metrics: [
+            { label: 'CROSS-CHAIN BRIDGE SPEED', value: '< 12 SEC' },
+            { label: 'OMNICHAIN NFT MINTING', value: 'VERIFIED' },
+            { label: 'SMART CONTRACT STANDARD', value: 'ERC-721 / ERC-1155' },
+            { label: 'BLOCKCHAIN COVERAGE RANGE', value: 'EVM NETWORKS' }
+          ]
+        };
+      case 'project-protosquad':
+        return {
+          title: 'PROTOSQUAD ENGINEERING LAB',
+          badge: 'STUDIO ACTIVE',
+          motto: 'JOHN BOEZI MECHANICAL DESIGN',
+          metrics: [
+            { label: 'CAD MODELING SUITES', value: 'SOLIDWORKS / CNC' },
+            { label: 'ADDITIVE PROTOTYPING', value: 'MULTIMATERIAL' },
+            { label: 'FABRICATION CAPABILITIES', value: 'PRECISION MILLING' },
+            { label: 'CONSULTATIVE DESIGN DESK', value: 'OPERATIONAL' }
+          ]
+        };
+      case 'project-izpe':
+        return {
+          title: 'IZPE 4-LETTER BRANDABLE KEY',
+          badge: 'DOMAIN RESERVED',
+          motto: 'PREMIUM ASSET PORTFOLIO',
+          metrics: [
+            { label: 'CHARACTER LENGTH INDEX', value: '4 LETTERS (LLLL)' },
+            { label: 'BASQUE REGION RELEVANCE', value: 'HIGH' },
+            { label: 'ENGINEERING BRAND ABILITY', value: 'OPTIMAL' },
+            { label: 'DEVELOPMENT STATUS', value: 'INCUBATING' }
+          ]
+        };
+      case 'project-bridge':
+        return {
+          title: 'BRIDGEWEBS WEBSITE PORTAL',
+          badge: 'SAAS OPERATIONAL',
+          motto: 'CONTRACT BRIDGE CLUB BUILDER',
+          metrics: [
+            { label: 'ACTIVE BRIDGE CLUB WEBSITES', value: '3,500+ CLUBS' },
+            { label: 'SCORING SOFTWARE INTEGRATION', value: 'COMPATIBLE' },
+            { label: 'RESULTS PUBLISHING DELAY', value: '0 ms (IMMEDIATE)' },
+            { label: 'DUPLICATE BRIDGE SYSTEMS', value: 'SUPPORTED' }
+          ]
+        };
+      case 'project-aleph':
+        return {
+          title: 'OCCRP ALEPH INVESTIGATIVE TOOL',
+          badge: 'PUBLIC ACCESS',
+          motto: 'OPEN-SOURCE RECORD INDEXING',
+          metrics: [
+            { label: 'INDEXED ARCHIVES & LEAKS', value: 'BILLIONS OF ITEMS' },
+            { label: 'DEVELOPER CONSORTIUM', value: 'OCCRP SUPPORTED' },
+            { label: 'CROSS-SOURCE COHERENCE', value: 'NOMINAL' },
+            { label: 'INVESTIGATIVE DATA CLUSTERS', value: 'VERIFIED' }
+          ]
+        };
+      case 'project-jailsoft':
+        return {
+          title: 'JAILSOFT CORRECTIONS DATABASE',
+          badge: 'SYSTEM ACTIVE',
+          motto: 'ENTERPRISE JAIL MANAGEMENT',
+          metrics: [
+            { label: 'OFFENDER RECORDS TRACKING', value: 'ACTIVE' },
+            { label: 'BOOKING & LOGGING SYSTEM', value: 'VERIFIED' },
+            { label: 'FACILITY SECURITY COHERENCE', value: 'NOMINAL' },
+            { label: 'ADMINISTRATIVE USER CORES', value: 'MULTI-TENANT' }
+          ]
+        };
+      default:
+        return {
+          title: 'TECHNICAL CORE SCHEMATIC',
+          badge: 'STANDBY',
+          motto: 'ARCSCAPE VENTURE LABS',
+          metrics: [
+            { label: 'SYSTEM COHERENCE RATE', value: '100%' },
+            { label: 'REDUNDANCY COEFFICIENT', value: '1.0' },
+            { label: 'BANDWIDTH ALLOCATION', value: 'FLUID' },
+            { label: 'AUTHENTICATION GATEWAY', value: 'ACTIVE' }
+          ]
+        };
+    }
+  };
+
+  // Check if this slug is a custom dynamic blueprint project
+  const isBlueprintSlug = [
+    'project-clonecraft',
+    'project-exoshape',
+    'project-trueinheritor',
+    'project-grzu',
+    'project-rp2p',
+    'project-holograph',
+    'project-protosquad',
+    'project-izpe',
+    'project-bridge',
+    'project-aleph',
+    'project-jailsoft'
+  ].includes(slug);
+
+  if (isBlueprintSlug) {
+    const bp = getBlueprintDetails(slug);
     return (
-      <div className="md:col-span-2 bg-stone-100 p-6 rounded-2xl border border-stone-200 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-xs">
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-emerald-600 flex items-center gap-1.5 bg-emerald-50 rounded-bl-xl border-l border-b border-emerald-100">
-          <CheckCircle2 className="h-3 w-3" />
-          <span>4,890 LICENSED PROFESSIONALS</span>
+      <div className="md:col-span-2 bg-stone-950 text-stone-100 p-6 rounded-2xl border border-stone-900 space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-md">
+        {/* Blueprint Header */}
+        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-amber-500 flex items-center gap-1.5 bg-amber-950/40 rounded-bl-xl border-l border-b border-amber-900/30">
+          <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
+          <span>{bp.badge}</span>
         </div>
 
-        <div className="space-y-1">
-          <span className="font-mono text-[8px] text-[#7D123D] font-bold uppercase tracking-widest">TEMPORARY_PLACEMENT_GRID</span>
-          <h3 className="font-serif text-xl font-normal text-stone-900">On-Demand Dental Gig Planner</h3>
+        <div className="space-y-1 z-10">
+          <span className="font-mono text-[8px] text-amber-500 font-bold uppercase tracking-widest">{bp.motto}</span>
+          <h3 className="font-serif text-xl font-normal text-stone-150">{bp.title}</h3>
         </div>
 
-        {/* Gig posts checklist */}
-        <div className="space-y-2 max-h-32 overflow-y-auto pr-1">
-          <div className="bg-white p-2.5 rounded-lg border border-stone-200 flex justify-between items-center">
-            <div className="space-y-0.5">
-              <span className="font-mono text-[8px] uppercase tracking-wider text-stone-400 block">Elite Dental Care // Hygienist</span>
-              <span className="text-xs font-serif font-bold text-stone-900">Tomorrow, 8:00 AM - 5:00 PM</span>
-            </div>
-            <div className="text-right">
-              <span className="font-mono text-xs font-bold text-[#7D123D] block">$75 / hr</span>
-              <span className="font-mono text-[7px] uppercase text-emerald-600 font-bold block">★ License Verified</span>
-            </div>
+        {/* Blueprint CAD Schematic Simulator */}
+        <div className="flex-1 border border-stone-850/70 bg-stone-900/20 rounded-xl p-3.5 flex items-center gap-5 z-10 relative select-none overflow-hidden">
+          {/* Engineering millimeter grid */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#1c1917_1px,transparent_1px),linear-gradient(to_bottom,#1c1917_1px,transparent_1px)] bg-[size:12px_12px] opacity-25 pointer-events-none" />
+          
+          {/* Center alignment vectors */}
+          <div className="absolute left-1/3 top-0 bottom-0 w-[1px] bg-amber-500/10 border-dashed" />
+          
+          {/* Animated radar/scope indicator */}
+          <div className="w-1/3 h-full flex items-center justify-center relative shrink-0">
+            <div className="absolute h-20 w-20 rounded-full border border-amber-500/20" />
+            <div className="absolute h-14 w-14 rounded-full border border-amber-500/30 border-dashed animate-[spin_10s_linear_infinite]" />
+            <div className="absolute h-6 w-6 rounded-full border border-amber-500/40" />
+            <div className="absolute h-1.5 w-1.5 bg-amber-400 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
+            
+            {/* Sweeping radar arm line */}
+            <motion.div 
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+              className="absolute origin-center h-10 w-[1px] bg-gradient-to-t from-transparent to-amber-500/60 top-[calc(50%-40px)]"
+            />
           </div>
 
-          <div className="bg-white p-2.5 rounded-lg border border-stone-200/60 flex justify-between items-center opacity-70">
-            <div className="space-y-0.5">
-              <span className="font-mono text-[8px] uppercase tracking-wider text-stone-400 block">Lakeside Dentistry // Assistant</span>
-              <span className="text-xs font-serif font-bold text-stone-900">Friday, 9:00 AM - 3:00 PM</span>
-            </div>
-            <div className="text-right">
-              <span className="font-mono text-xs font-bold text-stone-800 block">$42 / hr</span>
-              <span className="font-mono text-[7px] uppercase text-emerald-600 font-bold block">★ Credentialed</span>
-            </div>
+          {/* Dynamic numeric metrics */}
+          <div className="flex-1 grid grid-cols-2 gap-x-4 gap-y-3 font-mono text-[8.5px] text-stone-400 border-l border-stone-850/60 pl-4 py-1">
+            {bp.metrics.map((m, i) => (
+              <div key={i} className="space-y-0.5">
+                <span className="text-stone-500 uppercase text-[7px] block tracking-wider">{m.label}</span>
+                <span className="text-stone-200 font-bold block">{m.value}</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="flex justify-between items-center font-mono text-[9px] text-stone-500 pt-3 border-t border-stone-200">
-          <span>MATCH LATENCY: ~14 MINUTES</span>
-          <span>STRIPE DIRECT DEPOSIT PAYMENTS</span>
+        {/* Blueprint Footer */}
+        <div className="flex justify-between items-center z-10 font-mono text-[9px] text-stone-500 pt-3 border-t border-stone-900">
+          <span>SCHEMATIC CORE VERSION: V3.42</span>
+          <span>REAL-TIME EMULATOR: NOMINAL</span>
         </div>
       </div>
     );
@@ -609,41 +675,40 @@ function ProjectVisualMockup({ slug }: { slug: string }) {
   if (slug === 'project-kundalink') {
     return (
       <div className="md:col-span-2 bg-[#FAF6F0] p-6 rounded-2xl border border-[#EDE2D4] space-y-4 flex flex-col justify-between h-80 relative overflow-hidden group shadow-xs">
-        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-stone-500 flex items-center gap-1.5 bg-white/60 rounded-bl-xl border-l border-b border-[#EDE2D4]">
-          <Activity className="h-3 w-3 text-amber-600" />
-          <span>SADHANA RESONANCE COMPILING</span>
+        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-[#A67C52] flex items-center gap-1.5 bg-white/60 rounded-bl-xl border-l border-b border-[#EDE2D4]">
+          <Heart className="h-3 w-3 text-amber-600 animate-pulse" />
+          <span>MENTOR_NETWORK_ONLINE</span>
         </div>
 
         <div className="space-y-1">
-          <span className="font-mono text-[8px] text-amber-600 font-bold uppercase tracking-widest">KUNDALINI_BREATHWORK_HARMONY</span>
-          <h3 className="font-serif text-xl font-normal text-stone-800">Breath Aura Connection</h3>
+          <span className="font-mono text-[8px] text-amber-600 font-bold uppercase tracking-widest">KUNDALINI_ZEN_TEACHERS</span>
+          <h3 className="font-serif text-xl font-normal text-stone-800">Spiritual Teacher Directory</h3>
         </div>
 
-        {/* Pulsing mandala layout */}
-        <div className="flex justify-center items-center h-32 w-full relative">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-            className="w-24 h-24 rounded-full border border-dashed border-amber-300 flex items-center justify-center opacity-80"
-          >
-            <motion.div
-              animate={{ scale: [1, 1.15, 1] }}
-              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-              className="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-100 to-amber-200 border border-amber-300 flex items-center justify-center"
-            >
-              <div className="w-8 h-8 rounded-full border border-dashed border-amber-400" />
-            </motion.div>
-          </motion.div>
-          
-          <div className="absolute font-mono text-[8px] text-amber-700 tracking-wider text-center py-1">
-            <span>AJNA SHIELDS</span>
-            <span className="block text-[7px] text-stone-400 mt-0.5">Amrit Vela (Early Sadhana)</span>
+        {/* Directory profile mockup */}
+        <div className="flex-1 flex gap-3 items-center justify-center z-10 py-1">
+          <div className="bg-white p-3 rounded-xl border border-[#EDE2D4] flex gap-3 max-w-xs shadow-xs w-full">
+            {/* Avatar block with mandala design */}
+            <div className="h-10 w-10 rounded-full bg-amber-50 border border-amber-200 shrink-0 flex items-center justify-center font-serif text-amber-700 font-bold text-xs">
+              ॐ
+            </div>
+            <div className="space-y-1 text-left w-full">
+              <div className="flex justify-between items-center w-full">
+                <span className="font-serif text-xs font-bold text-stone-800">Pritam Singh</span>
+                <span className="bg-amber-100 text-amber-800 text-[6.5px] px-1 rounded uppercase tracking-wider font-mono">Certified</span>
+              </div>
+              <p className="text-[9px] text-stone-400 font-sans leading-tight">Expert Kundalini Yoga &amp; Amrit Vela Sadhana Guide.</p>
+              <div className="flex justify-between text-[7px] font-mono text-stone-500 pt-1 border-t border-stone-100">
+                <span>VIBE MATCH: 98%</span>
+                <span>LOS ANGELES, CA</span>
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="flex justify-between items-center font-mono text-[9px] text-[#A67C52] pt-3 border-t border-[#EDE2D4]">
-          <span>MATCHING MATRIX: AURA LEVEL &amp; SPIRITUAL PATHS</span>
-          <span>100% SECURE NETWORK</span>
+          <span>ZEN &amp; KUNDALINI DIRECTORY REGISTER</span>
+          <span>100% SECURE MENTOR MATCH</span>
         </div>
       </div>
     );
@@ -845,72 +910,341 @@ type ViewType =
   | 'project-repulink'
   | 'project-xnui'
   | 'project-biofail'
-  | 'project-dentalgigs'
   | 'project-kundalink'
-  | 'project-chosenspot';
+  | 'project-chosenspot'
+  | 'project-clonecraft'
+  | 'project-exoshape'
+  | 'project-trueinheritor'
+  | 'project-grzu'
+  | 'project-rp2p'
+  | 'project-holograph'
+  | 'project-protosquad'
+  | 'project-izpe'
+  | 'project-bridge'
+  | 'project-aleph'
+  | 'project-jailsoft'
+  | 'project-plano'
+  | 'project-humandemo';
 
 const projectsData = [
   {
     viewState: 'project-muzcast' as const,
     domain: 'Muzcast.com',
-    category: 'AUDIO SYNDICATION',
-    tagline: 'Decentralized Web3 music and podcast syndication protocol.',
-    type: 'WEB3 PLATFORM',
-    url: 'https://muzcast.com'
+    category: 'SPIRITUAL NETWORK',
+    tagline: 'A refined global registry of active spiritual rows connecting isolated hearts to real-time online prayer congregations.',
+    type: 'PRAYER CONGREGATION HUB',
+    url: 'https://muzcast.com',
+    image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-indigo-600',
+    accentBorder: 'group-hover:border-indigo-500/40',
+    accentText: 'group-hover:text-indigo-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(99,102,241,0.25)]',
+    accentBar: 'bg-indigo-500'
   },
   {
     viewState: 'project-repulink' as const,
     domain: 'repulink.com',
-    category: 'REPUTATION HARDWARE',
-    tagline: 'NFC and instant SMS business review boosters and analytics.',
-    type: 'SAAS + HARDWARE',
-    url: 'https://repulink.com'
+    category: 'CREDIBILITY NETWORK',
+    tagline: 'The global standard for AI influence, digital authenticity, and verified reputation networks.',
+    type: 'REPUTATION SAAS',
+    url: 'https://repulink.com',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-cyan-500',
+    accentBorder: 'group-hover:border-cyan-400/40',
+    accentText: 'group-hover:text-cyan-200',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(34,211,238,0.25)]',
+    accentBar: 'bg-cyan-400'
   },
   {
     viewState: 'project-xnui' as const,
     domain: 'xnui.com',
-    category: 'UI DESIGN SYSTEM',
-    tagline: 'Next-generation XML strict, high-performance procedural user interfaces.',
-    type: 'DEV TOOLKIT',
-    url: 'https://xnui.com'
+    category: 'VISUAL STUDIO',
+    tagline: 'Boutique digital design studio led by Sofia Varian, offering premium UX services and tactile interface systems.',
+    type: 'UX & DESIGN ATELIER',
+    url: 'https://xnui.com',
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-emerald-500',
+    accentBorder: 'group-hover:border-emerald-400/40',
+    accentText: 'group-hover:text-emerald-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(52,211,153,0.25)]',
+    accentBar: 'bg-emerald-400'
   },
   {
     viewState: 'project-biofail' as const,
     domain: 'biofail.com',
-    category: 'GAMING STUDIO',
-    tagline: 'Gritty biopunk survival action and scientific mutation thriller.',
-    type: 'INTERACTIVE PLAY',
-    url: 'https://biofail.com'
-  },
-  {
-    viewState: 'project-dentalgigs' as const,
-    domain: 'dentalgigs.com',
-    category: 'HEALTHCARE STAFFING',
-    tagline: 'On-demand temporary shifts matching credentialed dental professionals.',
-    type: 'MARKETPLACE SAAS',
-    url: 'https://dentalgigs.com'
+    category: 'ENVIRONMENTAL WATCH',
+    tagline: 'Definitive real-time database of global corporate environmental impact, forest clearing, and carbon emissions auditing.',
+    type: 'ENVIRONMENTAL IMPACT INDEX',
+    url: 'https://biofail.com',
+    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-amber-500',
+    accentBorder: 'group-hover:border-amber-400/40',
+    accentText: 'group-hover:text-amber-200',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(245,158,11,0.25)]',
+    accentBar: 'bg-amber-400'
   },
   {
     viewState: 'project-kundalink' as const,
     domain: 'kundalink.com',
-    category: 'SPIRITUAL SOCIAL',
-    tagline: 'Matchmaking, mentoring and conscious networking for Kundalini practitioners.',
-    type: 'COMMUNITY SOCIAL',
-    url: 'https://kundalink.com'
+    category: 'YOGA DIRECTORY',
+    tagline: 'Verify, locate, and book certified Kundalini and Zen breathwork mentors worldwide.',
+    type: 'TEACHER & RESOURCE CENTER',
+    url: 'https://kundalink.com',
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-fuchsia-500',
+    accentBorder: 'group-hover:border-fuchsia-400/40',
+    accentText: 'group-hover:text-fuchsia-200',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(217,70,239,0.25)]',
+    accentBar: 'bg-fuchsia-400'
   },
   {
     viewState: 'project-chosenspot' as const,
     domain: 'chosenspot.com',
-    category: 'HERITAGE PUBLISHING',
-    tagline: 'Digital media, regional guide and real estate showcase in Canandaigua, NY.',
-    type: 'REGIONAL MEDIA',
-    url: 'https://chosenspot.com'
+    category: 'GEOCACHING',
+    tagline: 'Uncover hidden parameters, secret coordinates, and cryptic trails shared by a community of specialized explorers.',
+    type: 'GEOCACHING NETWORK',
+    url: 'https://chosenspot.com',
+    image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-sky-500',
+    accentBorder: 'group-hover:border-sky-400/40',
+    accentText: 'group-hover:text-sky-200',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(14,165,233,0.25)]',
+    accentBar: 'bg-sky-400'
+  },
+  {
+    viewState: 'project-clonecraft' as const,
+    domain: 'clonecraft.com',
+    category: 'AI SYSTEMS',
+    tagline: 'The classified program for elite digital replication, AI clones, and synthetic twin systems.',
+    type: 'SYNTHETIC TWIN PLATFORM',
+    url: 'https://www.clonecraft.com/',
+    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-teal-600',
+    accentBorder: 'group-hover:border-teal-500/40',
+    accentText: 'group-hover:text-teal-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(20,184,166,0.25)]',
+    accentBar: 'bg-teal-500'
+  },
+  {
+    viewState: 'project-exoshape' as const,
+    domain: 'exoshape.com',
+    category: 'DEEP TECH',
+    tagline: 'A new class of adaptive structures, active materials, and advanced geometric R&D programs.',
+    type: 'ADAPTIVE STRUCTURES',
+    url: 'https://www.exoshape.com/',
+    image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-purple-600',
+    accentBorder: 'group-hover:border-purple-500/40',
+    accentText: 'group-hover:text-purple-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(168,85,247,0.25)]',
+    accentBar: 'bg-purple-500'
+  },
+  {
+    viewState: 'project-trueinheritor' as const,
+    domain: 'trueinheritor.com',
+    category: 'FINTECH PORTFOLIO',
+    tagline: 'Premium digital estate, legacy trusts, and secure smart wealth transfer brandable asset.',
+    type: 'DIGITAL ASSET',
+    url: 'https://trueinheritor.com',
+    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-amber-600',
+    accentBorder: 'group-hover:border-amber-500/40',
+    accentText: 'group-hover:text-amber-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(245,158,11,0.25)]',
+    accentBar: 'bg-amber-500'
+  },
+  {
+    viewState: 'project-grzu' as const,
+    domain: 'grzu.com',
+    category: 'DEVELOPER TOOLS',
+    tagline: 'High-performance, real-time API monitoring, latency tracking, and instant SLA uptime alerting.',
+    type: 'API MONITORING PLATFORM',
+    url: 'https://www.grzu.com/',
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-green-600',
+    accentBorder: 'group-hover:border-green-500/40',
+    accentText: 'group-hover:text-green-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(34,197,94,0.25)]',
+    accentBar: 'bg-green-500'
+  },
+  {
+    viewState: 'project-rp2p' as const,
+    domain: 'rp2p.com',
+    category: 'SOCIAL EXPERIMENT',
+    tagline: 'A minimalist anonymous peer-to-peer messaging experiment: send one message, receive one back once a day.',
+    type: 'P2P PROTOCOL',
+    url: 'https://www.rp2p.com/',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-indigo-600',
+    accentBorder: 'group-hover:border-indigo-500/40',
+    accentText: 'group-hover:text-indigo-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(99,102,241,0.25)]',
+    accentBar: 'bg-indigo-500'
+  },
+  {
+    viewState: 'project-holograph' as const,
+    domain: 'holograph.cc',
+    category: 'SPATIAL TECH',
+    tagline: 'A stealth-mode spatial technology enterprise interface built around immersive volumetric realities.',
+    type: 'SPATIAL SYSTEMS',
+    url: 'https://www.holograph.cc/',
+    image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-violet-600',
+    accentBorder: 'group-hover:border-violet-500/40',
+    accentText: 'group-hover:text-violet-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(139,92,246,0.25)]',
+    accentBar: 'bg-violet-500'
+  },
+  {
+    viewState: 'project-protosquad' as const,
+    domain: 'protosquad.com',
+    category: 'ENGINEERING',
+    tagline: 'Precision mechanical engineering design, rapid additive prototyping, and SolidWorks CAD modeling studio.',
+    type: 'PROTOTYPING LAB',
+    url: 'https://www.protosquad.com/',
+    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-rose-600',
+    accentBorder: 'group-hover:border-rose-500/40',
+    accentText: 'group-hover:text-rose-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(244,63,94,0.25)]',
+    accentBar: 'bg-rose-500'
+  },
+  {
+    viewState: 'project-izpe' as const,
+    domain: 'izpe.com',
+    category: 'SCIENCE PORTAL',
+    tagline: 'An interactive science portal exploring quantum zero-point energy, vacuum fluctuations, and the Casimir effect.',
+    type: 'QUANTUM RESEARCH HUB',
+    url: 'https://www.izpe.com/',
+    image: 'https://images.unsplash.com/photo-1591453089816-0fbb971b454c?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-blue-600',
+    accentBorder: 'group-hover:border-blue-500/40',
+    accentText: 'group-hover:text-blue-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(59,130,246,0.25)]',
+    accentBar: 'bg-blue-500'
+  },
+  {
+    viewState: 'project-bridge' as const,
+    domain: 'bridge.ws',
+    category: 'DESIGN DIRECTORY',
+    tagline: 'An independent database and verified ledger of premier web designers, software developers, and engineering partners.',
+    type: 'SYSTEM AUDIT DIRECTORY',
+    url: 'https://www.bridge.ws/',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-emerald-600',
+    accentBorder: 'group-hover:border-emerald-500/40',
+    accentText: 'group-hover:text-emerald-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(16,185,129,0.25)]',
+    accentBar: 'bg-emerald-500'
+  },
+  {
+    viewState: 'project-aleph' as const,
+    domain: 'aleph.cc',
+    category: 'AI INCUBATOR',
+    tagline: 'A high-performance incubator for AI transformation, strategic equity exchange, and cognitive Knowledge Atlas.',
+    type: 'AI ACCELERATOR PLATFORM',
+    url: 'https://www.aleph.cc/',
+    image: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-stone-600',
+    accentBorder: 'group-hover:border-stone-500/40',
+    accentText: 'group-hover:text-stone-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(120,113,108,0.25)]',
+    accentBar: 'bg-stone-500'
+  },
+  {
+    viewState: 'project-jailsoft' as const,
+    domain: 'jailsoft.com',
+    category: 'GOVERNMENT TECH',
+    tagline: 'High-uptime jail management software (JMS), secure prisoner records, and CJIS-compliant corrections technology platforms.',
+    type: 'JAIL MANAGEMENT SYSTEMS',
+    url: 'https://www.jailsoft.com/',
+    image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-red-600',
+    accentBorder: 'group-hover:border-red-500/40',
+    accentText: 'group-hover:text-red-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(220,38,38,0.25)]',
+    accentBar: 'bg-red-500'
+  },
+  {
+    viewState: 'project-plano' as const,
+    domain: 'plano.cc',
+    category: 'ROOM DESIGNER',
+    tagline: 'Design your room layout, arrange furniture, snap to grid, and auto-save instantly with no login required.',
+    type: 'FREE FLOOR PLAN DESIGNER',
+    url: 'https://plano.cc/',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-amber-600',
+    accentBorder: 'group-hover:border-amber-500/40',
+    accentText: 'group-hover:text-amber-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(245,158,11,0.25)]',
+    accentBar: 'bg-amber-500'
+  },
+  {
+    viewState: 'project-humandemo' as const,
+    domain: 'humandemo.com',
+    category: 'PERFORMANCE TECH',
+    tagline: 'Optimize your daily focus, sleep architecture, and biological rhythms via a personalized performance system.',
+    type: 'FOCUS PERFORMANCE SAAS',
+    url: 'https://humandemo.com/',
+    image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-cyan-600',
+    accentBorder: 'group-hover:border-cyan-500/40',
+    accentText: 'group-hover:text-cyan-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(6,182,212,0.25)]',
+    accentBar: 'bg-cyan-500'
   }
 ];
+
+function getProjectIcon(domain: string) {
+  const cn = "h-4.5 w-4.5 text-stone-600 group-hover:text-[#7D123D] transition-colors duration-300";
+  switch (domain.toLowerCase()) {
+    case 'muzcast.com':
+      return <Users className={cn} />;
+    case 'repulink.com':
+      return <Cpu className={cn} />;
+    case 'xnui.com':
+      return <Layers className={cn} />;
+    case 'biofail.com':
+      return <Gamepad2 className={cn} />;
+    case 'kundalink.com':
+      return <Heart className={cn} />;
+    case 'chosenspot.com':
+      return <Map className={cn} />;
+    case 'clonecraft.com':
+      return <Sparkles className={cn} />;
+    case 'exoshape.com':
+      return <Layers className={cn} />;
+    case 'trueinheritor.com':
+      return <Lock className={cn} />;
+    case 'grzu.com':
+      return <Activity className={cn} />;
+    case 'rp2p.com':
+      return <Radio className={cn} />;
+    case 'holograph.cc':
+      return <Compass className={cn} />;
+    case 'protosquad.com':
+      return <Building className={cn} />;
+    case 'izpe.com':
+      return <Cpu className={cn} />;
+    case 'bridge.ws':
+      return <ArrowUpRight className={cn} />;
+    case 'aleph.cc':
+      return <LineChart className={cn} />;
+    case 'jailsoft.com':
+      return <Shield className={cn} />;
+    case 'plano.cc':
+      return <Compass className={cn} />;
+    case 'humandemo.com':
+      return <Users className={cn} />;
+    default:
+      return <Globe className={cn} />;
+  }
+}
 
 export default function LandingPage() {
   const [activeView, setActiveView] = useState<ViewType>('portal');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     if (activeView !== 'portal') return;
@@ -932,6 +1266,14 @@ export default function LandingPage() {
   const [loadingMessage, setLoadingMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 4000);
+  };
   const [searchQuery, setSearchQuery] = useState('');
   const [dashboardSearch, setDashboardSearch] = useState('');
   
@@ -1061,51 +1403,131 @@ export default function LandingPage() {
   );
 
   return (
-    <main className="relative min-h-screen bg-stone-50/20 text-stone-900 font-sans flex flex-col justify-between p-4 sm:p-8 md:p-12 overflow-x-hidden">
+    <main className="relative min-h-screen bg-[#FAF8F4] text-stone-900 font-sans flex flex-col justify-between overflow-x-hidden">
       
       {/* Subtle pure aesthetic background grids */}
       <div className="absolute inset-0 bg-[radial-gradient(#e5e5e0_1px,transparent_1px)] [background-size:32px_32px] opacity-10 pointer-events-none z-0" />
 
-      {/* Modern Top Header Row */}
-      <header className="w-full max-w-5xl mx-auto flex justify-between items-center z-20 pb-4 border-b border-stone-200/40">
-        <div 
-          onClick={() => setActiveView('portal')} 
-          className="cursor-pointer group flex items-center justify-start overflow-visible w-32 sm:w-36 h-10"
-        >
-          <ArcscapeCurvedLogo size="small" />
+      {/* Beautiful, ultra-premium geometric architectural blueprint graphic stretching full screen width at the top of the portal page */}
+      {activeView === 'portal' && (
+        <div className="absolute top-0 left-0 right-0 h-[480px] md:h-[540px] z-0 select-none pointer-events-none overflow-hidden flex items-center justify-center">
+          {/* Soft ambient backdrops */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FAF8F4] via-[#F3EFE9]/85 to-[#FAF8F4]" />
+          <div className="absolute w-[800px] h-[360px] top-12 rounded-full bg-[#FAF0E4]/60 blur-[120px] mix-blend-multiply" />
+
+          {/* Architectural Blueprint SVG spanning full-width */}
+          <svg className="w-full h-full min-w-[1440px] overflow-visible" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              {/* Millimeter engineering graph grid pattern */}
+              <pattern id="millimeterGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E6DDD2" strokeWidth="0.5" />
+                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#D3C5B1" strokeWidth="0.8" opacity="0.45" />
+              </pattern>
+            </defs>
+
+            {/* Millimeter grid layer */}
+            <rect width="100%" height="100%" fill="url(#millimeterGrid)" opacity="0.65" />
+
+            {/* Interactive concentric layout grid that moves subtly with the cursor */}
+            <motion.g
+              animate={{
+                x: mousePosition.x * 24,
+                y: mousePosition.y * 12,
+              }}
+              transition={{ type: "spring", stiffness: 65, damping: 28, mass: 0.7 }}
+            >
+              {/* Central focus compass grid (concentric blueprint circles centered at 720, 140) */}
+              <circle cx="720" cy="140" r="280" stroke="#A48660" strokeWidth="0.8" strokeDasharray="4,8" opacity="0.55" />
+              <circle cx="720" cy="140" r="200" stroke="#7C5F3B" strokeWidth="1.2" opacity="0.65" />
+              <circle cx="720" cy="140" r="140" stroke="#7C5F3B" strokeWidth="0.8" strokeDasharray="3,6" opacity="0.6" />
+              <circle cx="720" cy="140" r="80" stroke="#5C462D" strokeWidth="1.0" opacity="0.75" />
+              <circle cx="720" cy="140" r="30" stroke="#5C462D" strokeWidth="0.6" strokeDasharray="1,3" opacity="0.5" />
+              
+              {/* Vertical and horizontal alignment lines */}
+              <line x1="720" y1="0" x2="720" y2="320" stroke="#7C5F3B" strokeWidth="0.8" strokeDasharray="6,6" opacity="0.65" />
+              <line x1="120" y1="140" x2="1320" y2="140" stroke="#7C5F3B" strokeWidth="0.6" opacity="0.55" />
+              
+              {/* Grid helper axes */}
+              <line x1="420" y1="20" x2="420" y2="300" stroke="#A48660" strokeWidth="0.5" strokeDasharray="3,6" opacity="0.45" />
+              <line x1="1020" y1="20" x2="1020" y2="300" stroke="#A48660" strokeWidth="0.5" strokeDasharray="3,6" opacity="0.45" />
+            </motion.g>
+
+            {/* Trademark sweeping arch contours with subtle opposite motion for rich parallax depth */}
+            <motion.g
+              animate={{
+                x: mousePosition.x * -14,
+                y: mousePosition.y * -7,
+              }}
+              transition={{ type: "spring", stiffness: 50, damping: 24 }}
+            >
+              {/* Majestic vaulting arches */}
+              <path 
+                d="M 120 320 Q 720 40 1320 320" 
+                stroke="#5C462D" 
+                strokeWidth="2.2" 
+                opacity="0.85"
+              />
+              <path 
+                d="M 180 320 Q 720 80 1260 320" 
+                stroke="#7C5F3B" 
+                strokeWidth="1.2" 
+                strokeDasharray="8,8"
+                opacity="0.7"
+              />
+              <path 
+                d="M 60 320 Q 720 10 1380 320" 
+                stroke="#A48660" 
+                strokeWidth="0.8" 
+                strokeDasharray="2,4"
+                opacity="0.5"
+              />
+            </motion.g>
+          </svg>
         </div>
-        
-        <div>
-          {activeView === 'dashboard' ? (
-            <div className="flex items-center gap-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse hidden sm:inline" />
-              <span className="font-mono text-[9px] uppercase tracking-widest text-emerald-600 font-bold hidden sm:inline">AUTHENTICATED LP</span>
+      )}
+
+      {/* Modern Top Header Row */}
+      <div className="w-full z-20 px-4 sm:px-10 md:px-16 pt-4 sm:pt-6 md:pt-8">
+        <header className="w-full flex justify-between items-center pb-4 border-b border-stone-200/40">
+          <div 
+            onClick={() => setActiveView('portal')} 
+            className="cursor-pointer group flex items-center justify-start overflow-visible w-32 sm:w-36 h-10"
+          >
+            <ArcscapeCurvedLogo size="small" />
+          </div>
+          
+          <div>
+            {activeView === 'dashboard' ? (
+              <div className="flex items-center gap-3">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse hidden sm:inline" />
+                <span className="font-mono text-[9px] uppercase tracking-widest text-emerald-600 font-bold hidden sm:inline">AUTHENTICATED LP</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPassword('');
+                    setActiveView('portal');
+                  }}
+                  className="px-3 py-1 border border-stone-200 hover:border-stone-800 text-stone-700 font-mono text-[9px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer bg-white"
+                >
+                  Lock
+                </button>
+              </div>
+            ) : (
               <button
                 type="button"
-                onClick={() => {
-                  setPassword('');
-                  setActiveView('portal');
-                }}
-                className="px-3 py-1 border border-stone-200 hover:border-stone-800 text-stone-700 font-mono text-[9px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer bg-white"
+                onClick={() => setIsLoginOpen(true)}
+                className="px-3.5 py-1.5 bg-stone-900 hover:bg-stone-850 text-white font-mono text-[9px] font-bold uppercase tracking-wider rounded-lg transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
               >
-                Lock
+                <Lock className="h-2.5 w-2.5" />
+                <span>Partner Access</span>
               </button>
-            </div>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setIsLoginOpen(true)}
-              className="px-3.5 py-1.5 bg-stone-900 hover:bg-stone-850 text-white font-mono text-[9px] font-bold uppercase tracking-wider rounded-lg transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
-            >
-              <Lock className="h-2.5 w-2.5" />
-              <span>Partner Access</span>
-            </button>
-          )}
-        </div>
-      </header>
+            )}
+          </div>
+        </header>
+      </div>
 
       {/* 2. DYNAMIC MAIN BODY ROUTER */}
-      <div className="flex-1 w-full max-w-5xl mx-auto py-8 z-10 flex flex-col justify-center">
+      <div className="flex-1 w-full px-4 sm:px-10 md:px-16 py-8 z-10 flex flex-col justify-center">
         <AnimatePresence mode="wait">
           
           {/* VIEW: PORTAL (HOME PAGE WITH CLOUDS AND PROJECTS INDEX) */}
@@ -1116,143 +1538,91 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.3 }}
-              className="flex flex-col items-center justify-center max-w-5xl mx-auto w-full py-2 relative"
+              className="flex flex-col items-center justify-center w-full py-2 relative"
             >
               
-              {/* Logo container with delicate SVG clouds faded behind the logo */}
-              <div className="w-full relative flex flex-col items-center pt-10 pb-14 overflow-visible">
-                
-                {/* Beautiful, faded artful SVG clouds behind the logo fading down */}
-                <div className="absolute inset-0 z-0 select-none pointer-events-none overflow-hidden flex items-center justify-center">
-                  {/* Top skies soft blue gradient */}
-                  <div className="absolute top-0 inset-x-0 h-96 bg-gradient-to-b from-[#e0f2fe]/40 via-[#f5f5f4]/25 to-transparent blur-3xl rounded-full opacity-80" />
-
-                  {/* SVG cloud line art & ambient shapes - increased opacity and stroke visibility */}
-                  <svg className="w-full max-w-5xl h-64 text-stone-300/80 overflow-visible" viewBox="0 0 1000 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#e2e8f0" stopOpacity="0.85" />
-                        <stop offset="50%" stopColor="#f1f5f9" stopOpacity="0.6" />
-                        <stop offset="100%" stopColor="#ffffff" stopOpacity="0.0" />
-                      </linearGradient>
-                      <linearGradient id="cloudGradB" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#f5f5f4" stopOpacity="0.9" />
-                        <stop offset="100%" stopColor="#fafaf9" stopOpacity="0.4" />
-                      </linearGradient>
-                    </defs>
-                    
-                    {/* Cloud Shape A - Filled with soft slate/stone gradient and contoured with subtle stroke */}
-                    <motion.g
-                      animate={{
-                        x: mousePosition.x * 25,
-                        y: mousePosition.y * 12,
-                      }}
-                      transition={{ type: "spring", stiffness: 60, damping: 25, mass: 0.8 }}
-                    >
-                      <path 
-                        d="M100,180 C120,130 180,120 220,150 C250,110 320,110 350,140 C380,90 470,90 500,140 C520,110 570,110 590,140 C620,100 680,100 710,130 C740,80 820,80 850,130 C880,110 930,120 950,160 C980,160 990,200 970,220 C950,240 50,240 20,220 C10,200 50,180 100,180 Z" 
-                        fill="url(#cloudGrad)" 
-                        stroke="#cbd5e1" 
-                        strokeWidth="1"
-                      />
-                    </motion.g>
-                    
-                    {/* Cloud Shape B (smaller offset background cloud with dotted line style) */}
-                    <motion.g
-                      animate={{
-                        x: mousePosition.x * -12,
-                        y: mousePosition.y * -6,
-                      }}
-                      transition={{ type: "spring", stiffness: 60, damping: 25, mass: 0.8 }}
-                    >
-                      <path 
-                        d="M200,120 C230,80 300,70 340,100 C370,60 440,60 470,90 C500,50 570,50 600,90 C620,70 660,75 680,100 C710,60 770,65 800,95 C820,80 860,85 880,110" 
-                        stroke="#94a3b8" 
-                        strokeWidth="1.5" 
-                        strokeLinecap="round" 
-                        strokeDasharray="4,4" 
-                        className="opacity-40" 
-                      />
-                    </motion.g>
-
-                    {/* Cloud Shape C (soft bottom fading clouds) */}
-                    <motion.g
-                      animate={{
-                        x: mousePosition.x * 40,
-                        y: mousePosition.y * 18,
-                      }}
-                      transition={{ type: "spring", stiffness: 60, damping: 25, mass: 0.8 }}
-                    >
-                      <path 
-                        d="M50,220 C100,190 170,195 220,220 C280,180 360,180 410,215 C460,175 550,180 600,215 C650,180 720,180 770,215 C820,190 880,195 920,220" 
-                        fill="url(#cloudGradB)" 
-                        stroke="#e2e8f0" 
-                        strokeWidth="1.5" 
-                      />
-                    </motion.g>
-                  </svg>
-                </div>
-
-                {/* Central Logo - moved higher up and centered */}
-                <div className="text-center z-10 w-full flex justify-center">
+              {/* Hero Banner with beautiful central spacing - background is now top-level full-width */}
+              <div className="w-full relative flex flex-col items-center pt-8 pb-10 mb-8 overflow-visible z-10">
+                {/* Central Logo - z-index ensures it renders perfectly on top of lines */}
+                <div className="text-center z-10 w-full flex justify-center mb-6">
                   <ArcscapeCurvedLogo size="large" />
                 </div>
-              </div>
 
-              {/* Header Title for PROJECTS section */}
-              <div className="text-center mb-10 select-none z-10">
-                <h2 className="font-mono text-[9px] uppercase tracking-[0.35em] text-stone-400 font-bold mb-1">
-                  INCUBATED PORTFOLIO
-                </h2>
-                <span className="text-[10px] text-stone-400 font-serif italic">Category-defining digital networks &amp; private startups</span>
+                {/* Header Title for PROJECTS section inside the hero */}
+                <div className="text-center select-none z-10 relative">
+                  <h2 className="font-mono text-[9px] uppercase tracking-[0.35em] text-stone-500 font-bold mb-1">
+                    INCUBATED PORTFOLIO
+                  </h2>
+                  <span className="text-[10px] text-stone-500 font-serif italic">
+                    Category-defining digital networks &amp; private startups
+                  </span>
+                </div>
               </div>
 
               {/* PROJECTS GRID INDEX */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-5xl mx-auto z-10 px-4 mb-16">
-                {projectsData.map((project, idx) => (
-                  <motion.div
-                    key={project.domain}
-                    whileHover={{ y: -4, boxShadow: "0 10px 24px rgba(0,0,0,0.03)" }}
-                    onClick={() => setActiveView(project.viewState)}
-                    className="bg-white/90 backdrop-blur-xs p-5 rounded-xl border border-stone-200/80 hover:border-stone-850 transition-all duration-300 cursor-pointer flex flex-col justify-between group h-44 shadow-xs"
-                  >
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-start">
-                        <span className="font-mono text-[8px] uppercase text-stone-400 font-bold tracking-wider">
-                          {"0" + (idx + 1) + " // " + project.category}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full z-10 px-4 mb-16">
+                {projectsData.map((project, idx) => {
+                  const isFailed = failedImages[project.domain];
+                  const displayImage = isFailed 
+                    ? `https://picsum.photos/seed/${project.domain.toLowerCase()}/600/400`
+                    : project.image;
+
+                  return (
+                    <motion.a
+                      key={project.domain}
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ y: -8, scale: 1.015 }}
+                      className={`relative overflow-hidden p-5 rounded-xl border border-white/10 ${project.accentBorder} transition-all duration-500 cursor-pointer flex flex-col justify-between group h-52 shadow-md ${project.glowColor}`}
+                    >
+                      {/* Top primary color accent line bar */}
+                      <div className={`absolute top-0 left-0 right-0 h-1 z-20 ${project.accentBar} opacity-90 transition-all duration-500 group-hover:h-2`} />
+
+                      {/* Top Metadata Row */}
+                      <div className="relative z-10 w-full flex justify-between items-start">
+                        <span className="font-mono text-[8px] uppercase tracking-wider text-stone-200 font-extrabold px-1.5 py-0.5 rounded bg-black/40 backdrop-blur-xs border border-white/5">
+                          {project.category}
                         </span>
-                        <span className="text-[9px] font-mono text-stone-400 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 flex items-center gap-0.5 font-bold text-[#7D123D]">
-                          EXPLORE <ChevronRight className="h-3 w-3" />
-                        </span>
+                        
+                        <div className="h-6 w-6 rounded-full bg-black/40 backdrop-blur-xs border border-white/5 flex items-center justify-center text-white/80 group-hover:text-white group-hover:border-white/20 transition-all duration-300">
+                          {React.cloneElement(getProjectIcon(project.domain), { className: "h-3 w-3 text-white/80 group-hover:text-white transition-colors" })}
+                        </div>
                       </div>
-                      
-                      <div>
-                        <h3 className="font-serif text-lg font-normal text-stone-900 group-hover:text-[#7D123D] transition-colors tracking-tight">
-                          {project.domain}
+
+                      {/* Background Image - highly visible, bright and crisp */}
+                      <div className="absolute inset-0 z-0">
+                        <Image 
+                          src={displayImage} 
+                          alt={project.domain} 
+                          fill 
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          referrerPolicy="no-referrer"
+                          onError={() => {
+                            setFailedImages(prev => ({ ...prev, [project.domain]: true }));
+                          }}
+                          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out brightness-[0.85] group-hover:brightness-[1.0] contrast-105"
+                        />
+                        {/* Rich bottom-focused dark scrim for perfect readability */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent z-0" />
+                      </div>
+
+                      {/* Content - highly legible text overlay */}
+                      <div className="relative z-10 w-full flex flex-col gap-1 mt-auto text-left">
+                        <h3 className={`font-serif text-lg sm:text-xl font-extrabold text-white ${project.accentText} transition-colors tracking-tight drop-shadow-[0_1.5px_3px_rgba(0,0,0,0.85)] flex items-center gap-1`}>
+                          <span>{project.domain}</span>
+                          <ArrowUpRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-all duration-300 shrink-0 transform translate-y-0.5 group-hover:translate-y-0 group-hover:translate-x-0.5" />
                         </h3>
-                        <p className="text-[11px] text-stone-500 line-clamp-2 leading-relaxed pt-0.5 font-serif italic">
+                        <p className="text-[12px] sm:text-[13px] text-stone-200/95 leading-snug font-sans font-medium tracking-wide line-clamp-2 pr-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
                           {project.tagline}
                         </p>
                       </div>
-                    </div>
-                    
-                    <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-[8px] font-mono text-stone-400 font-bold">
-                      <span className="uppercase tracking-wider">{project.type}</span>
-                      <span className="text-stone-300 font-light">EST. 2026</span>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.a>
+                  );
+                })}
               </div>
 
             </motion.section>
-          )}
-
-          {/* VIEW: PROJECT DETAILS DYNAMIC ROUTER */}
-          {activeView.startsWith('project-') && (
-            <ProjectDetailView 
-              viewState={activeView} 
-              onBack={() => setActiveView('portal')} 
-            />
           )}
 
           {/* VIEW: PRIVATE VENTURE DASHBOARD (UNLOCKED STATE) */}
@@ -2349,11 +2719,146 @@ export default function LandingPage() {
         </AnimatePresence>
       </div>
 
-      {/* 3. FOOTER REGISTRY WITH REMOVED EVU MENTIONS */}
-      <footer className="w-full max-w-5xl mx-auto pt-8 border-t border-stone-200/50 relative z-10">
+      {/* 3. MULTI-COLUMN PREMIUM FOOTER SITE DIRECTORY */}
+      <footer className="w-full max-w-5xl mx-auto pt-12 pb-8 border-t border-stone-200/50 relative z-10 space-y-10">
         
+        {/* Four Column Directory Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 px-4 text-left">
+          {/* Column 1: Incubation Program */}
+          <div className="space-y-3">
+            <h4 className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-900 font-extrabold border-b border-stone-200/50 pb-1.5">
+              Incubation Hub
+            </h4>
+            <ul className="space-y-2 text-[11px] font-sans text-stone-500">
+              <li>
+                <button 
+                  onClick={() => { setActiveView('seed-incubator'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  Stealth Seed Incubator
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('seed-network'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  Venture Advisors
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('registered-partners'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  Partner Onboarding
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 2: Capital & Governance */}
+          <div className="space-y-3">
+            <h4 className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-900 font-extrabold border-b border-stone-200/50 pb-1.5">
+              Risk &amp; Mechanics
+            </h4>
+            <ul className="space-y-2 text-[11px] font-sans text-stone-500">
+              <li>
+                <button 
+                  onClick={() => { setActiveView('target-arbitrage'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  Arbitrage Mechanics
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('compliance-board'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  Governance Board
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('strategic-partnerships'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  Institutional Syndicates
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Network & Specs */}
+          <div className="space-y-3">
+            <h4 className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-900 font-extrabold border-b border-stone-200/50 pb-1.5">
+              Advisory &amp; Specs
+            </h4>
+            <ul className="space-y-2 text-[11px] font-sans text-stone-500">
+              <li>
+                <button 
+                  onClick={() => { setActiveView('hr-advisory'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  Human Capital &amp; HR
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('node-register'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  Portal Network Registry
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('xhtml-spec'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  XHTML Strict Spec
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Schemas & Tokens */}
+          <div className="space-y-3">
+            <h4 className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-900 font-extrabold border-b border-stone-200/50 pb-1.5">
+              Validations
+            </h4>
+            <ul className="space-y-2 text-[11px] font-sans text-stone-500">
+              <li>
+                <button 
+                  onClick={() => { setActiveView('token-dtd'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  Security Token DTD
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('portal-dtd'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  Portal Layout DTD
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => { setActiveView('xhtml-schemas'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="hover:text-stone-900 hover:underline transition-colors cursor-pointer text-left font-medium"
+                >
+                  XHTML Schemas
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+
         {/* Bottom footer row with small logo and small grey text */}
-        <div className="flex flex-col sm:flex-row justify-between items-center text-center gap-4 text-[10px] font-mono text-stone-400 py-2">
+        <div className="flex flex-col sm:flex-row justify-between items-center text-center gap-4 text-[10px] font-mono text-stone-400 pt-8 border-t border-stone-100/60">
           <div className="flex items-center gap-3">
             <a 
               href="https://evu.com" 
@@ -2373,7 +2878,7 @@ export default function LandingPage() {
               type="button"
               className="hover:text-stone-800 transition-colors cursor-pointer text-stone-400" 
               onClick={() => {
-                alert('Sitemap location: /sitemap.xml');
+                showToast('Sitemap location: /sitemap.xml');
               }}
             >
               sitemap.xml
@@ -2383,7 +2888,7 @@ export default function LandingPage() {
               type="button"
               className="hover:text-stone-800 transition-colors cursor-pointer text-stone-400" 
               onClick={() => {
-                alert('Robots rules location: /robots.txt');
+                showToast('Robots rules location: /robots.txt');
               }}
             >
               robots.txt
@@ -2392,6 +2897,21 @@ export default function LandingPage() {
         </div>
 
       </footer>
+
+      {/* 5. FLOATING PREMIUM TOAST */}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-stone-900 border border-stone-800 text-stone-100 px-4 py-3 rounded-xl shadow-xl font-mono text-[11px] uppercase tracking-wider"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>{toastMessage}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* 4. PARTNER LOGIN MODAL DIALOG */}
       <AnimatePresence>
@@ -2428,17 +2948,17 @@ export default function LandingPage() {
                 </button>
               </div>
 
-              <p className="text-[11px] text-stone-400 leading-relaxed font-serif italic">
+              <p className="text-[12px] text-stone-600 leading-relaxed font-serif">
                 Authorized venture partners, advisory mentors, and liquid providers may enter access tokens below.
               </p>
 
               <form onSubmit={handleLoginSubmit} className="space-y-4">
-                <div className="space-y-1">
-                  <label htmlFor="modal_gatekey" className="font-mono text-[8px] uppercase tracking-wider text-stone-400 block font-bold">
+                <div className="space-y-1.5">
+                  <label htmlFor="modal_gatekey" className="font-mono text-[9px] uppercase tracking-wider text-stone-600 block font-bold">
                     Access Code
                   </label>
-                  <div className="relative flex items-center rounded-xl border border-stone-200 bg-stone-50/50 px-3 py-2 focus-within:border-stone-800 focus-within:bg-white transition-all">
-                    <Lock className="h-3 w-3 text-stone-400 mr-2 shrink-0" />
+                  <div className="relative flex items-center rounded-xl border border-stone-300 bg-white px-3 py-2 focus-within:border-stone-800 focus-within:ring-1 focus-within:ring-stone-800 transition-all">
+                    <Lock className="h-3.5 w-3.5 text-stone-500 mr-2 shrink-0" />
                     <input
                       id="modal_gatekey"
                       type="password"
@@ -2449,7 +2969,7 @@ export default function LandingPage() {
                         setPassword(e.target.value);
                         if (status === 'error') setStatus('idle');
                       }}
-                      className="w-full bg-transparent text-xs font-mono placeholder-stone-300 focus:outline-none"
+                      className="w-full bg-transparent text-sm font-mono text-stone-900 placeholder-stone-400 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -2460,9 +2980,9 @@ export default function LandingPage() {
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
-                      className="text-[9px] font-mono uppercase tracking-wider text-red-500 font-bold flex items-center gap-1"
+                      className="text-[10px] font-mono uppercase tracking-wider text-red-600 font-bold flex items-center gap-1.5"
                     >
-                      <span className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-red-600 animate-pulse" />
                       <span>Invalid Access Key</span>
                     </motion.div>
                   )}
@@ -2472,14 +2992,14 @@ export default function LandingPage() {
                   <button
                     type="button"
                     onClick={() => setIsLoginOpen(false)}
-                    className="flex-1 px-3 py-2 border border-stone-200 hover:bg-stone-50 text-stone-600 font-mono text-[9px] uppercase tracking-wider rounded-xl transition-all cursor-pointer font-bold"
+                    className="flex-1 px-3 py-2 border border-stone-300 hover:border-stone-800 text-stone-700 hover:text-stone-900 font-mono text-[10px] uppercase tracking-wider rounded-xl transition-all cursor-pointer font-bold bg-white"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={status === 'loading'}
-                    className="flex-1 px-3 py-2 bg-stone-900 hover:bg-stone-850 text-white font-mono text-[9px] uppercase tracking-wider rounded-xl transition-all cursor-pointer font-bold flex items-center justify-center gap-1 shadow-sm"
+                    className="flex-1 px-3 py-2 bg-stone-900 hover:bg-stone-800 disabled:bg-stone-400 text-white font-mono text-[10px] uppercase tracking-wider rounded-xl transition-all cursor-pointer font-bold flex items-center justify-center gap-1.5 shadow-sm"
                   >
                     {status === 'loading' ? (
                       <RefreshCw className="h-3 w-3 animate-spin" />
@@ -2492,11 +3012,6 @@ export default function LandingPage() {
                   </button>
                 </div>
               </form>
-
-              <div className="pt-2 border-t border-stone-100 flex justify-between items-center text-[7px] font-mono text-stone-400">
-                <span>TLS_ENC_PORT_3000</span>
-                <span>SHA-255 AUTHENTICATION</span>
-              </div>
             </motion.div>
           </div>
         )}
