@@ -47,11 +47,27 @@ import {
   Layers,
   Gamepad2,
   Heart,
-  Map
+  Map,
+  AlertCircle,
+  ExternalLink,
+  ChevronDown
 } from 'lucide-react';
 
 // Perfect, mathematical curved logo using crisp textpath rendering
 function ArcscapeCurvedLogo({ size = "normal" }: { size?: "normal" | "small" | "large" }) {
+  if (size === "small") {
+    return (
+      <div className="flex items-center select-none group">
+        <span 
+          className="font-serif text-sm tracking-[0.35em] font-extrabold uppercase text-stone-900 transition-colors group-hover:text-[#7D123D]"
+          style={{ fontFamily: "var(--font-serif), Playfair Display, serif" }}
+        >
+          ARCSCAPE
+        </span>
+      </div>
+    );
+  }
+
   let width = 180;
   let height = 55;
   let viewBox = "0 0 180 55";
@@ -59,14 +75,7 @@ function ArcscapeCurvedLogo({ size = "normal" }: { size?: "normal" | "small" | "
   let fontSize = "13px";
   let tracking = "0.38em";
 
-  if (size === "small") {
-    width = 130;
-    height = 42;
-    viewBox = "0 0 130 42";
-    pathD = "M 8 34 Q 65 18 122 34"; // Scaled curve keeping small logo clear and unclipped
-    fontSize = "10px";
-    tracking = "0.32em";
-  } else if (size === "large") {
+  if (size === "large") {
     // Large centered hero logo - beautifully proportioned, never clipped at top/sides
     width = 1200;
     height = 300;
@@ -109,82 +118,62 @@ function ArcscapeCurvedLogo({ size = "normal" }: { size?: "normal" | "small" | "
         
         <path id={`curve-${size}`} d={pathD} fill="none" stroke="transparent" />
 
-        {/* Small header logo variant uses clean, crisp dark bronze/charcoal serif */}
-        {size === "small" ? (
-          <text 
-            className="font-serif uppercase" 
-            style={{ 
-              fontFamily: "var(--font-serif), Playfair Display, serif",
-              fontSize, 
-              letterSpacing: tracking, 
-              fill: "#2C241E", 
-              fontWeight: 600,
-            }}
-          >
-            <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-              ARCSCAPE
-            </textPath>
-          </text>
-        ) : (
-          <>
-            {/* Layer 1: Ambient Drop Shadow for real stationery deep embossing depth */}
-            <text 
-              className="font-serif uppercase" 
-              style={{ 
-                fontFamily: "var(--font-serif), Playfair Display, serif",
-                fontSize, 
-                letterSpacing: tracking, 
-                fill: "#1C1917", 
-                fontWeight: 600,
-                filter: `url(#luxShadow-${size})`,
-                opacity: size === "large" ? 0.25 : 0.18
-              }}
-              dx="0"
-              dy={size === "large" ? "6" : "1.2"}
-            >
-              <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                ARCSCAPE
-              </textPath>
-            </text>
+        {/* Layer 1: Ambient Drop Shadow for real stationery deep embossing depth */}
+        <text 
+          className="font-serif uppercase" 
+          style={{ 
+            fontFamily: "var(--font-serif), Playfair Display, serif",
+            fontSize, 
+            letterSpacing: tracking, 
+            fill: "#1C1917", 
+            fontWeight: 600,
+            filter: `url(#luxShadow-${size})`,
+            opacity: size === "large" ? 0.25 : 0.18
+          }}
+          dx="0"
+          dy={size === "large" ? "6" : "1.2"}
+        >
+          <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
+            ARCSCAPE
+          </textPath>
+        </text>
 
-            {/* Layer 2: Rich, Dark Bronze Bevel Edge to simulate 3D relief extrusion */}
-            <text 
-              className="font-serif uppercase" 
-              style={{ 
-                fontFamily: "var(--font-serif), Playfair Display, serif",
-                fontSize, 
-                letterSpacing: tracking, 
-                fill: "#4E361D", 
-                fontWeight: 600,
-              }}
-              dx="0"
-              dy={size === "large" ? "2.5" : "0.6"}
-            >
-              <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                ARCSCAPE
-              </textPath>
-            </text>
+        {/* Layer 2: Rich, Dark Bronze Bevel Edge to simulate 3D relief extrusion */}
+        <text 
+          className="font-serif uppercase" 
+          style={{ 
+            fontFamily: "var(--font-serif), Playfair Display, serif",
+            fontSize, 
+            letterSpacing: tracking, 
+            fill: "#4E361D", 
+            fontWeight: 600,
+          }}
+          dx="0"
+          dy={size === "large" ? "2.5" : "0.6"}
+        >
+          <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
+            ARCSCAPE
+          </textPath>
+        </text>
 
-            {/* Layer 3: Main Gold Foil Face with fine stroke border */}
-            <text 
-              className="font-serif uppercase" 
-              style={{ 
-                fontFamily: "var(--font-serif), Playfair Display, serif",
-                fontSize, 
-                letterSpacing: tracking, 
-                fill: `url(#goldGrad-${size})`,
-                stroke: "#3A2814", 
-                strokeWidth: size === "large" ? "1.4px" : "0.3px",
-                strokeLinejoin: "round",
-                fontWeight: 600,
-              }}
-            >
-              <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
-                ARCSCAPE
-              </textPath>
-            </text>
-          </>
-        )}
+        {/* Layer 3: Main Gold Foil Face with fine stroke border */}
+        <text 
+          className="font-serif uppercase" 
+          style={{ 
+            fontFamily: "var(--font-serif), Playfair Display, serif",
+            fontSize, 
+            letterSpacing: tracking, 
+            fill: `url(#goldGrad-${size})`,
+            stroke: "#3A2814", 
+            strokeWidth: size === "large" ? "1.4px" : "0.3px",
+            strokeLinejoin: "round",
+            fontWeight: 600,
+          }}
+        >
+          <textPath href={`#curve-${size}`} startOffset="50%" textAnchor="middle">
+            ARCSCAPE
+          </textPath>
+        </text>
       </svg>
     </div>
   );
@@ -673,15 +662,28 @@ function ProjectDetailView({
       exit={{ opacity: 0, y: -15 }}
       className="space-y-8 max-w-4xl mx-auto w-full text-left"
     >
-      {/* Back button and title */}
-      <div className="space-y-2">
-        <button 
-          onClick={onBack}
-          className="font-mono text-xs text-stone-500 hover:text-stone-850 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
-        >
-          <ArrowLeft className="h-3 w-3" />
-          <span>Back to Projects</span>
-        </button>
+      {/* Back button and quick access Live link */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between gap-4 w-full border-b border-stone-150 pb-3">
+          <button 
+            onClick={onBack}
+            className="font-mono text-xs text-stone-500 hover:text-stone-900 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+          >
+            <ArrowLeft className="h-3 w-3" />
+            <span>Back to Projects</span>
+          </button>
+
+          <a 
+            href={currentProject.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="font-sans text-xs font-bold uppercase tracking-wider text-white bg-[#7D123D] hover:bg-stone-900 transition-colors flex items-center gap-1.5 px-4.5 py-1.5 rounded-full shadow-xs cursor-pointer"
+          >
+            <span>Live Project Link</span>
+            <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
+        
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-stone-200/50 pb-4">
           <div>
             <h2 className="font-serif text-3xl sm:text-4xl font-normal text-stone-900 tracking-tight">{currentProject.domain}</h2>
@@ -697,19 +699,31 @@ function ProjectDetailView({
 
       {/* Large Featured Image matching card on homepage but larger */}
       <div className="relative h-64 sm:h-96 w-full rounded-2xl overflow-hidden border border-stone-200 shadow-md group">
-        <Image 
-          src={displayImage} 
-          alt={currentProject.domain} 
-          fill 
-          sizes="(max-width: 1200px) 100vw, 1200px"
-          referrerPolicy="no-referrer"
-          onError={() => {
-            setFailedImages(prev => ({ ...prev, [currentProject.domain]: true }));
-          }}
-          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-        />
-        {/* Subtle overlay gradient to ensure contrast and premium feel */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+        {isFailed ? (
+          <div className="absolute inset-0 flex flex-col items-center justify-center p-8 bg-gradient-to-br from-stone-50 to-stone-100/60">
+            {React.cloneElement(getProjectIcon(currentProject.domain), { 
+              className: `h-16 w-16 mb-4 transition-colors ${getProjectTheme(currentProject.accentBar).text}` 
+            })}
+            <h3 className="font-serif text-2xl font-bold text-stone-800 tracking-tight">
+              {currentProject.domain}
+            </h3>
+            <p className="font-mono text-xs text-stone-400 uppercase tracking-widest mt-1">
+              {currentProject.category}
+            </p>
+          </div>
+        ) : (
+          <Image 
+            src={displayImage} 
+            alt={currentProject.domain} 
+            fill 
+            sizes="(max-width: 1200px) 100vw, 1200px"
+            referrerPolicy="no-referrer"
+            onError={() => {
+              setFailedImages(prev => ({ ...prev, [currentProject.domain]: true }));
+            }}
+            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          />
+        )}
       </div>
 
       {/* Dynamic visual dashboard layout and metrics */}
@@ -854,7 +868,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-indigo-500/40',
     accentText: 'group-hover:text-indigo-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(99,102,241,0.25)]',
-    accentBar: 'bg-indigo-500'
+    accentBar: 'bg-indigo-500',
+    status: 'Active' as const,
+    readiness: 95
   },
   {
     viewState: 'project-repulink' as const,
@@ -868,7 +884,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-cyan-400/40',
     accentText: 'group-hover:text-cyan-200',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(34,211,238,0.25)]',
-    accentBar: 'bg-cyan-400'
+    accentBar: 'bg-cyan-400',
+    status: 'Incubating' as const,
+    readiness: 75
   },
   {
     viewState: 'project-xnui' as const,
@@ -882,7 +900,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-emerald-400/40',
     accentText: 'group-hover:text-emerald-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(52,211,153,0.25)]',
-    accentBar: 'bg-emerald-400'
+    accentBar: 'bg-emerald-400',
+    status: 'Ready' as const,
+    readiness: 100
   },
   {
     viewState: 'project-biofail' as const,
@@ -896,7 +916,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-amber-400/40',
     accentText: 'group-hover:text-amber-200',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(245,158,11,0.25)]',
-    accentBar: 'bg-amber-400'
+    accentBar: 'bg-amber-400',
+    status: 'Active' as const,
+    readiness: 90
   },
   {
     viewState: 'project-kundalink' as const,
@@ -910,7 +932,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-fuchsia-400/40',
     accentText: 'group-hover:text-fuchsia-200',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(217,70,239,0.25)]',
-    accentBar: 'bg-fuchsia-400'
+    accentBar: 'bg-fuchsia-400',
+    status: 'Incubating' as const,
+    readiness: 80
   },
   {
     viewState: 'project-chosenspot' as const,
@@ -924,7 +948,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-sky-400/40',
     accentText: 'group-hover:text-sky-200',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(14,165,233,0.25)]',
-    accentBar: 'bg-sky-400'
+    accentBar: 'bg-sky-400',
+    status: 'Active' as const,
+    readiness: 88
   },
   {
     viewState: 'project-clonecraft' as const,
@@ -938,7 +964,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-teal-500/40',
     accentText: 'group-hover:text-teal-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(20,184,166,0.25)]',
-    accentBar: 'bg-teal-500'
+    accentBar: 'bg-teal-500',
+    status: 'Ready' as const,
+    readiness: 98
   },
   {
     viewState: 'project-exoshape' as const,
@@ -952,7 +980,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-purple-500/40',
     accentText: 'group-hover:text-purple-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(168,85,247,0.25)]',
-    accentBar: 'bg-purple-500'
+    accentBar: 'bg-purple-500',
+    status: 'Incubating' as const,
+    readiness: 65
   },
   {
     viewState: 'project-trueinheritor' as const,
@@ -966,7 +996,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-amber-500/40',
     accentText: 'group-hover:text-amber-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(245,158,11,0.25)]',
-    accentBar: 'bg-amber-500'
+    accentBar: 'bg-amber-500',
+    status: 'Ready' as const,
+    readiness: 92
   },
   {
     viewState: 'project-grzu' as const,
@@ -980,7 +1012,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-green-500/40',
     accentText: 'group-hover:text-green-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(34,197,94,0.25)]',
-    accentBar: 'bg-green-500'
+    accentBar: 'bg-green-500',
+    status: 'Active' as const,
+    readiness: 94
   },
   {
     viewState: 'project-rp2p' as const,
@@ -994,7 +1028,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-indigo-500/40',
     accentText: 'group-hover:text-indigo-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(99,102,241,0.25)]',
-    accentBar: 'bg-indigo-500'
+    accentBar: 'bg-indigo-500',
+    status: 'Active' as const,
+    readiness: 85
   },
   {
     viewState: 'project-holograph' as const,
@@ -1008,7 +1044,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-violet-500/40',
     accentText: 'group-hover:text-violet-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(139,92,246,0.25)]',
-    accentBar: 'bg-violet-500'
+    accentBar: 'bg-violet-500',
+    status: 'Incubating' as const,
+    readiness: 60
   },
   {
     viewState: 'project-protosquad' as const,
@@ -1022,7 +1060,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-rose-500/40',
     accentText: 'group-hover:text-rose-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(244,63,94,0.25)]',
-    accentBar: 'bg-rose-500'
+    accentBar: 'bg-rose-500',
+    status: 'Ready' as const,
+    readiness: 100
   },
   {
     viewState: 'project-izpe' as const,
@@ -1036,7 +1076,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-blue-500/40',
     accentText: 'group-hover:text-blue-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(59,130,246,0.25)]',
-    accentBar: 'bg-blue-500'
+    accentBar: 'bg-blue-500',
+    status: 'Incubating' as const,
+    readiness: 70
   },
   {
     viewState: 'project-bridge' as const,
@@ -1050,7 +1092,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-emerald-500/40',
     accentText: 'group-hover:text-emerald-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(16,185,129,0.25)]',
-    accentBar: 'bg-emerald-500'
+    accentBar: 'bg-emerald-500',
+    status: 'Active' as const,
+    readiness: 91
   },
   {
     viewState: 'project-aleph' as const,
@@ -1064,7 +1108,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-stone-500/40',
     accentText: 'group-hover:text-stone-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(120,113,108,0.25)]',
-    accentBar: 'bg-stone-500'
+    accentBar: 'bg-stone-500',
+    status: 'Incubating' as const,
+    readiness: 78
   },
   {
     viewState: 'project-jailsoft' as const,
@@ -1078,7 +1124,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-red-500/40',
     accentText: 'group-hover:text-red-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(220,38,38,0.25)]',
-    accentBar: 'bg-red-500'
+    accentBar: 'bg-red-500',
+    status: 'Ready' as const,
+    readiness: 96
   },
   {
     viewState: 'project-plano' as const,
@@ -1092,7 +1140,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-amber-500/40',
     accentText: 'group-hover:text-amber-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(245,158,11,0.25)]',
-    accentBar: 'bg-amber-500'
+    accentBar: 'bg-amber-500',
+    status: 'Active' as const,
+    readiness: 89
   },
   {
     viewState: 'project-humandemo' as const,
@@ -1106,7 +1156,9 @@ const projectsData = [
     accentBorder: 'group-hover:border-cyan-500/40',
     accentText: 'group-hover:text-cyan-300',
     glowColor: 'group-hover:shadow-[0_15px_30px_rgba(6,182,212,0.25)]',
-    accentBar: 'bg-cyan-500'
+    accentBar: 'bg-cyan-500',
+    status: 'Incubating' as const,
+    readiness: 83
   }
 ];
 
@@ -1156,10 +1208,83 @@ function getProjectIcon(domain: string) {
   }
 }
 
+// Helper to classify project domains into human-meaningful categories
+function getCategoryGroup(domain: string): 'AI & Deep Tech' | 'Wellness & Life' | 'Enterprise & Tools' {
+  const d = domain.toLowerCase();
+  if (d.includes('clonecraft') || d.includes('exoshape') || d.includes('aleph') || d.includes('holograph') || d.includes('repulink')) {
+    return 'AI & Deep Tech';
+  }
+  if (d.includes('muzcast') || d.includes('kundalink') || d.includes('humandemo') || d.includes('rp2p') || d.includes('chosenspot')) {
+    return 'Wellness & Life';
+  }
+  return 'Enterprise & Tools';
+}
+
+// Helper to provide realistic technical and product attributes (anti-AI slop)
+function getProjectTech(domain: string): string[] {
+  const d = domain.toLowerCase();
+  if (d.includes('muzcast')) return ['Next.js', 'WebSockets', 'Tailwind'];
+  if (d.includes('repulink')) return ['React', 'D3.js', 'SaaS Platform'];
+  if (d.includes('xnui')) return ['Design Systems', 'CSS Canvas', 'Motion'];
+  if (d.includes('biofail')) return ['Auditing Db', 'Carbon API', 'Tailwind'];
+  if (d.includes('kundalink')) return ['React Router', 'Geolocation', 'Firebase'];
+  if (d.includes('chosenspot')) return ['Mapbox API', 'P2P Net', 'Leaflet'];
+  if (d.includes('clonecraft')) return ['Gemini API', 'Speech Synth', 'WebSocket'];
+  if (d.includes('exoshape')) return ['3D Canvas', 'Mechanical CAD', 'D3.js'];
+  if (d.includes('trueinheritor')) return ['Cryptography', 'Secure Vault', 'Next.js'];
+  if (d.includes('grzu')) return ['API Monitor', 'Uptime Alerts', 'React'];
+  if (d.includes('rp2p')) return ['P2P Protocol', 'WebRTC', 'Anonymous Mail'];
+  if (d.includes('holograph')) return ['WebGL', 'Immersive UI', 'Three.js'];
+  if (d.includes('protosquad')) return ['SolidWorks CAD', 'Additive Mfg', 'React'];
+  if (d.includes('izpe')) return ['Quantum Sandbox', 'D3 Simulation', 'HTML5'];
+  if (d.includes('bridge')) return ['Verified Ledger', 'Directory React', 'Tailwind'];
+  if (d.includes('aleph')) return ['Knowledge Graph', 'Cognitive AI', 'Next.js'];
+  if (d.includes('jailsoft')) return ['Jail Monitor', 'Secure Records', 'CJIS'];
+  if (d.includes('plano')) return ['Interactive Canvas', 'Local Storage', 'HTML5'];
+  if (d.includes('humandemo')) return ['Focus SaaS', 'Bio Rhythms', 'Chart.js'];
+  return ['TypeScript', 'Next.js', 'Tailwind'];
+}
+
+// Helper to get tailored styling properties matching each project's accent color theme
+interface ProjectTheme {
+  rgb: string;
+  hoverText: string;
+  hoverBg: string;
+  text: string;
+  bgClass: string;
+}
+
+function getProjectTheme(accentBar: string): ProjectTheme {
+  const bar = accentBar.toLowerCase();
+  if (bar.includes('indigo')) return { rgb: '99, 102, 241', hoverText: 'group-hover:text-indigo-600', hoverBg: 'group-hover:bg-indigo-50/75', text: 'text-indigo-600', bgClass: 'bg-indigo-600 hover:bg-indigo-700' };
+  if (bar.includes('cyan')) return { rgb: '6, 182, 212', hoverText: 'group-hover:text-cyan-600', hoverBg: 'group-hover:bg-cyan-50/75', text: 'text-cyan-600', bgClass: 'bg-cyan-600 hover:bg-cyan-700' };
+  if (bar.includes('emerald')) return { rgb: '16, 185, 129', hoverText: 'group-hover:text-emerald-600', hoverBg: 'group-hover:bg-emerald-50/75', text: 'text-emerald-600', bgClass: 'bg-emerald-600 hover:bg-emerald-700' };
+  if (bar.includes('amber')) return { rgb: '245, 158, 11', hoverText: 'group-hover:text-amber-600', hoverBg: 'group-hover:bg-amber-50/75', text: 'text-amber-600', bgClass: 'bg-amber-600 hover:bg-amber-700' };
+  if (bar.includes('fuchsia')) return { rgb: '217, 70, 239', hoverText: 'group-hover:text-fuchsia-600', hoverBg: 'group-hover:bg-fuchsia-50/75', text: 'text-fuchsia-600', bgClass: 'bg-fuchsia-600 hover:bg-fuchsia-700' };
+  if (bar.includes('sky')) return { rgb: '14, 165, 233', hoverText: 'group-hover:text-sky-600', hoverBg: 'group-hover:bg-sky-50/75', text: 'text-sky-600', bgClass: 'bg-sky-600 hover:bg-sky-700' };
+  if (bar.includes('teal')) return { rgb: '20, 184, 166', hoverText: 'group-hover:text-teal-600', hoverBg: 'group-hover:bg-teal-50/75', text: 'text-teal-600', bgClass: 'bg-teal-600 hover:bg-teal-700' };
+  if (bar.includes('purple')) return { rgb: '168, 85, 247', hoverText: 'group-hover:text-purple-600', hoverBg: 'group-hover:bg-purple-50/75', text: 'text-purple-600', bgClass: 'bg-purple-600 hover:bg-purple-700' };
+  if (bar.includes('green')) return { rgb: '34, 197, 94', hoverText: 'group-hover:text-green-600', hoverBg: 'group-hover:bg-green-50/75', text: 'text-green-600', bgClass: 'bg-green-600 hover:bg-green-700' };
+  if (bar.includes('violet')) return { rgb: '139, 92, 246', hoverText: 'group-hover:text-violet-600', hoverBg: 'group-hover:bg-violet-50/75', text: 'text-violet-600', bgClass: 'bg-violet-600 hover:bg-violet-700' };
+  if (bar.includes('rose')) return { rgb: '244, 63, 94', hoverText: 'group-hover:text-rose-600', hoverBg: 'group-hover:bg-rose-50/75', text: 'text-rose-600', bgClass: 'bg-rose-600 hover:bg-rose-700' };
+  if (bar.includes('blue')) return { rgb: '59, 130, 246', hoverText: 'group-hover:text-blue-600', hoverBg: 'group-hover:bg-blue-50/75', text: 'text-blue-600', bgClass: 'bg-blue-600 hover:bg-blue-700' };
+  if (bar.includes('red')) return { rgb: '239, 68, 68', hoverText: 'group-hover:text-red-600', hoverBg: 'group-hover:bg-red-50/75', text: 'text-red-600', bgClass: 'bg-red-600 hover:bg-red-700' };
+  return { rgb: '125, 18, 61', hoverText: 'group-hover:text-[#7D123D]', hoverBg: 'group-hover:bg-[#7D123D]/5', text: 'text-[#7D123D]', bgClass: 'bg-[#7D123D] hover:bg-stone-900' };
+}
+
 export default function LandingPage() {
   const [activeView, setActiveView] = useState<ViewType>('portal');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
+  const [selectedCategory, setSelectedCategory] = useState<'All' | 'AI & Deep Tech' | 'Wellness & Life' | 'Enterprise & Tools'>('All');
+
+  const filteredProjects = React.useMemo(() => {
+    let list = [...projectsData].sort((a, b) => a.domain.toLowerCase().localeCompare(b.domain.toLowerCase()));
+    if (selectedCategory !== 'All') {
+      list = list.filter(p => getCategoryGroup(p.domain) === selectedCategory);
+    }
+    return list;
+  }, [selectedCategory]);
 
   useEffect(() => {
     if (activeView !== 'portal') return;
@@ -1326,12 +1451,54 @@ export default function LandingPage() {
     );
   };
 
-  // Support Page States
-  const [supportName, setSupportName] = useState('');
-  const [supportEmail, setSupportEmail] = useState('');
-  const [supportType, setSupportType] = useState('access');
-  const [supportMessage, setSupportMessage] = useState('');
-  const [supportSuccess, setSupportSuccess] = useState(false);
+  // Support Page Math Puzzle States
+  const [supportHasInitiated, setSupportHasInitiated] = useState(false);
+  const [supportNum1, setSupportNum1] = useState(0);
+  const [supportNum2, setSupportNum2] = useState(0);
+  const [supportUserAnswer, setSupportUserAnswer] = useState('');
+  const [supportErrorStatus, setSupportErrorStatus] = useState<string | null>(null);
+  const [supportIsRevealed, setSupportIsRevealed] = useState(false);
+  const [supportCopied, setSupportCopied] = useState(false);
+
+  const resetSupportMathChallenge = () => {
+    setSupportNum1(Math.floor(Math.random() * 8) + 3); // 3 to 10
+    setSupportNum2(Math.floor(Math.random() * 7) + 2); // 2 to 8
+    setSupportUserAnswer('');
+    setSupportErrorStatus(null);
+  };
+
+  const handleSupportVerify = (e: React.FormEvent) => {
+    e.preventDefault();
+    const parsed = parseInt(supportUserAnswer.trim(), 10);
+    
+    if (isNaN(parsed)) {
+      setSupportErrorStatus('Please enter a valid numeric answer');
+      return;
+    }
+
+    if (parsed === supportNum1 + supportNum2) {
+      setSupportIsRevealed(true);
+      setSupportErrorStatus(null);
+    } else {
+      setSupportErrorStatus('Incorrect answer. Please try again.');
+    }
+  };
+
+  const handleSupportCopy = () => {
+    navigator.clipboard.writeText('info@arcscape.com');
+    setSupportCopied(true);
+    setTimeout(() => setSupportCopied(false), 2000);
+  };
+
+  // Generate math equation when active view changes to support
+  useEffect(() => {
+    if (activeView === 'support') {
+      const timer = setTimeout(() => {
+        resetSupportMathChallenge();
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [activeView]);
 
   // Diagnostic checklist state for Help Page
   const [diagnosticRun, setDiagnosticRun] = useState(false);
@@ -1537,26 +1704,75 @@ export default function LandingPage() {
 
       {/* Modern Top Header Row */}
       <div className="w-full z-20 px-4 sm:px-10 md:px-16 pt-4 sm:pt-6 md:pt-8">
-        <header className="w-full flex justify-between items-center pb-4 border-b border-stone-200/40">
+        <header className="w-full flex justify-between items-center pb-4 border-b border-stone-200/50">
           <div 
-            onClick={() => setActiveView('portal')} 
-            className="cursor-pointer group flex items-center justify-start overflow-visible w-32 sm:w-36 h-10"
+            onClick={() => {
+              setActiveView('portal');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }} 
+            className="cursor-pointer group flex items-center justify-start overflow-visible h-10 w-28 sm:w-36 shrink-0"
           >
             <ArcscapeCurvedLogo size="small" />
           </div>
           
-          <div>
+          <div className="flex items-center gap-3 sm:gap-6">
+            {/* Highly readable, ultra-clean horizontal navigation */}
+            <nav className="flex items-center gap-3.5 sm:gap-6 text-stone-600 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider">
+              <button
+                onClick={() => {
+                  setActiveView('portal');
+                  setTimeout(() => {
+                    const portfolioSection = document.getElementById('portfolio-section');
+                    if (portfolioSection) {
+                      portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }, 50);
+                }}
+                className={`hover:text-[#7D123D] transition-colors cursor-pointer relative py-1 px-1.5 ${activeView === 'portal' ? 'text-[#7D123D] font-extrabold' : ''}`}
+              >
+                <span>Ventures</span>
+                {activeView === 'portal' && (
+                  <span className="absolute bottom-[-4px] left-1 right-1 h-[2px] bg-[#7D123D] rounded-full" />
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  setActiveView('about');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`hover:text-[#7D123D] transition-colors cursor-pointer relative py-1 px-1.5 ${activeView === 'about' ? 'text-[#7D123D] font-extrabold' : ''}`}
+              >
+                <span>About</span>
+                {activeView === 'about' && (
+                  <span className="absolute bottom-[-4px] left-1 right-1 h-[2px] bg-[#7D123D] rounded-full" />
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  setActiveView('support');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`hover:text-[#7D123D] transition-colors cursor-pointer relative py-1 px-1.5 ${activeView === 'support' ? 'text-[#7D123D] font-extrabold' : ''}`}
+              >
+                <span>Support</span>
+                {activeView === 'support' && (
+                  <span className="absolute bottom-[-4px] left-1 right-1 h-[2px] bg-[#7D123D] rounded-full" />
+                )}
+              </button>
+            </nav>
+
+            <div className="h-4 w-[1px] bg-stone-200/80 hidden xs:block" />
+
             {activeView === 'dashboard' ? (
-              <div className="flex items-center gap-3">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse hidden sm:inline" />
-                <span className="font-mono text-xs uppercase tracking-wider text-emerald-600 font-bold hidden sm:inline">AUTHENTICATED LP</span>
+              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                <span className="font-sans text-[10px] tracking-wide text-stone-500 font-medium hidden sm:inline">Authorized Partner</span>
                 <button
                   type="button"
                   onClick={() => {
                     setPassword('');
                     setActiveView('portal');
                   }}
-                  className="px-3.5 py-1.5 border-2 border-stone-200 hover:border-stone-800 text-stone-700 font-mono text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer bg-white"
+                  className="px-3 py-1.5 border border-stone-200 hover:border-stone-800 text-stone-700 font-mono text-[9px] font-bold uppercase tracking-wider rounded-full transition-all cursor-pointer bg-white shadow-2xs"
                 >
                   Lock
                 </button>
@@ -1565,9 +1781,9 @@ export default function LandingPage() {
               <button
                 type="button"
                 onClick={() => setIsLoginOpen(true)}
-                className="px-4 py-2 bg-stone-900 hover:bg-stone-850 text-white font-mono text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+                className="px-3 py-1.5 sm:px-4 sm:py-2 bg-stone-900 hover:bg-[#7D123D] text-white font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-full transition-all duration-300 shadow-2xs cursor-pointer flex items-center gap-1.5 border border-transparent shrink-0"
               >
-                <Lock className="h-3 w-3" />
+                <Lock className="h-3 w-3 shrink-0" />
                 <span>Partner Access</span>
               </button>
             )}
@@ -1591,84 +1807,211 @@ export default function LandingPage() {
               className="flex flex-col items-center justify-center w-full py-2 relative"
             >
               
-              {/* Hero Banner with beautiful central spacing - background is now top-level full-width */}
-              <div className="w-full relative flex flex-col items-center pt-8 pb-10 mb-8 overflow-visible z-10">
-                {/* Central Logo - z-index ensures it renders perfectly on top of lines */}
-                <div className="text-center z-10 w-full flex justify-center mb-6">
+              {/* Hero Banner - Highly integrated, unbloated architectural vault layout */}
+              <div className="w-full max-w-4xl mx-auto relative flex flex-col items-center pt-4 pb-12 mb-8 text-center z-10 px-4">
+                {/* 1. Large Curvature Logo - Elegant, cinematic static entrance */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-full max-w-[550px] sm:max-w-[700px] md:max-w-[850px] flex justify-center overflow-visible select-none pointer-events-none -mb-8 sm:-mb-16 md:-mb-24 lg:-mb-[110px] relative"
+                >
                   <ArcscapeCurvedLogo size="large" />
-                </div>
+                </motion.div>
 
-                {/* Header Title for PROJECTS section inside the hero */}
-                <div className="text-center select-none z-10 relative">
-                  <h2 className="font-mono text-xs uppercase tracking-[0.25em] text-stone-600 font-extrabold mb-1.5">
-                    INCUBATED PORTFOLIO
-                  </h2>
-                  <span className="text-sm text-stone-550 font-serif italic">
-                    Category-defining digital networks &amp; private startups
-                  </span>
+                {/* 2. Hero Content Frame - Sitting snuggly under the curve */}
+                <div className="relative z-10 space-y-5 max-w-2xl mx-auto pt-8 sm:pt-14">
+                  {/* Subtle, beautiful static visual separator */}
+                  <div className="flex items-center justify-center gap-3 opacity-35">
+                    <span className="w-2 h-[1px] bg-[#7D123D]" />
+                    <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-[#7D123D] font-extrabold">Established MMXXIV</span>
+                    <span className="w-2 h-[1px] bg-[#7D123D]" />
+                  </div>
+
+                  <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-stone-900 leading-tight">
+                    Architects of the <span className="font-serif italic text-[#7D123D]">Next Digital Frontier</span>
+                  </h1>
+                  
+                  <p className="text-stone-600 font-sans text-sm sm:text-[15px] leading-relaxed max-w-lg mx-auto">
+                    We partner with founders to build elegant software, high-integrity systems, and beautiful user experiences.
+                  </p>
+
+                  {/* High-end Balanced CTA Composition - highly legible, modern sans buttons */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3 w-full max-w-md mx-auto">
+                    <button 
+                      onClick={() => {
+                        const portfolioSection = document.getElementById('portfolio-section');
+                        if (portfolioSection) {
+                          portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans text-sm font-semibold text-white bg-stone-900 hover:bg-[#7D123D] px-6 py-2.5 rounded-full transition-all duration-250 shadow-xs hover:shadow-md cursor-pointer border border-transparent"
+                    >
+                      <span>Explore Assets</span>
+                      <span className="text-xs">↓</span>
+                    </button>
+                    <button 
+                      onClick={() => {
+                        setActiveView('about');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans text-sm font-semibold text-stone-700 hover:text-stone-900 hover:bg-stone-50 bg-white border border-stone-200 px-6 py-2.5 rounded-full transition-all duration-250 shadow-3xs hover:shadow-2xs cursor-pointer"
+                    >
+                      <span>Read Manifest</span>
+                      <span className="text-xs">→</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* PROJECTS GRID INDEX */}
+              {/* Category Filter Tab Bar - zero slop, extremely crisp design */}
+              <div className="w-full text-left mb-8 max-w-7xl mx-auto px-4 z-10">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-200/40 pb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="h-1 w-1 rounded-full bg-[#7D123D]" />
+                    <h2 className="font-mono text-[9px] uppercase tracking-[0.2em] text-stone-500 font-extrabold">
+                      STUDIO PORTFOLIO / VENTURES INDEX
+                    </h2>
+                  </div>
+                  
+                  {/* High-end Minimal Tabs */}
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {(['All', 'AI & Deep Tech', 'Wellness & Life', 'Enterprise & Tools'] as const).map((cat) => (
+                      <button
+                        key={cat}
+                        onClick={() => setSelectedCategory(cat)}
+                        className={`px-3.5 py-1.5 rounded-full font-mono text-[9px] uppercase tracking-wider font-bold transition-all cursor-pointer ${
+                          selectedCategory === cat
+                            ? 'bg-stone-900 text-white shadow-2xs'
+                            : 'bg-stone-50 text-stone-500 hover:bg-stone-100/80 hover:text-stone-800'
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* PROJECTS GRID INDEX - Redesigned, clean card architecture */}
               <div id="portfolio-section" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full z-10 px-4 mb-16">
-                {projectsData.map((project, idx) => {
+                {filteredProjects.map((project, idx) => {
                   const isFailed = failedImages[project.domain];
                   const displayImage = isFailed 
                     ? `https://picsum.photos/seed/${project.domain.toLowerCase()}/600/400`
                     : project.image;
+                  const theme = getProjectTheme(project.accentBar);
 
                   return (
-                    <motion.button
+                    <motion.div
                       key={project.domain}
+                      whileHover={{ y: -4 }}
+                      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                       onClick={() => {
                         setActiveView(project.viewState as any);
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
-                      whileHover={{ y: -8, scale: 1.015 }}
-                      className={`relative overflow-hidden p-5 rounded-xl border border-white/10 ${project.accentBorder} transition-all duration-500 cursor-pointer flex flex-col justify-between group h-52 shadow-md ${project.glowColor} w-full`}
+                      className={`relative p-5 overflow-hidden bg-white rounded-2xl border border-stone-200/85 hover:shadow-[0_12px_32px_rgba(0,0,0,0.03)] transition-all duration-300 flex flex-col justify-between group h-[385px] w-full cursor-pointer ${project.accentBorder} ${project.glowColor}`}
                     >
-                      {/* Top primary color accent line bar */}
-                      <div className={`absolute top-0 left-0 right-0 h-1 z-20 ${project.accentBar} opacity-90 transition-all duration-500 group-hover:h-2`} />
-
-                      {/* Top Metadata Row */}
-                      <div className="relative z-10 w-full flex justify-between items-start">
-                        <span className="font-mono text-[10px] uppercase tracking-wider text-stone-100 font-extrabold px-2 py-1 rounded bg-black/50 backdrop-blur-xs border border-white/10">
-                          {project.category}
+                      {/* Quiet Top Header Row: Category Group & Cloned Icon matching the theme */}
+                      <div className="flex items-center justify-between gap-2 mb-3 shrink-0">
+                        <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-stone-400 font-bold">
+                          {getCategoryGroup(project.domain)}
                         </span>
                         
-                        <div className="h-6 w-6 rounded-full bg-black/40 backdrop-blur-xs border border-white/5 flex items-center justify-center text-white/80 group-hover:text-white group-hover:border-white/20 transition-all duration-300">
-                          {React.cloneElement(getProjectIcon(project.domain), { className: "h-3 w-3 text-white/80 group-hover:text-white transition-colors" })}
+                        <div className={`h-6 w-6 rounded-full bg-stone-50 border border-stone-100 flex items-center justify-center text-stone-400 transition-all duration-350 shrink-0 ${theme.hoverBg} ${theme.hoverText}`}>
+                          {React.cloneElement(getProjectIcon(project.domain), { className: "h-3 w-3 text-stone-400 group-hover:text-inherit transition-colors" })}
                         </div>
                       </div>
 
-                      {/* Background Image - highly visible, bright and crisp */}
-                      <div className="absolute inset-0 z-0">
-                        <Image 
-                          src={displayImage} 
-                          alt={project.domain} 
-                          fill 
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                          referrerPolicy="no-referrer"
-                          onError={() => {
-                            setFailedImages(prev => ({ ...prev, [project.domain]: true }));
-                          }}
-                          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out brightness-[0.85] group-hover:brightness-[1.0] contrast-105"
-                        />
-                        {/* Rich bottom-focused dark scrim for perfect readability */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent z-0" />
+                      {/* Redesigned Card Image Section - elegant, clean, zero slop with thematic tinting */}
+                      <div className="relative w-full h-36 overflow-hidden bg-stone-50 rounded-xl border border-stone-150 shrink-0 block">
+                        {isFailed ? (
+                          <div className="absolute inset-0 flex flex-col items-center justify-center p-4 bg-gradient-to-br from-stone-50 to-stone-100/40">
+                            {React.cloneElement(getProjectIcon(project.domain), { 
+                              className: `h-8 w-8 mb-2 transition-colors ${theme.text}` 
+                            })}
+                            <span className="font-sans text-[11px] font-semibold text-stone-500 uppercase tracking-widest">
+                              {project.domain}
+                            </span>
+                          </div>
+                        ) : (
+                          <>
+                            <Image 
+                              src={displayImage} 
+                              alt={project.domain} 
+                              fill
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                              referrerPolicy="no-referrer"
+                              onError={() => {
+                                setFailedImages(prev => ({ ...prev, [project.domain]: true }));
+                              }}
+                              className="object-cover filter grayscale-[15%] sepia-[5%] group-hover:grayscale-0 group-hover:sepia-0 group-hover:scale-[1.03] transition-all duration-500 ease-out opacity-100"
+                            />
+                            
+                            {/* Elegant consistent tint overlay that matches the styling theme of each image beautifully and softens on hover */}
+                            <div 
+                              className="absolute inset-0 mix-blend-color opacity-70 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none z-10" 
+                              style={{ backgroundColor: `rgba(${theme.rgb}, 0.18)` }}
+                            />
+                            <div 
+                              className="absolute inset-0 opacity-20 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none z-10" 
+                              style={{ backgroundColor: `rgba(${theme.rgb}, 0.25)` }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-45 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none z-10" />
+                          </>
+                        )}
                       </div>
 
-                      {/* Content - highly legible text overlay */}
-                      <div className="relative z-10 w-full flex flex-col gap-1 mt-auto text-left">
-                        <h3 className={`font-serif text-lg sm:text-xl font-extrabold text-white ${project.accentText} transition-colors tracking-tight drop-shadow-[0_1.5px_3px_rgba(0,0,0,0.85)] flex items-center gap-1`}>
-                          <span>{project.domain}</span>
-                          <ArrowUpRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-all duration-300 shrink-0 transform translate-y-0.5 group-hover:translate-y-0 group-hover:translate-x-0.5" />
-                        </h3>
-                        <p className="text-[12px] sm:text-[13px] text-stone-200/95 leading-snug font-sans font-medium tracking-wide line-clamp-2 pr-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
-                          {project.tagline}
-                        </p>
+                      {/* Card Info Section - clean, highly legible */}
+                      <div className="flex flex-col flex-grow justify-between text-left pt-3.5">
+                        <div className="space-y-1">
+                          <span className={`font-serif text-[17px] font-bold text-stone-900 transition-colors tracking-tight block ${theme.hoverText}`}>
+                            {project.domain}
+                          </span>
+
+                          <p className="text-xs text-stone-500 leading-relaxed font-sans font-normal line-clamp-2">
+                            {project.tagline}
+                          </p>
+                        </div>
+
+                        {/* Distinct click areas: View Details & Live Project Link */}
+                        <div className="pt-3 border-t border-stone-100 mt-3 shrink-0 space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="font-mono text-[8px] uppercase tracking-wider text-stone-400 font-bold block truncate">
+                              {getProjectTech(project.domain).join(' \u2022 ')}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            {/* View Details action */}
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveView(project.viewState as any);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                              }}
+                              className="flex-1 inline-flex items-center justify-center font-sans text-[10px] font-bold uppercase tracking-wider text-stone-600 hover:text-stone-900 bg-stone-100/70 hover:bg-stone-200/60 border border-stone-200/40 py-1.5 rounded-lg transition-colors cursor-pointer"
+                            >
+                              View Details
+                            </button>
+
+                            {/* Direct website link action tailored with project theme colors */}
+                            <a
+                              href={project.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className={`flex-1 inline-flex items-center justify-center gap-1 font-sans text-[10px] font-extrabold uppercase tracking-wider text-white transition-colors py-1.5 rounded-lg shadow-3xs cursor-pointer ${theme.bgClass}`}
+                            >
+                              <span>Live Project</span>
+                              <ExternalLink className="h-2.5 w-2.5" />
+                            </a>
+                          </div>
+                        </div>
                       </div>
-                    </motion.button>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -1904,105 +2247,135 @@ export default function LandingPage() {
 
               <div className="bg-white rounded-2xl border border-stone-200/85 p-6 sm:p-8 shadow-sm">
                 <AnimatePresence mode="wait">
-                  {!supportSuccess ? (
-                    <motion.form 
-                      key="support-form"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        setSupportSuccess(true);
-                      }}
-                      className="space-y-4"
+                  {!supportIsRevealed ? (
+                    <motion.div
+                      key="verification-gate"
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="space-y-6"
                     >
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-1">
-                          <label htmlFor="sup-name" className="font-mono text-[9px] uppercase tracking-wider text-stone-400 block font-bold">Your Name</label>
-                          <input 
-                            id="sup-name"
-                            required={true}
-                            type="text" 
-                            placeholder="Alex Mercer"
-                            value={supportName}
-                            onChange={(e) => setSupportName(e.target.value)}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-xs font-sans focus:outline-none focus:ring-1 focus:ring-[#7D123D]"
-                          />
+                      <div className="space-y-2 text-center sm:text-left">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#7D123D]/5 border border-[#7D123D]/10 text-[#7D123D] font-mono text-[9px] uppercase tracking-wider font-bold">
+                          <Lock className="h-3 w-3" />
+                          <span>Identity Verification Gate</span>
                         </div>
-                        <div className="space-y-1">
-                          <label htmlFor="sup-email" className="font-mono text-[9px] uppercase tracking-wider text-stone-400 block font-bold">Email Address</label>
-                          <input 
-                            id="sup-email"
-                            required={true}
-                            type="email" 
-                            placeholder="alex@mercer.com"
-                            value={supportEmail}
-                            onChange={(e) => setSupportEmail(e.target.value)}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-xs font-sans focus:outline-none focus:ring-1 focus:ring-[#7D123D]"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <label htmlFor="sup-type" className="font-mono text-[9px] uppercase tracking-wider text-stone-400 block font-bold">Inquiry Routing</label>
-                        <select 
-                          id="sup-type"
-                          value={supportType}
-                          onChange={(e) => setSupportType(e.target.value)}
-                          className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-xs font-sans focus:outline-none focus:ring-1 focus:ring-[#7D123D]"
-                        >
-                          <option value="access">Access Token Verification &amp; Diagnostics</option>
-                          <option value="incubation">Seed Incubation Cohort Applications</option>
-                          <option value="partner">Limited Partner Syndicates</option>
-                          <option value="legal">Governance &amp; DTD Compliance Inquiry</option>
-                        </select>
-                      </div>
-
-                      <div className="space-y-1">
-                        <label htmlFor="sup-msg" className="font-mono text-[9px] uppercase tracking-wider text-stone-400 block font-bold">Message / Proposal</label>
-                        <textarea 
-                          id="sup-msg"
-                          rows={4}
-                          required={true}
-                          placeholder="Please provide details of your portfolio company, credential request, or compliance question..."
-                          value={supportMessage}
-                          onChange={(e) => setSupportMessage(e.target.value)}
-                          className="w-full bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-xs font-sans focus:outline-none focus:ring-1 focus:ring-[#7D123D] resize-none"
-                        />
-                      </div>
-
-                      <button
-                        type="submit"
-                        className="w-full py-3 bg-[#7D123D] hover:bg-[#9E1D51] text-white font-mono text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all duration-300 shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
-                      >
-                        <Send className="h-3.5 w-3.5" />
-                        <span>Send Support Request</span>
-                      </button>
-                    </motion.form>
-                  ) : (
-                    <motion.div 
-                      key="support-success"
-                      initial={{ scale: 0.95, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      className="text-center py-6 space-y-4"
-                    >
-                      <div className="h-12 w-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-100">
-                        <Check className="h-6 w-6" />
-                      </div>
-                      <div className="space-y-2">
-                        <h4 className="font-serif font-semibold text-stone-900 text-lg">Inquiry Successfully Routed</h4>
-                        <p className="text-xs text-stone-500 leading-relaxed max-w-[340px] mx-auto">
-                          Thank you, <span className="font-bold text-stone-800">{supportName}</span>. Your request has been logged and assigned to the appropriate Arcscape desk. An advisor will reach out to you within 24 business hours.
+                        <h3 className="font-serif text-xl font-bold text-stone-900">Partner Communication Channel</h3>
+                        <p className="text-xs text-stone-550 leading-relaxed font-sans">
+                          To protect our advisory desk and partner directories from automated network scrapers and email harvesting bots, please solve this simple equation to reveal our direct communication address.
                         </p>
                       </div>
+
+                      <form onSubmit={handleSupportVerify} className="space-y-4">
+                        <div className="flex items-center gap-3 bg-stone-50 border border-stone-200 p-4 rounded-xl justify-center max-w-sm mx-auto">
+                          <span className="font-mono font-black text-base text-stone-700">
+                            {supportNum1} + {supportNum2} =
+                          </span>
+                          <input
+                            type="text"
+                            pattern="[0-9]*"
+                            inputMode="numeric"
+                            required
+                            placeholder="?"
+                            value={supportUserAnswer}
+                            onChange={(e) => {
+                              setSupportUserAnswer(e.target.value);
+                              setSupportErrorStatus(null);
+                            }}
+                            className="w-16 bg-white border border-stone-300 rounded-lg text-center py-2 text-sm font-bold text-[#7D123D] focus:outline-none focus:ring-2 focus:ring-[#7D123D]/20 focus:border-[#7D123D]"
+                          />
+                          <button
+                            type="button"
+                            onClick={resetSupportMathChallenge}
+                            title="Generate new equation"
+                            className="p-1.5 text-stone-400 hover:text-[#7D123D] transition-colors rounded-md hover:bg-stone-100"
+                          >
+                            <RefreshCw className="h-4 w-4" />
+                          </button>
+                        </div>
+
+                        {supportErrorStatus && (
+                          <div className="flex items-center gap-2 justify-center text-xs font-mono text-red-600 font-bold bg-red-50 py-2 px-4 rounded-lg border border-red-200 max-w-sm mx-auto">
+                            <AlertCircle className="h-4 w-4 shrink-0" />
+                            <span>{supportErrorStatus}</span>
+                          </div>
+                        )}
+
+                        <button
+                          type="submit"
+                          className="w-full max-w-sm mx-auto py-3 bg-[#7D123D] hover:bg-[#9E1D51] text-white font-mono text-xs font-bold uppercase tracking-wider rounded-lg transition-all duration-300 shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+                        >
+                          <span>Verify &amp; Reveal Channel</span>
+                        </button>
+                      </form>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="verification-revealed"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="space-y-6 text-center"
+                    >
+                      <div className="space-y-2">
+                        <div className="inline-flex items-center gap-1 text-xs font-mono text-emerald-700 font-bold tracking-wider bg-emerald-50 border border-emerald-200 px-3.5 py-1 rounded-full uppercase mx-auto">
+                          <Check className="h-3.5 w-3.5" />
+                          <span>Human Verification Successful</span>
+                        </div>
+                        <h3 className="font-serif text-xl font-bold text-stone-900">
+                          Direct Communication Channel
+                        </h3>
+                        <p className="text-xs text-stone-500 leading-relaxed max-w-md mx-auto">
+                          Our secure partner communication route is revealed below. You can copy the clean address directly or click to launch your local email client.
+                        </p>
+                      </div>
+
+                      {/* THE MUNGED EMAIL ADDRESS DISPLAYED IN MASSIVE BOLD TEXT */}
+                      <div className="bg-stone-50 border-2 border-stone-200/80 p-5 rounded-2xl max-w-md mx-auto space-y-4">
+                        <div className="space-y-1">
+                          <span className="font-mono text-[9px] uppercase tracking-wider text-stone-400 font-bold block">Protected Address (Munged)</span>
+                          <div className="font-mono text-lg sm:text-xl font-black text-[#7D123D] select-all tracking-wide">
+                            info [at] arcscape.com
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row items-center gap-2 justify-center pt-2 border-t border-stone-200/40">
+                          <a
+                            href="mailto:info@arcscape.com"
+                            className="w-full sm:w-auto px-4 py-2 bg-[#7D123D] hover:bg-[#9E1D51] text-white font-mono text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
+                          >
+                            <Mail className="h-4 w-4" />
+                            <span>Launch Email Client</span>
+                          </a>
+
+                          <button
+                            onClick={handleSupportCopy}
+                            className="w-full sm:w-auto flex items-center justify-center gap-1.5 py-2 px-4 text-xs font-mono font-bold uppercase tracking-wider rounded-lg border-2 border-stone-200 text-stone-700 hover:bg-stone-50 transition-all cursor-pointer bg-white"
+                          >
+                            {supportCopied ? (
+                              <>
+                                <Check className="h-4 w-4 text-emerald-600" />
+                                <span className="text-emerald-600">Copied!</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="h-4 w-4 text-stone-500" />
+                                <span>Copy Clean Email</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+
                       <button
                         type="button"
                         onClick={() => {
-                          setSupportSuccess(false);
-                          setSupportName('');
-                          setSupportEmail('');
-                          setSupportMessage('');
+                          setSupportIsRevealed(false);
+                          setSupportUserAnswer('');
+                          resetSupportMathChallenge();
                         }}
-                        className="px-6 py-2 border border-stone-200 text-stone-700 hover:bg-stone-50 font-mono text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer"
+                        className="text-stone-400 hover:text-stone-700 font-mono text-[10px] uppercase tracking-wider transition-all cursor-pointer block mx-auto font-bold"
                       >
-                        New Inquiry
+                        Reset &amp; Lock Channel
                       </button>
                     </motion.div>
                   )}
@@ -3134,6 +3507,15 @@ export default function LandingPage() {
               }}
             >
               Terms of Engagement
+            </button>
+            <span>•</span>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="hover:text-[#7D123D] text-stone-400 font-bold transition-colors cursor-pointer flex items-center gap-1 group"
+              type="button"
+            >
+              <span>Back to Top</span>
+              <span className="text-[9px] transform group-hover:-translate-y-0.5 transition-transform duration-300">↑</span>
             </button>
           </div>
         </div>
