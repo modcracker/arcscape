@@ -33,7 +33,6 @@ import {
   LineChart,
   Scale,
   Award,
-  Sparkles,
   Activity,
   Calendar,
   MapPin,
@@ -50,24 +49,30 @@ import {
   Map,
   AlertCircle,
   ExternalLink,
-  ChevronDown
+  ChevronDown,
+  Music2,
+  Dna,
+  Atom,
+  Brain,
+  Bot,
+  Share2,
+  Link2,
+  Terminal,
+  Printer,
+  Moon,
+  CalendarDays,
+  Flame,
+  ShieldCheck,
+  Palette,
+  Shapes,
+  Fingerprint,
+  Vault,
+  GitMerge,
+  Network
 } from 'lucide-react';
 
 // Perfect, mathematical curved logo using crisp textpath rendering
 function ArcscapeCurvedLogo({ size = "normal" }: { size?: "normal" | "small" | "large" }) {
-  if (size === "small") {
-    return (
-      <div className="flex items-center select-none group">
-        <span 
-          className="font-serif text-sm tracking-[0.35em] font-extrabold uppercase text-stone-900 transition-colors group-hover:text-[#7D123D]"
-          style={{ fontFamily: "var(--font-serif), Playfair Display, serif" }}
-        >
-          ARCSCAPE
-        </span>
-      </div>
-    );
-  }
-
   let width = 180;
   let height = 55;
   let viewBox = "0 0 180 55";
@@ -75,7 +80,14 @@ function ArcscapeCurvedLogo({ size = "normal" }: { size?: "normal" | "small" | "
   let fontSize = "13px";
   let tracking = "0.38em";
 
-  if (size === "large") {
+  if (size === "small") {
+    width = 135;
+    height = 42;
+    viewBox = "0 0 135 42";
+    pathD = "M 8 33 Q 67.5 16 127 33";
+    fontSize = "10.5px";
+    tracking = "0.35em";
+  } else if (size === "large") {
     // Large centered hero logo - beautifully proportioned, never clipped at top/sides
     width = 1200;
     height = 300;
@@ -85,8 +97,20 @@ function ArcscapeCurvedLogo({ size = "normal" }: { size?: "normal" | "small" | "
     tracking = "0.45em";
   }
 
+  const isAnimated = size === "large" || size === "normal";
+
   return (
-    <div className="flex items-center justify-center w-full overflow-visible">
+    <motion.div 
+      animate={isAnimated ? {
+        y: [0, -6, 0],
+      } : {}}
+      transition={isAnimated ? {
+        duration: 6,
+        ease: "easeInOut",
+        repeat: Infinity,
+      } : {}}
+      className="flex items-center justify-center w-full overflow-visible"
+    >
       <svg 
         viewBox={viewBox} 
         style={{ width: "100%", maxWidth: `${width}px`, height: "auto" }} 
@@ -175,7 +199,7 @@ function ArcscapeCurvedLogo({ size = "normal" }: { size?: "normal" | "small" | "
           </textPath>
         </text>
       </svg>
-    </div>
+    </motion.div>
   );
 }
 
@@ -515,6 +539,21 @@ function ProjectVisualMockup({ slug }: { slug: string }) {
       ],
       readinessLabel: "Model Accuracy Level",
       readinessPercentage: 86
+    },
+    'project-biotrojan': {
+      title: "Biotrojan Virus Lab",
+      subtitle: "Deterministic Pathogen Simulation Tool",
+      sector: "Cybersecurity & Bio-Simulation Labs",
+      demographic: "Epidemiologists, research clinics & security engineers",
+      businessModel: "Enterprise Research Subscriptions",
+      accent: "blue",
+      metrics: [
+        { label: "MUTATION VECTORS", value: "10,000+ Simulated", detail: "Real-time strain mapping" },
+        { label: "PROPAGATION SLA", value: "< 50ms Realtime", detail: "Fast network simulation" },
+        { label: "RESEARCH PARTNERS", value: "45 Labs Active", detail: "Collaborative global studies" }
+      ],
+      readinessLabel: "Simulation Accuracy",
+      readinessPercentage: 94
     }
   };
 
@@ -534,101 +573,81 @@ function ProjectVisualMockup({ slug }: { slug: string }) {
     readinessPercentage: 85
   };
 
-  // Color theme variables based on accent
-  const colorThemes = {
-    blue: {
-      border: "border-blue-250",
-      accentBg: "bg-blue-50/50",
-      pillBg: "bg-blue-100 text-blue-800 border-blue-200",
-      textHighlight: "text-blue-600",
-      barColor: "bg-blue-600",
-      glow: "shadow-blue-500/10",
-      accentLine: "bg-blue-600"
-    },
-    red: {
-      border: "border-red-250",
-      accentBg: "bg-red-50/50",
-      pillBg: "bg-red-100 text-red-800 border-red-200",
-      textHighlight: "text-red-600",
-      barColor: "bg-red-600",
-      glow: "shadow-red-500/10",
-      accentLine: "bg-red-600"
-    },
-    green: {
-      border: "border-emerald-250",
-      accentBg: "bg-emerald-50/50",
-      pillBg: "bg-emerald-100 text-emerald-800 border-emerald-200",
-      textHighlight: "text-emerald-600",
-      barColor: "bg-emerald-600",
-      glow: "shadow-emerald-500/10",
-      accentLine: "bg-emerald-600"
-    },
-    amber: {
-      border: "border-amber-250",
-      accentBg: "bg-amber-50/50",
-      pillBg: "bg-amber-100 text-amber-800 border-amber-200",
-      textHighlight: "text-amber-600",
-      barColor: "bg-amber-600",
-      glow: "shadow-amber-500/10",
-      accentLine: "bg-amber-600"
-    }
-  };
-
-  const theme = colorThemes[info.accent];
-
+  // Neutral, beautiful design parameters - zero slop
   return (
-    <div className={`md:col-span-2 bg-white text-stone-800 p-6 rounded-2xl border-2 ${theme.border} space-y-5 flex flex-col justify-between min-h-[360px] relative overflow-hidden shadow-xs hover:shadow-sm transition-shadow`}>
-      {/* Accent strip on the left edge */}
-      <div className={`absolute top-0 bottom-0 left-0 w-1.5 ${theme.accentLine}`} />
-      
-      {/* Top Header Row with sector pill */}
-      <div className="flex flex-wrap items-start justify-between gap-2 z-10">
-        <div className="space-y-1">
-          <span className="text-xs font-bold font-mono tracking-widest text-stone-400 uppercase">VENTURE REPORT</span>
-          <h3 className="font-serif text-xl font-bold text-stone-900 leading-tight">{info.title}</h3>
-          <p className="text-sm font-medium text-stone-500">{info.subtitle}</p>
+    <div className="md:col-span-2 bg-white text-stone-800 p-8 rounded-2xl border border-stone-200/60 space-y-8 flex flex-col justify-between min-h-[400px] relative overflow-hidden shadow-xs">
+      {/* Top Header Row with segment indicator */}
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#7D123D]" />
+            <span className="text-[10px] font-bold font-mono tracking-[0.2em] text-stone-400 uppercase">VENTURE BRIEF</span>
+          </div>
+          <h3 className="font-serif text-2xl font-light text-stone-900 leading-tight">{info.title}</h3>
+          <p className="text-xs font-serif italic text-stone-500">{info.subtitle}</p>
         </div>
-        <span className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${theme.pillBg}`}>
+        <span className="text-[10px] px-3 py-1 rounded font-mono uppercase tracking-widest text-stone-500 bg-stone-50 border border-stone-200/50">
           {info.sector}
         </span>
       </div>
 
-      {/* Primary Color Bright Infographic Progress Gauge */}
-      <div className="bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-2 z-10">
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-stone-600 font-bold font-sans uppercase tracking-wider">{info.readinessLabel}</span>
-          <span className={`font-mono font-black ${theme.textHighlight}`}>{info.readinessPercentage}%</span>
+      {/* Structured Development Milestone Timeline - Replacing raw colorful progress gauge */}
+      <div className="border-t border-b border-stone-150/60 py-5 space-y-3">
+        <div className="flex justify-between items-center text-[10px] font-mono uppercase tracking-wider text-stone-400">
+          <span>Staging Phase Registry</span>
+          <span className="text-stone-800 font-bold">Phase IV // Audited</span>
         </div>
-        <div className="w-full bg-stone-200 h-3.5 rounded-full overflow-hidden border border-stone-300/40">
-          <motion.div 
-            initial={{ width: 0 }}
-            animate={{ width: `${info.readinessPercentage}%` }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className={`h-full ${theme.barColor} rounded-full`}
-          />
+        
+        {/* Horizontal Milestone Scale */}
+        <div className="relative pt-1.5 pb-2">
+          {/* Timeline track line */}
+          <div className="absolute left-1 right-1 top-[13.5px] h-[1px] bg-stone-200/70" />
+          
+          <div className="relative flex justify-between">
+            {[
+              { name: "Concept", active: true },
+              { name: "Validation", active: true },
+              { name: "Prototype", active: true },
+              { name: "Secure Audit", active: true },
+              { name: "Stewardship", active: false }
+            ].map((step, sIdx) => (
+              <div key={sIdx} className="flex flex-col items-center space-y-2 z-10">
+                <div 
+                  className={`h-2.5 w-2.5 rounded-full border transition-all duration-300 ${
+                    step.active 
+                      ? 'bg-[#7D123D] border-[#7D123D] scale-110 shadow-sm shadow-[#7D123D]/25' 
+                      : 'bg-white border-stone-300'
+                  }`} 
+                />
+                <span className={`text-[9px] font-mono uppercase tracking-wide ${step.active ? 'text-stone-800 font-bold' : 'text-stone-400'}`}>
+                  {step.name}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* 3 Real, Logical Venture Metrics in Readable Bento Blocks */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 z-10">
+      {/* 3 Real, Logical Venture Metrics in fine-ruled columns */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
         {info.metrics.map((metric, idx) => (
-          <div key={idx} className={`p-3.5 rounded-xl border ${theme.border} ${theme.accentBg} flex flex-col justify-between space-y-1.5`}>
-            <span className="text-[10px] font-bold text-stone-500 uppercase tracking-wider block">{metric.label}</span>
-            <span className="text-base font-black text-stone-900 leading-none">{metric.value}</span>
-            <span className="text-[11px] text-stone-500 font-medium leading-tight block">{metric.detail}</span>
+          <div key={idx} className="space-y-1 text-left">
+            <span className="text-[9px] font-bold text-stone-400 uppercase tracking-widest block font-mono">{metric.label}</span>
+            <span className="text-lg font-serif text-stone-900 block font-normal">{metric.value}</span>
+            <span className="text-[10px] text-stone-500 block leading-normal">{metric.detail}</span>
           </div>
         ))}
       </div>
 
-      {/* Strategic Target Bullets - Two Columns */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-stone-200 text-sm font-sans z-10">
-        <div className="space-y-0.5">
-          <span className="text-xs font-bold text-stone-400 uppercase tracking-widest block">TARGET DEMOGRAPHIC</span>
-          <p className="text-stone-700 font-medium">{info.demographic}</p>
+      {/* Strategic Target Bullets - Dual Columns with thin dividers */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-stone-150/65 text-xs font-sans">
+        <div className="space-y-1">
+          <span className="text-[9px] font-bold text-stone-400 uppercase tracking-widest block font-mono">TARGET DEMOGRAPHIC</span>
+          <p className="text-stone-700 leading-relaxed font-serif">{info.demographic}</p>
         </div>
-        <div className="space-y-0.5">
-          <span className="text-xs font-bold text-stone-400 uppercase tracking-widest block">REVENUE & BUSINESS MODEL</span>
-          <p className="text-stone-700 font-medium">{info.businessModel}</p>
+        <div className="space-y-1">
+          <span className="text-[9px] font-bold text-stone-400 uppercase tracking-widest block font-mono">REVENUE & CAPITAL STRUCTURE</span>
+          <p className="text-stone-700 leading-relaxed font-serif">{info.businessModel}</p>
         </div>
       </div>
     </div>
@@ -649,11 +668,6 @@ function ProjectDetailView({
   const currentProject = projectsData.find(p => p.viewState === viewState);
   if (!currentProject) return null;
 
-  const isFailed = failedImages[currentProject.domain];
-  const displayImage = isFailed 
-    ? `https://picsum.photos/seed/${currentProject.domain.toLowerCase()}/1200/800`
-    : currentProject.image;
-
   return (
     <motion.section 
       key={`${viewState}-view`}
@@ -664,12 +678,12 @@ function ProjectDetailView({
     >
       {/* Back button and quick access Live link */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between gap-4 w-full border-b border-stone-150 pb-3">
+        <div className="flex items-center justify-between gap-4 w-full border-b border-stone-200/50 pb-3">
           <button 
             onClick={onBack}
-            className="font-mono text-xs text-stone-500 hover:text-stone-900 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+            className="group font-mono text-[10px] text-stone-500 hover:text-[#7D123D] transition-colors flex items-center gap-1.5 uppercase cursor-pointer tracking-widest font-bold"
           >
-            <ArrowLeft className="h-3 w-3" />
+            <ArrowLeft className="h-3 w-3 group-hover:-translate-x-0.5 transition-transform duration-200" />
             <span>Back to Projects</span>
           </button>
 
@@ -677,53 +691,58 @@ function ProjectDetailView({
             href={currentProject.url} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="font-sans text-xs font-bold uppercase tracking-wider text-white bg-[#7D123D] hover:bg-stone-900 transition-colors flex items-center gap-1.5 px-4.5 py-1.5 rounded-full shadow-xs cursor-pointer"
+            className="font-mono text-[9px] font-bold uppercase tracking-widest text-white bg-[#7D123D] hover:bg-stone-900 transition-all duration-300 flex items-center gap-1.5 px-4.5 py-1.5 rounded-md shadow-sm cursor-pointer"
           >
             <span>Live Project Link</span>
             <ExternalLink className="h-3 w-3" />
           </a>
         </div>
         
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-stone-200/50 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-stone-200/40 pb-4">
           <div>
-            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-stone-900 tracking-tight">{currentProject.domain}</h2>
-            <span className="font-mono text-xs uppercase text-[#7D123D] tracking-widest font-bold">
-              {"0" + (projectsData.indexOf(currentProject) + 1) + " // " + currentProject.category}
+            <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.25em] font-extrabold block">
+              {"0" + (projectsData.indexOf(currentProject) + 1) + " // VENTURE SPECIFICATION"}
             </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-light text-stone-900 tracking-tight mt-0.5">{currentProject.domain}</h2>
           </div>
-          <div className="font-mono text-xs text-stone-500 bg-stone-100 border border-stone-250/60 px-3 py-1 rounded-full uppercase tracking-wider">
+          <div className="font-mono text-[9px] text-stone-500 bg-[#F5F5F0] border border-stone-250/60 px-3 py-1 rounded uppercase tracking-widest font-bold">
             {currentProject.type}
           </div>
         </div>
       </div>
 
-      {/* Large Featured Image matching card on homepage but larger */}
-      <div className="relative h-64 sm:h-96 w-full rounded-2xl overflow-hidden border border-stone-200 shadow-md group">
-        {isFailed ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-8 bg-gradient-to-br from-stone-50 to-stone-100/60">
-            {React.cloneElement(getProjectIcon(currentProject.domain), { 
-              className: `h-16 w-16 mb-4 transition-colors ${getProjectTheme(currentProject.accentBar).text}` 
-            })}
-            <h3 className="font-serif text-2xl font-bold text-stone-800 tracking-tight">
+      {/* Large Architectural System Blueprint Banner - Fully custom zero-slop drawing */}
+      <div className="relative h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-stone-250/60 bg-[#F5F5F0] flex items-center justify-center shadow-3xs group">
+        {/* Drafting Millimeter Grid Background */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#E5E5DE_1px,transparent_1px),linear-gradient(to_bottom,#E5E5DE_1px,transparent_1px)] bg-[size:16px_16px] opacity-35 pointer-events-none" />
+        
+        {/* Large Concentric Circles representing System Scope */}
+        <div className="absolute h-[420px] w-[420px] rounded-full border border-stone-300/30 flex items-center justify-center opacity-70 pointer-events-none">
+          <div className="h-[300px] w-[300px] rounded-full border border-stone-300/40 border-dashed flex items-center justify-center">
+            <div className="h-[180px] w-[180px] rounded-full border border-stone-300/50 flex items-center justify-center" />
+          </div>
+        </div>
+
+        {/* Super large background icon - Bleeding & Centered */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-10 opacity-75 group-hover:scale-[1.03] transition-transform duration-700">
+          {React.cloneElement(getProjectIcon(currentProject.domain), { 
+            strokeWidth: 1.2,
+            className: "w-[360px] h-[360px] text-white" 
+          })}
+        </div>
+
+        {/* Floating Drafting Coordinates & Meta Text */}
+        <div className="absolute left-6 bottom-6 right-6 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3 z-20 pointer-events-none select-none">
+          <div className="space-y-1.5 bg-[#FAF9F5]/90 px-4 py-3.5 rounded-lg border border-stone-200/80 shadow-3xs backdrop-blur-xs max-w-sm">
+            <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#7D123D] font-black block">SPECIFICATION METADATA</span>
+            <h3 className="font-serif text-lg font-normal text-stone-900 tracking-tight leading-none uppercase">
               {currentProject.domain}
             </h3>
-            <p className="font-mono text-xs text-stone-400 uppercase tracking-widest mt-1">
-              {currentProject.category}
+            <p className="font-sans text-[10px] text-stone-500 leading-normal font-semibold">
+              VENTURE TYPE: {currentProject.type.toUpperCase()}
             </p>
           </div>
-        ) : (
-          <Image 
-            src={displayImage} 
-            alt={currentProject.domain} 
-            fill 
-            sizes="(max-width: 1200px) 100vw, 1200px"
-            referrerPolicy="no-referrer"
-            onError={() => {
-              setFailedImages(prev => ({ ...prev, [currentProject.domain]: true }));
-            }}
-            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-          />
-        )}
+        </div>
       </div>
 
       {/* Dynamic visual dashboard layout and metrics */}
@@ -735,34 +754,38 @@ function ProjectDetailView({
         {/* Content detail panel on the right */}
         <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between min-h-[320px]">
           <div className="space-y-4">
-            <h4 className="font-serif font-bold text-stone-900 text-sm">Product Matrix</h4>
-            <p className="text-sm text-stone-600 leading-relaxed font-sans">
+            <h4 className="font-mono text-[10px] font-bold text-stone-400 uppercase tracking-widest border-b border-stone-200/40 pb-2">
+              Product Specification Matrix
+            </h4>
+            <p className="text-xs text-stone-600 leading-relaxed font-sans">
               Deploying highly specialized digital frameworks and physical materials under standard compliance protocols.
             </p>
             
-            <div className="space-y-3 font-mono text-sm pt-2">
-              <div className="flex justify-between pb-1.5 border-b border-stone-100">
+            <div className="space-y-3 font-mono text-[11px] pt-2 text-stone-700">
+              <div className="flex justify-between pb-1.5 border-b border-stone-150">
                 <span className="text-stone-400">Launch Timeline:</span>
-                <span className="text-stone-800 font-bold">Q2 2026</span>
+                <span className="text-stone-900 font-bold">Q2 2026</span>
               </div>
-              <div className="flex justify-between pb-1.5 border-b border-stone-100">
+              <div className="flex justify-between pb-1.5 border-b border-stone-150">
                 <span className="text-stone-400">Secured Funding:</span>
-                <span className="text-stone-800 font-bold">Seed Tier I</span>
+                <span className="text-stone-900 font-bold">Seed Tier I</span>
               </div>
-              <div className="flex justify-between pb-1.5 border-b border-stone-100">
+              <div className="flex justify-between pb-1.5 border-b border-stone-150">
                 <span className="text-stone-400">Audit Status:</span>
-                <span className="text-emerald-600 font-bold">COMPLIANT</span>
+                <span className="text-emerald-700 font-bold bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded text-[9px]">COMPLIANT</span>
               </div>
-              <div className="flex justify-between pb-1.5 border-b border-stone-100">
+              <div className="flex justify-between pb-1.5 border-b border-stone-150">
                 <span className="text-stone-400">Partner Access:</span>
-                <span className="text-stone-800 font-bold">ACTIVE</span>
+                <span className="text-stone-900 font-bold">ACTIVE</span>
               </div>
             </div>
           </div>
 
-          <div className="pt-2 border-t border-stone-100 mt-4">
-            <span className="font-mono text-xs text-stone-400 uppercase tracking-widest block font-bold mb-1">Ecosystem Integration</span>
-            <span className="text-sm text-stone-700 font-serif italic leading-snug block">Aligned under general partnership capital.</span>
+          <div className="pt-3 border-t border-stone-200/50 mt-4">
+            <span className="font-mono text-[9px] text-stone-400 uppercase tracking-widest block font-bold mb-1">Ecosystem Integration</span>
+            <span className="text-xs text-stone-600 font-serif italic leading-relaxed block">
+              Direct General Partnership custody &amp; capital allocation alignment.
+            </span>
           </div>
         </div>
 
@@ -771,17 +794,20 @@ function ProjectDetailView({
       {/* Rich descriptive editorial layout */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
         <div className="md:col-span-2 space-y-4">
-          <h3 className="font-serif text-xl text-stone-950 font-normal">Aesthetic Architecture &amp; Mission</h3>
-          <p className="text-sm text-stone-600 leading-relaxed font-sans">
+          <h3 className="font-serif text-xl text-stone-900 font-normal">Aesthetic Architecture &amp; Mission</h3>
+          <p className="text-stone-650 text-sm leading-relaxed font-sans">
             {currentProject.tagline} This platform is engineered strictly to resolve category-level hurdles in its respective industry. By combining procedural design, strict standards compliance, and an unhurried focus on sensory user layouts, we build sustainable, highly capitalized assets.
           </p>
-          <p className="text-sm text-stone-600 leading-relaxed font-sans">
+          <p className="text-stone-650 text-sm leading-relaxed font-sans">
             We avoid modern hype trends in favor of absolute functional utility and mathematical optimization, ensuring that every pixel, interaction, and database record serves to build authentic, long-term brand authority.
           </p>
         </div>
-        <div className="bg-stone-50 p-5 rounded-2xl border border-stone-200/50 space-y-3">
-          <h4 className="font-serif font-bold text-stone-900 text-xs uppercase tracking-wider">Strategic Pillars</h4>
-          <ul className="space-y-2 text-sm text-stone-600 leading-relaxed">
+        
+        <div className="bg-stone-50 p-5 rounded-2xl border border-stone-250/60 space-y-4">
+          <h4 className="font-mono text-[9px] font-bold text-stone-400 uppercase tracking-widest border-b border-stone-200/40 pb-2">
+            Strategic Pillars
+          </h4>
+          <ul className="space-y-3 text-[11px] font-sans text-stone-600 leading-relaxed">
             <li className="flex items-start gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-[#7D123D] shrink-0 mt-1.5" />
               <span>Deep layout integrity and frictionless micro-interactions.</span>
@@ -799,17 +825,17 @@ function ProjectDetailView({
       </div>
 
       {/* Central Call To Action at Bottom Center */}
-      <div className="flex flex-col items-center justify-center pt-12 pb-4">
+      <div className="flex flex-col items-center justify-center pt-10 pb-4 border-t border-stone-200/40">
         <a 
           href={currentProject.url} 
           target="_blank" 
           rel="noopener noreferrer"
-          className="px-8 py-3.5 bg-stone-950 hover:bg-[#7D123D] text-white font-mono text-[10px] uppercase tracking-widest rounded-full shadow-md hover:shadow-xl flex items-center gap-2 cursor-pointer transition-all duration-300 transform hover:scale-[1.03] active:scale-[0.97]"
+          className="px-8 py-3.5 bg-stone-900 hover:bg-[#7D123D] text-white font-mono text-[10px] uppercase tracking-widest rounded transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2 cursor-pointer"
         >
           <Globe className="h-3.5 w-3.5" />
           <span>VISIT {currentProject.domain.toUpperCase()}</span>
         </a>
-        <span className="text-[9px] text-stone-400 font-mono mt-2.5 uppercase tracking-wider">DIRECT DOMAIN CONNECTION</span>
+        <span className="text-[9px] text-stone-400 font-mono mt-2.5 uppercase tracking-widest font-semibold">{"// ARCSCAPE ADVISORY PARTNERS //"}</span>
       </div>
     </motion.section>
   );
@@ -853,7 +879,8 @@ type ViewType =
   | 'project-aleph'
   | 'project-jailsoft'
   | 'project-plano'
-  | 'project-humandemo';
+  | 'project-humandemo'
+  | 'project-biotrojan';
 
 const projectsData = [
   {
@@ -1159,6 +1186,22 @@ const projectsData = [
     accentBar: 'bg-cyan-500',
     status: 'Incubating' as const,
     readiness: 83
+  },
+  {
+    viewState: 'project-biotrojan' as const,
+    domain: 'biotrojan.com',
+    category: 'VIRUS SIMULATOR',
+    tagline: 'A deterministic viral mutation and pathogen propagation simulator built for academic epidemiological research.',
+    type: 'VIRAL SIMULATION ENGINE',
+    url: 'https://biotrojan.com/',
+    image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=600&q=80',
+    accentBg: 'group-hover:bg-red-600',
+    accentBorder: 'group-hover:border-red-500/40',
+    accentText: 'group-hover:text-red-300',
+    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(239,68,68,0.25)]',
+    accentBar: 'bg-red-500',
+    status: 'Active' as const,
+    readiness: 94
   }
 ];
 
@@ -1166,43 +1209,45 @@ function getProjectIcon(domain: string) {
   const cn = "h-4.5 w-4.5 text-stone-600 group-hover:text-[#7D123D] transition-colors duration-300";
   switch (domain.toLowerCase()) {
     case 'muzcast.com':
-      return <Users className={cn} />;
+      return <Music2 className={cn} />;
     case 'repulink.com':
-      return <Cpu className={cn} />;
+      return <Network className={cn} />;
     case 'xnui.com':
-      return <Layers className={cn} />;
+      return <Palette className={cn} />;
     case 'biofail.com':
-      return <Gamepad2 className={cn} />;
+      return <Dna className={cn} />;
     case 'kundalink.com':
-      return <Heart className={cn} />;
+      return <Flame className={cn} />;
     case 'chosenspot.com':
-      return <Map className={cn} />;
+      return <MapPin className={cn} />;
     case 'clonecraft.com':
-      return <Sparkles className={cn} />;
+      return <Bot className={cn} />;
     case 'exoshape.com':
-      return <Layers className={cn} />;
+      return <Shapes className={cn} />;
     case 'trueinheritor.com':
-      return <Lock className={cn} />;
+      return <Vault className={cn} />;
     case 'grzu.com':
-      return <Activity className={cn} />;
+      return <Terminal className={cn} />;
     case 'rp2p.com':
-      return <Radio className={cn} />;
+      return <Share2 className={cn} />;
     case 'holograph.cc':
-      return <Compass className={cn} />;
+      return <Fingerprint className={cn} />;
     case 'protosquad.com':
-      return <Building className={cn} />;
+      return <Printer className={cn} />;
     case 'izpe.com':
-      return <Cpu className={cn} />;
+      return <Atom className={cn} />;
     case 'bridge.ws':
-      return <ArrowUpRight className={cn} />;
+      return <GitMerge className={cn} />;
     case 'aleph.cc':
-      return <LineChart className={cn} />;
+      return <Brain className={cn} />;
     case 'jailsoft.com':
-      return <Shield className={cn} />;
+      return <ShieldCheck className={cn} />;
     case 'plano.cc':
-      return <Compass className={cn} />;
+      return <CalendarDays className={cn} />;
     case 'humandemo.com':
-      return <Users className={cn} />;
+      return <Moon className={cn} />;
+    case 'biotrojan.com':
+      return <ShieldAlert className={cn} />;
     default:
       return <Globe className={cn} />;
   }
@@ -1211,13 +1256,44 @@ function getProjectIcon(domain: string) {
 // Helper to classify project domains into human-meaningful categories
 function getCategoryGroup(domain: string): 'AI & Deep Tech' | 'Wellness & Life' | 'Enterprise & Tools' {
   const d = domain.toLowerCase();
-  if (d.includes('clonecraft') || d.includes('exoshape') || d.includes('aleph') || d.includes('holograph') || d.includes('repulink')) {
+  if (d.includes('clonecraft') || d.includes('exoshape') || d.includes('aleph') || d.includes('holograph') || d.includes('repulink') || d.includes('biotrojan')) {
     return 'AI & Deep Tech';
   }
   if (d.includes('muzcast') || d.includes('kundalink') || d.includes('humandemo') || d.includes('rp2p') || d.includes('chosenspot')) {
     return 'Wellness & Life';
   }
   return 'Enterprise & Tools';
+}
+
+// Helper to get consistent primary solid colors for project background banners
+function getProjectSolidColor(domain: string): string {
+  const colors = [
+    "bg-red-500",
+    "bg-blue-600",
+    "bg-amber-500",
+    "bg-emerald-600",
+    "bg-orange-500",
+    "bg-indigo-600",
+    "bg-purple-600",
+    "bg-rose-500",
+    "bg-teal-500",
+    "bg-cyan-500"
+  ];
+  let hash = 0;
+  for (let i = 0; i < domain.length; i++) {
+    hash = domain.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return colors[Math.abs(hash) % colors.length];
+}
+
+// Helper to shorten project taglines to 4-7 words for extremely minimalist design
+function getShortTagline(tagline: string): string {
+  const words = tagline.trim().split(/\s+/).filter(Boolean);
+  if (words.length <= 6) return tagline;
+  let result = words.slice(0, 6).join(' ');
+  // Remove any trailing commas, periods, colons or semicolons to look neat
+  result = result.replace(/[,.;:]+$/, '');
+  return result;
 }
 
 // Helper to provide realistic technical and product attributes (anti-AI slop)
@@ -1278,6 +1354,7 @@ export default function LandingPage() {
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
   const [selectedCategory, setSelectedCategory] = useState<'All' | 'AI & Deep Tech' | 'Wellness & Life' | 'Enterprise & Tools'>('All');
 
+
   const filteredProjects = React.useMemo(() => {
     let list = [...projectsData].sort((a, b) => a.domain.toLowerCase().localeCompare(b.domain.toLowerCase()));
     if (selectedCategory !== 'All') {
@@ -1317,6 +1394,22 @@ export default function LandingPage() {
   };
   const [searchQuery, setSearchQuery] = useState('');
   const [dashboardSearch, setDashboardSearch] = useState('');
+  
+  // Interactive feature states for redesigned de-slopped pages
+  const [inquirySubmitted, setInquirySubmitted] = useState(false);
+  const [supportFormData, setSupportFormData] = useState({
+    name: '',
+    affiliation: '',
+    email: '',
+    classification: 'LP Inquiry',
+    message: ''
+  });
+  const [checkedSteps, setCheckedSteps] = useState<Record<string, boolean>>({
+    step1: false,
+    step2: false,
+    step3: false,
+    step4: false
+  });
 
   const renderBreadcrumbs = () => {
     if (activeView === 'portal') return null;
@@ -1619,30 +1712,30 @@ export default function LandingPage() {
   );
 
   return (
-    <main className="relative min-h-screen bg-[#FAF8F4] text-stone-900 font-sans flex flex-col justify-between overflow-x-hidden">
+    <main className="relative min-h-screen bg-[#FAF9F5] text-stone-900 font-sans flex flex-col justify-between overflow-x-hidden">
       
       {/* Subtle pure aesthetic background grids */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e5e0_1px,transparent_1px)] [background-size:32px_32px] opacity-10 pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(#E5E5DE_1px,transparent_1px)] [background-size:32px_32px] opacity-25 pointer-events-none z-0" />
 
       {/* Beautiful, ultra-premium geometric architectural blueprint graphic stretching full screen width at the top of the portal page */}
       {activeView === 'portal' && (
         <div className="absolute top-0 left-0 right-0 h-[480px] md:h-[540px] z-0 select-none pointer-events-none overflow-hidden flex items-center justify-center">
           {/* Soft ambient backdrops */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#FAF8F4] via-[#F3EFE9]/85 to-[#FAF8F4]" />
-          <div className="absolute w-[800px] h-[360px] top-12 rounded-full bg-[#FAF0E4]/60 blur-[120px] mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FAF9F5] via-[#F4F3ED]/80 to-[#FAF9F5]" />
+          <div className="absolute w-[800px] h-[360px] top-12 rounded-full bg-[#E5DFD3]/40 blur-[120px] mix-blend-multiply" />
 
           {/* Architectural Blueprint SVG spanning full-width */}
           <svg className="w-full h-full min-w-[1440px] overflow-visible" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               {/* Millimeter engineering graph grid pattern */}
               <pattern id="millimeterGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E6DDD2" strokeWidth="0.5" />
-                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#D3C5B1" strokeWidth="0.8" opacity="0.45" />
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E5E5DE" strokeWidth="0.5" />
+                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#D6D6CE" strokeWidth="0.8" opacity="0.45" />
               </pattern>
             </defs>
 
             {/* Millimeter grid layer */}
-            <rect width="100%" height="100%" fill="url(#millimeterGrid)" opacity="0.65" />
+            <rect width="100%" height="100%" fill="url(#millimeterGrid)" opacity="0.25" />
 
             {/* Interactive concentric layout grid that moves subtly with the cursor */}
             <motion.g
@@ -1653,19 +1746,19 @@ export default function LandingPage() {
               transition={{ type: "spring", stiffness: 65, damping: 28, mass: 0.7 }}
             >
               {/* Central focus compass grid (concentric blueprint circles centered at 720, 140) */}
-              <circle cx="720" cy="140" r="280" stroke="#A48660" strokeWidth="0.8" strokeDasharray="4,8" opacity="0.55" />
-              <circle cx="720" cy="140" r="200" stroke="#7C5F3B" strokeWidth="1.2" opacity="0.65" />
-              <circle cx="720" cy="140" r="140" stroke="#7C5F3B" strokeWidth="0.8" strokeDasharray="3,6" opacity="0.6" />
-              <circle cx="720" cy="140" r="80" stroke="#5C462D" strokeWidth="1.0" opacity="0.75" />
-              <circle cx="720" cy="140" r="30" stroke="#5C462D" strokeWidth="0.6" strokeDasharray="1,3" opacity="0.5" />
+              <circle cx="720" cy="140" r="280" stroke="#D2D2CA" strokeWidth="0.8" strokeDasharray="4,8" opacity="0.25" />
+              <circle cx="720" cy="140" r="200" stroke="#C5C4BE" strokeWidth="1.2" opacity="0.3" />
+              <circle cx="720" cy="140" r="140" stroke="#C5C4BE" strokeWidth="0.8" strokeDasharray="3,6" opacity="0.25" />
+              <circle cx="720" cy="140" r="80" stroke="#A3A29B" strokeWidth="1.0" opacity="0.35" />
+              <circle cx="720" cy="140" r="30" stroke="#A3A29B" strokeWidth="0.6" strokeDasharray="1,3" opacity="0.2" />
               
               {/* Vertical and horizontal alignment lines */}
-              <line x1="720" y1="0" x2="720" y2="320" stroke="#7C5F3B" strokeWidth="0.8" strokeDasharray="6,6" opacity="0.65" />
-              <line x1="120" y1="140" x2="1320" y2="140" stroke="#7C5F3B" strokeWidth="0.6" opacity="0.55" />
+              <line x1="720" y1="0" x2="720" y2="320" stroke="#C5C4BE" strokeWidth="0.8" strokeDasharray="6,6" opacity="0.25" />
+              <line x1="120" y1="140" x2="1320" y2="140" stroke="#C5C4BE" strokeWidth="0.6" opacity="0.2" />
               
               {/* Grid helper axes */}
-              <line x1="420" y1="20" x2="420" y2="300" stroke="#A48660" strokeWidth="0.5" strokeDasharray="3,6" opacity="0.45" />
-              <line x1="1020" y1="20" x2="1020" y2="300" stroke="#A48660" strokeWidth="0.5" strokeDasharray="3,6" opacity="0.45" />
+              <line x1="420" y1="20" x2="420" y2="300" stroke="#D2D2CA" strokeWidth="0.5" strokeDasharray="3,6" opacity="0.2" />
+              <line x1="1020" y1="20" x2="1020" y2="300" stroke="#D2D2CA" strokeWidth="0.5" strokeDasharray="3,6" opacity="0.2" />
             </motion.g>
 
             {/* Trademark sweeping arch contours with subtle opposite motion for rich parallax depth */}
@@ -1679,23 +1772,23 @@ export default function LandingPage() {
               {/* Majestic vaulting arches */}
               <path 
                 d="M 120 320 Q 720 40 1320 320" 
-                stroke="#5C462D" 
+                stroke="#9A9992" 
                 strokeWidth="2.2" 
-                opacity="0.85"
+                opacity="0.35"
               />
               <path 
                 d="M 180 320 Q 720 80 1260 320" 
-                stroke="#7C5F3B" 
+                stroke="#B2B1AA" 
                 strokeWidth="1.2" 
                 strokeDasharray="8,8"
-                opacity="0.7"
+                opacity="0.25"
               />
               <path 
                 d="M 60 320 Q 720 10 1380 320" 
-                stroke="#A48660" 
+                stroke="#C6C5BE" 
                 strokeWidth="0.8" 
                 strokeDasharray="2,4"
-                opacity="0.5"
+                opacity="0.2"
               />
             </motion.g>
           </svg>
@@ -1704,7 +1797,7 @@ export default function LandingPage() {
 
       {/* Modern Top Header Row */}
       <div className="w-full z-20 px-4 sm:px-10 md:px-16 pt-4 sm:pt-6 md:pt-8">
-        <header className="w-full flex justify-between items-center pb-4 border-b border-stone-200/50">
+        <header className="w-full flex justify-between items-center pb-4 border-b border-stone-200/40">
           <div 
             onClick={() => {
               setActiveView('portal');
@@ -1715,9 +1808,9 @@ export default function LandingPage() {
             <ArcscapeCurvedLogo size="small" />
           </div>
           
-          <div className="flex items-center gap-3 sm:gap-6">
+          <div className="flex items-center gap-4 sm:gap-6">
             {/* Highly readable, ultra-clean horizontal navigation */}
-            <nav className="flex items-center gap-3.5 sm:gap-6 text-stone-600 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider">
+            <nav className="flex items-center gap-4 sm:gap-6 text-stone-500 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.18em]">
               <button
                 onClick={() => {
                   setActiveView('portal');
@@ -1728,11 +1821,14 @@ export default function LandingPage() {
                     }
                   }, 50);
                 }}
-                className={`hover:text-[#7D123D] transition-colors cursor-pointer relative py-1 px-1.5 ${activeView === 'portal' ? 'text-[#7D123D] font-extrabold' : ''}`}
+                className={`hover:text-stone-900 transition-all cursor-pointer relative py-1 ${activeView === 'portal' ? 'text-stone-900 font-extrabold font-semibold' : 'font-medium'}`}
               >
                 <span>Ventures</span>
                 {activeView === 'portal' && (
-                  <span className="absolute bottom-[-4px] left-1 right-1 h-[2px] bg-[#7D123D] rounded-full" />
+                  <motion.span 
+                    layoutId="headerNavUnderline"
+                    className="absolute -bottom-[17px] left-0 right-0 h-[1.5px] bg-[#7D123D]" 
+                  />
                 )}
               </button>
               <button
@@ -1740,11 +1836,14 @@ export default function LandingPage() {
                   setActiveView('about');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className={`hover:text-[#7D123D] transition-colors cursor-pointer relative py-1 px-1.5 ${activeView === 'about' ? 'text-[#7D123D] font-extrabold' : ''}`}
+                className={`hover:text-stone-900 transition-all cursor-pointer relative py-1 ${activeView === 'about' ? 'text-stone-900 font-extrabold font-semibold' : 'font-medium'}`}
               >
                 <span>About</span>
                 {activeView === 'about' && (
-                  <span className="absolute bottom-[-4px] left-1 right-1 h-[2px] bg-[#7D123D] rounded-full" />
+                  <motion.span 
+                    layoutId="headerNavUnderline"
+                    className="absolute -bottom-[17px] left-0 right-0 h-[1.5px] bg-[#7D123D]" 
+                  />
                 )}
               </button>
               <button
@@ -1752,27 +1851,33 @@ export default function LandingPage() {
                   setActiveView('support');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className={`hover:text-[#7D123D] transition-colors cursor-pointer relative py-1 px-1.5 ${activeView === 'support' ? 'text-[#7D123D] font-extrabold' : ''}`}
+                className={`hover:text-stone-900 transition-all cursor-pointer relative py-1 ${activeView === 'support' ? 'text-stone-900 font-extrabold font-semibold' : 'font-medium'}`}
               >
                 <span>Support</span>
                 {activeView === 'support' && (
-                  <span className="absolute bottom-[-4px] left-1 right-1 h-[2px] bg-[#7D123D] rounded-full" />
+                  <motion.span 
+                    layoutId="headerNavUnderline"
+                    className="absolute -bottom-[17px] left-0 right-0 h-[1.5px] bg-[#7D123D]" 
+                  />
                 )}
               </button>
             </nav>
 
-            <div className="h-4 w-[1px] bg-stone-200/80 hidden xs:block" />
-
+            {/* Silent structural spacer line */}
+            <span className="hidden sm:inline h-4 w-[1px] bg-stone-300" />
+            
             {activeView === 'dashboard' ? (
               <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                <span className="font-sans text-[10px] tracking-wide text-stone-500 font-medium hidden sm:inline">Authorized Partner</span>
+                <span className="font-mono text-[9px] uppercase tracking-wider text-[#7D123D] font-extrabold flex items-center bg-[#FAF4F6] border border-[#EBE1E4] px-2.5 py-1 rounded-md">
+                  Authorized Partner
+                </span>
                 <button
                   type="button"
                   onClick={() => {
                     setPassword('');
                     setActiveView('portal');
                   }}
-                  className="px-3 py-1.5 border border-stone-200 hover:border-stone-800 text-stone-700 font-mono text-[9px] font-bold uppercase tracking-wider rounded-full transition-all cursor-pointer bg-white shadow-2xs"
+                  className="px-3 py-1 border border-stone-300 hover:border-stone-800 text-stone-700 hover:text-stone-950 font-mono text-[9px] font-bold uppercase tracking-widest rounded-full transition-all cursor-pointer bg-white"
                 >
                   Lock
                 </button>
@@ -1781,14 +1886,15 @@ export default function LandingPage() {
               <button
                 type="button"
                 onClick={() => setIsLoginOpen(true)}
-                className="px-3 py-1.5 sm:px-4 sm:py-2 bg-stone-900 hover:bg-[#7D123D] text-white font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-full transition-all duration-300 shadow-2xs cursor-pointer flex items-center gap-1.5 border border-transparent shrink-0"
+                className="px-3 py-1.5 border border-stone-200 hover:border-stone-800 text-stone-650 hover:text-stone-900 font-mono text-[9px] uppercase tracking-wider rounded-md transition-all duration-300 cursor-pointer flex items-center gap-1.5 bg-[#F5F5F0] hover:bg-white shadow-3xs shrink-0"
               >
-                <Lock className="h-3 w-3 shrink-0" />
+                <Lock className="h-2.5 w-2.5 text-[#7D123D] shrink-0" />
                 <span>Partner Access</span>
               </button>
             )}
           </div>
         </header>
+
         {renderBreadcrumbs()}
       </div>
 
@@ -1807,89 +1913,71 @@ export default function LandingPage() {
               className="flex flex-col items-center justify-center w-full py-2 relative"
             >
               
-              {/* Hero Banner - Highly integrated, unbloated architectural vault layout */}
-              <div className="w-full max-w-4xl mx-auto relative flex flex-col items-center pt-4 pb-12 mb-8 text-center z-10 px-4">
+              {/* Hero Banner - Majestic, high-end Swiss-gallery style layout */}
+              <div className="w-full max-w-5xl mx-auto relative flex flex-col items-center pt-8 pb-10 mb-8 text-center z-10 px-4">
                 {/* 1. Large Curvature Logo - Elegant, cinematic static entrance */}
                 <motion.div 
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-full max-w-[550px] sm:max-w-[700px] md:max-w-[850px] flex justify-center overflow-visible select-none pointer-events-none -mb-8 sm:-mb-16 md:-mb-24 lg:-mb-[110px] relative"
+                  className="w-full max-w-[550px] sm:max-w-[750px] flex justify-center overflow-visible select-none pointer-events-none relative"
                 >
                   <ArcscapeCurvedLogo size="large" />
                 </motion.div>
 
-                {/* 2. Hero Content Frame - Sitting snuggly under the curve */}
-                <div className="relative z-10 space-y-5 max-w-2xl mx-auto pt-8 sm:pt-14">
-                  {/* Subtle, beautiful static visual separator */}
-                  <div className="flex items-center justify-center gap-3 opacity-35">
-                    <span className="w-2 h-[1px] bg-[#7D123D]" />
-                    <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-[#7D123D] font-extrabold">Established MMXXIV</span>
-                    <span className="w-2 h-[1px] bg-[#7D123D]" />
-                  </div>
+                {/* 2. Delicate Architectural Marker */}
+                <motion.div 
+                  initial={{ scaleY: 0, opacity: 0 }}
+                  animate={{ scaleY: 1, opacity: 0.3 }}
+                  transition={{ delay: 0.4, duration: 1 }}
+                  className="h-10 w-[1px] bg-gradient-to-b from-[#7D123D] to-transparent my-6 origin-top"
+                />
 
-                  <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-stone-900 leading-tight">
-                    Architects of the <span className="font-serif italic text-[#7D123D]">Next Digital Frontier</span>
+                {/* 3. Hero Content Frame */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative z-10 max-w-2xl mx-auto text-center space-y-6"
+                >
+                  <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.3em] font-extrabold block">
+                    {"// ADVISORY PARTNERS AG // EST. ZUG, SWITZERLAND"}
+                  </span>
+                  
+                  <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-extralight tracking-tight text-stone-900 leading-[1.15] max-w-xl mx-auto">
+                    We seed &amp; build the next wave of <span className="font-serif italic text-[#7D123D] font-normal">category-defining</span> venture systems.
                   </h1>
                   
-                  <p className="text-stone-600 font-sans text-sm sm:text-[15px] leading-relaxed max-w-lg mx-auto">
-                    We partner with founders to build elegant software, high-integrity systems, and beautiful user experiences.
+                  <p className="font-sans text-xs sm:text-sm text-stone-500 leading-relaxed max-w-lg mx-auto font-medium">
+                    A boutique investment syndicate and design house organizing high-end, mathematically compliant consumer brands and deep computational tech laboratories.
                   </p>
-
-                  {/* High-end Balanced CTA Composition - highly legible, modern sans buttons */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3 w-full max-w-md mx-auto">
-                    <button 
-                      onClick={() => {
-                        const portfolioSection = document.getElementById('portfolio-section');
-                        if (portfolioSection) {
-                          portfolioSection.scrollIntoView({ behavior: 'smooth' });
-                        }
-                      }}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans text-sm font-semibold text-white bg-stone-900 hover:bg-[#7D123D] px-6 py-2.5 rounded-full transition-all duration-250 shadow-xs hover:shadow-md cursor-pointer border border-transparent"
-                    >
-                      <span>Explore Assets</span>
-                      <span className="text-xs">↓</span>
-                    </button>
-                    <button 
-                      onClick={() => {
-                        setActiveView('about');
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans text-sm font-semibold text-stone-700 hover:text-stone-900 hover:bg-stone-50 bg-white border border-stone-200 px-6 py-2.5 rounded-full transition-all duration-250 shadow-3xs hover:shadow-2xs cursor-pointer"
-                    >
-                      <span>Read Manifest</span>
-                      <span className="text-xs">→</span>
-                    </button>
-                  </div>
-                </div>
+                </motion.div>
               </div>
 
               {/* Category Filter Tab Bar - zero slop, extremely crisp design */}
-              <div className="w-full text-left mb-8 max-w-7xl mx-auto px-4 z-10">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-200/40 pb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="h-1 w-1 rounded-full bg-[#7D123D]" />
-                    <h2 className="font-mono text-[9px] uppercase tracking-[0.2em] text-stone-500 font-extrabold">
-                      STUDIO PORTFOLIO / VENTURES INDEX
-                    </h2>
-                  </div>
-                  
-                  {/* High-end Minimal Tabs */}
-                  <div className="flex flex-wrap items-center gap-1.5">
-                    {(['All', 'AI & Deep Tech', 'Wellness & Life', 'Enterprise & Tools'] as const).map((cat) => (
+              <div className="w-full mb-8 max-w-7xl mx-auto px-4 z-10 flex justify-center">
+                <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-2">
+                  {(['All', 'AI & Deep Tech', 'Wellness & Life', 'Enterprise & Tools'] as const).map((cat, cIdx) => (
+                    <React.Fragment key={cat}>
+                      {cIdx > 0 && <span className="text-stone-300 select-none font-mono text-[9px] mx-1">/</span>}
                       <button
-                        key={cat}
                         onClick={() => setSelectedCategory(cat)}
-                        className={`px-3.5 py-1.5 rounded-full font-mono text-[9px] uppercase tracking-wider font-bold transition-all cursor-pointer ${
+                        className={`px-2 py-1 font-mono text-[10px] uppercase tracking-wider font-bold transition-all cursor-pointer relative ${
                           selectedCategory === cat
-                            ? 'bg-stone-900 text-white shadow-2xs'
-                            : 'bg-stone-50 text-stone-500 hover:bg-stone-100/80 hover:text-stone-800'
+                            ? 'text-stone-900 font-extrabold'
+                            : 'text-stone-400 hover:text-stone-800'
                         }`}
                       >
-                        {cat}
+                        <span>{cat}</span>
+                        {selectedCategory === cat && (
+                          <motion.span 
+                            layoutId="activeCategoryUnderline"
+                            className="absolute bottom-[-4px] left-2 right-2 h-[1px] bg-[#7D123D]" 
+                          />
+                        )}
                       </button>
-                    ))}
-                  </div>
+                    </React.Fragment>
+                  ))}
                 </div>
               </div>
 
@@ -1905,110 +1993,61 @@ export default function LandingPage() {
                   return (
                     <motion.div
                       key={project.domain}
-                      whileHover={{ y: -4 }}
+                      whileHover={{ 
+                        scale: 1.025, 
+                        y: -6,
+                        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                      }}
                       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                       onClick={() => {
                         setActiveView(project.viewState as any);
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
-                      className={`relative p-5 overflow-hidden bg-white rounded-2xl border border-stone-200/85 hover:shadow-[0_12px_32px_rgba(0,0,0,0.03)] transition-all duration-300 flex flex-col justify-between group h-[385px] w-full cursor-pointer ${project.accentBorder} ${project.glowColor}`}
+                      className="relative p-3.5 overflow-hidden bg-white rounded-2xl border border-stone-200/60 hover:border-stone-400/80 transition-all duration-300 flex flex-col justify-between group h-[225px] w-full cursor-pointer shadow-xs"
                     >
-                      {/* Quiet Top Header Row: Category Group & Cloned Icon matching the theme */}
-                      <div className="flex items-center justify-between gap-2 mb-3 shrink-0">
-                        <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-stone-400 font-bold">
-                          {getCategoryGroup(project.domain)}
-                        </span>
-                        
-                        <div className={`h-6 w-6 rounded-full bg-stone-50 border border-stone-100 flex items-center justify-center text-stone-400 transition-all duration-350 shrink-0 ${theme.hoverBg} ${theme.hoverText}`}>
-                          {React.cloneElement(getProjectIcon(project.domain), { className: "h-3 w-3 text-stone-400 group-hover:text-inherit transition-colors" })}
+                      {/* Card Header Section - Solid light eggshell grey on EVERY card with super large bleeding white icon */}
+                      <div className="relative w-full h-[145px] overflow-hidden bg-[#F5F5F0] rounded-xl border border-stone-200/50 shrink-0 flex items-center justify-center">
+                        {/* Super large white icon flat on top center, bleeding into background */}
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 overflow-hidden">
+                          {React.cloneElement(getProjectIcon(project.domain), { 
+                            strokeWidth: 2.2,
+                            className: "w-[260px] h-[260px] text-white opacity-100 group-hover:scale-[1.05] transition-all duration-500" 
+                          })}
                         </div>
-                      </div>
 
-                      {/* Redesigned Card Image Section - elegant, clean, zero slop with thematic tinting */}
-                      <div className="relative w-full h-36 overflow-hidden bg-stone-50 rounded-xl border border-stone-150 shrink-0 block">
-                        {isFailed ? (
-                          <div className="absolute inset-0 flex flex-col items-center justify-center p-4 bg-gradient-to-br from-stone-50 to-stone-100/40">
-                            {React.cloneElement(getProjectIcon(project.domain), { 
-                              className: `h-8 w-8 mb-2 transition-colors ${theme.text}` 
-                            })}
-                            <span className="font-sans text-[11px] font-semibold text-stone-500 uppercase tracking-widest">
-                              {project.domain}
-                            </span>
-                          </div>
-                        ) : (
-                          <>
-                            <Image 
-                              src={displayImage} 
-                              alt={project.domain} 
-                              fill
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                              referrerPolicy="no-referrer"
-                              onError={() => {
-                                setFailedImages(prev => ({ ...prev, [project.domain]: true }));
-                              }}
-                              className="object-cover filter grayscale-[15%] sepia-[5%] group-hover:grayscale-0 group-hover:sepia-0 group-hover:scale-[1.03] transition-all duration-500 ease-out opacity-100"
-                            />
-                            
-                            {/* Elegant consistent tint overlay that matches the styling theme of each image beautifully and softens on hover */}
-                            <div 
-                              className="absolute inset-0 mix-blend-color opacity-70 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none z-10" 
-                              style={{ backgroundColor: `rgba(${theme.rgb}, 0.18)` }}
-                            />
-                            <div 
-                              className="absolute inset-0 opacity-20 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none z-10" 
-                              style={{ backgroundColor: `rgba(${theme.rgb}, 0.25)` }}
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-45 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none z-10" />
-                          </>
-                        )}
-                      </div>
-
-                      {/* Card Info Section - clean, highly legible */}
-                      <div className="flex flex-col flex-grow justify-between text-left pt-3.5">
-                        <div className="space-y-1">
-                          <span className={`font-serif text-[17px] font-bold text-stone-900 transition-colors tracking-tight block ${theme.hoverText}`}>
-                            {project.domain}
+                        {/* Title text ABOVE CENTER over the icon with short tagline underneath */}
+                        <div className="absolute inset-x-0 top-8 bottom-4 flex flex-col justify-start items-center z-20 px-4 text-center pointer-events-none">
+                          <span className="font-sans text-[12px] sm:text-[13.5px] uppercase tracking-[0.12em] font-black text-stone-950 group-hover:text-[#7D123D] transition-colors duration-300 drop-shadow-[0_1.5px_2px_rgba(255,255,255,1)]">
+                            {project.domain.toUpperCase()}
                           </span>
-
-                          <p className="text-xs text-stone-500 leading-relaxed font-sans font-normal line-clamp-2">
-                            {project.tagline}
-                          </p>
+                          <span className="font-sans text-[11px] leading-relaxed text-stone-600 mt-3.5 max-w-[92%] font-semibold transition-colors duration-300 drop-shadow-[0_1.5px_1.5px_rgba(255,255,255,1)]">
+                            {getShortTagline(project.tagline)}
+                          </span>
                         </div>
+                      </div>
 
-                        {/* Distinct click areas: View Details & Live Project Link */}
-                        <div className="pt-3 border-t border-stone-100 mt-3 shrink-0 space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="font-mono text-[8px] uppercase tracking-wider text-stone-400 font-bold block truncate">
-                              {getProjectTech(project.domain).join(' \u2022 ')}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center gap-2">
-                            {/* View Details action */}
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setActiveView(project.viewState as any);
-                                window.scrollTo({ top: 0, behavior: 'smooth' });
-                              }}
-                              className="flex-1 inline-flex items-center justify-center font-sans text-[10px] font-bold uppercase tracking-wider text-stone-600 hover:text-stone-900 bg-stone-100/70 hover:bg-stone-200/60 border border-stone-200/40 py-1.5 rounded-lg transition-colors cursor-pointer"
-                            >
-                              View Details
-                            </button>
-
-                            {/* Direct website link action tailored with project theme colors */}
-                            <a
-                              href={project.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                              className={`flex-1 inline-flex items-center justify-center gap-1 font-sans text-[10px] font-extrabold uppercase tracking-wider text-white transition-colors py-1.5 rounded-lg shadow-3xs cursor-pointer ${theme.bgClass}`}
-                            >
-                              <span>Live Project</span>
-                              <ExternalLink className="h-2.5 w-2.5" />
-                            </a>
-                          </div>
+                      {/* Card Info Section with 2 Pill Buttons */}
+                      <div className="flex flex-col flex-grow justify-end pt-2">
+                        <div className="flex items-center justify-between gap-2.5">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveView(project.viewState as any);
+                              window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                            className="flex-1 flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider bg-stone-100 hover:bg-stone-200 text-stone-700 transition-all duration-300 border border-stone-200/80 shadow-sm"
+                          >
+                            More Details
+                          </button>
+                          <a
+                            href={project.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="flex-1 flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider bg-stone-900 hover:bg-[#7D123D] text-white transition-all duration-300 shadow-sm"
+                          >
+                            View Site <ArrowUpRight className="w-3 h-3" />
+                          </a>
                         </div>
                       </div>
                     </motion.div>
@@ -2157,66 +2196,90 @@ export default function LandingPage() {
             </motion.section>
           )}
 
+
+
           {/* VIEW: ABOUT */}
           {activeView === 'about' && (
             <motion.section 
               key="about-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-8 max-w-3xl mx-auto w-full"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="max-w-3xl mx-auto w-full space-y-10 py-6 text-left"
             >
-              <div className="space-y-3">
+              {/* Unified Header */}
+              <div className="space-y-6">
                 <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  onClick={() => {
+                    setActiveView('portal');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="group font-mono text-[10px] text-stone-400 hover:text-[#7D123D] transition-colors flex items-center gap-1.5 uppercase cursor-pointer tracking-widest font-bold"
                 >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
+                  <ArrowLeft className="h-3 w-3 group-hover:-translate-x-0.5 transition-transform duration-200" />
+                  <span>Return to Access</span>
                 </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Who We Are</h2>
-                <p className="text-sm text-stone-500 font-serif italic">Crafting lasting value through patient capital, absolute design honesty, and operational precision.</p>
-              </div>
-
-              <div className="prose prose-stone text-stone-700 text-sm leading-relaxed space-y-4">
-                <p>
-                  Arcscape Capital operates as a bespoke venture development team and institutional investment firm. We organize, seed, and build dynamic consumer-facing brands and computational startups that define their niche rather than conforming to legacy markets.
-                </p>
-                <p>
-                  We believe that authentic venture architecture requires deep design alignment, mathematical capitalization modeling, and a profound commitment to usability over modern aesthetic trendiness. We avoid the hollow noise of high-velocity funding hype, focusing instead on structural longevity, robust compliance standards, and sustainable cash-flow mechanics.
-                </p>
-              </div>
-
-              {/* Three Pillars Bento Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-                <div className="bg-white p-5 rounded-xl border border-stone-200/80 space-y-2">
-                  <Compass className="h-5 w-5 text-[#7D123D]" />
-                  <h4 className="font-serif font-semibold text-stone-900 text-sm">Patient Incubation</h4>
-                  <p className="text-[11px] text-stone-500 leading-relaxed">
-                    We seed businesses with no arbitrary exit timelines, prioritizing organic cash growth and market resiliency.
-                  </p>
-                </div>
-                <div className="bg-white p-5 rounded-xl border border-stone-200/80 space-y-2">
-                  <Scale className="h-5 w-5 text-[#7D123D]" />
-                  <h4 className="font-serif font-semibold text-stone-900 text-sm">Regulatory Fidelity</h4>
-                  <p className="text-[11px] text-stone-500 leading-relaxed">
-                    Every asset is structured to comply perfectly with modern global security and intellectual framework matrices.
-                  </p>
-                </div>
-                <div className="bg-white p-5 rounded-xl border border-stone-200/80 space-y-2">
-                  <Award className="h-5 w-5 text-[#7D123D]" />
-                  <h4 className="font-serif font-semibold text-stone-900 text-sm">Design Excellence</h4>
-                  <p className="text-[11px] text-stone-500 leading-relaxed">
-                    No template layouts or lazy designs. Every viewport and code asset is crafted from first-principles typography.
-                  </p>
+                
+                <div className="border-t border-b border-stone-200/40 py-6 flex flex-col md:flex-row justify-between items-start md:items-baseline gap-4">
+                  <div className="space-y-1">
+                    <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.25em] font-extrabold block">
+                      Arcscape Capital // Private Register
+                    </span>
+                    <h2 className="font-serif text-3xl font-light text-stone-900 tracking-tight">Who We Are</h2>
+                  </div>
+                  <span className="font-mono text-[9px] text-stone-400 uppercase tracking-widest bg-stone-100/60 px-3 py-1 rounded border border-stone-200/50">
+                    Ref: AC-ABOUT
+                  </span>
                 </div>
               </div>
 
-              <div className="pt-6 text-center">
+              {/* Content Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                <div className="md:col-span-2 space-y-6">
+                  <p className="font-serif text-lg text-stone-800 leading-relaxed font-light">
+                    Arcscape Capital operates as a bespoke venture development team and institutional investment firm. We organize, seed, and build dynamic consumer-facing brands and computational startups that define their niche rather than conforming to legacy markets.
+                  </p>
+                  <p className="text-stone-650 text-sm leading-relaxed font-sans">
+                    We believe that authentic venture architecture requires deep design alignment, mathematical capitalization modeling, and a profound commitment to usability over modern aesthetic trendiness. We avoid the hollow noise of high-velocity funding hype, focusing instead on structural longevity, robust compliance standards, and sustainable cash-flow mechanics.
+                  </p>
+                  <p className="text-stone-650 text-sm leading-relaxed font-sans">
+                    Through patient capital and direct stewardship, we build alongside our founders from the initial protocol layer up to consumer launch, ensuring that every interface is a masterpiece of visual honesty and computational precision.
+                  </p>
+                </div>
+
+                <div className="bg-stone-50 p-5 rounded-xl border border-stone-250/60 space-y-5">
+                  <h4 className="font-mono text-[9px] font-bold text-stone-400 uppercase tracking-widest border-b border-stone-200/40 pb-2">Firm Mandates</h4>
+                  <div className="space-y-5">
+                    <div className="space-y-1">
+                      <h5 className="font-serif text-stone-900 font-medium text-xs uppercase tracking-wide">Patient Incubation</h5>
+                      <p className="text-[11px] text-stone-500 leading-relaxed font-sans">
+                        We seed businesses with no arbitrary exit timelines, prioritizing organic growth and market resiliency.
+                      </p>
+                    </div>
+                    <div className="space-y-1">
+                      <h5 className="font-serif text-stone-900 font-medium text-xs uppercase tracking-wide">Regulatory Fidelity</h5>
+                      <p className="text-[11px] text-stone-500 leading-relaxed font-sans">
+                        Every asset is structured to comply perfectly with global security and intellectual property frameworks.
+                      </p>
+                    </div>
+                    <div className="space-y-1">
+                      <h5 className="font-serif text-stone-900 font-medium text-xs uppercase tracking-wide">Design Excellence</h5>
+                      <p className="text-[11px] text-stone-500 leading-relaxed font-sans">
+                        No template layouts or lazy structures. Every viewport and code asset is crafted from first-principles.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-stone-200/40 flex justify-center">
                 <button
                   type="button"
-                  onClick={() => setActiveView('support')}
-                  className="px-6 py-2.5 bg-[#7D123D] hover:bg-[#9E1D51] text-white font-mono text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all shadow-sm cursor-pointer"
+                  onClick={() => {
+                    setActiveView('support');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="px-6 py-3 bg-stone-900 hover:bg-[#7D123D] text-white font-mono text-[10px] font-bold uppercase tracking-widest rounded transition-all shadow-sm cursor-pointer"
                 >
                   Contact Our Partners
                 </button>
@@ -2224,262 +2287,286 @@ export default function LandingPage() {
             </motion.section>
           )}
 
-          {/* VIEW: SUPPORT DESK (INTERACTIVE FORM) */}
+          {/* VIEW: SUPPORT DESK */}
           {activeView === 'support' && (
             <motion.section 
               key="support-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-8 max-w-2xl mx-auto w-full"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="max-w-2xl mx-auto w-full space-y-12 py-6 text-left"
             >
-              <div className="space-y-2 text-center sm:text-left">
+              {/* Unified Header */}
+              <div className="space-y-6">
                 <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  onClick={() => {
+                    setActiveView('portal');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="group font-mono text-[10px] text-stone-400 hover:text-[#7D123D] transition-colors flex items-center gap-1.5 uppercase cursor-pointer tracking-widest font-semibold"
                 >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
+                  <ArrowLeft className="h-3 w-3 group-hover:-translate-x-0.5 transition-transform duration-200" />
+                  <span>Return to Access</span>
                 </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Advisor Support Desk</h2>
-                <p className="text-xs text-stone-500">Contact our general partner desks, request token assistance, or submit venture prospectuses.</p>
+                
+                <div className="border-t border-b border-stone-200/40 py-6 flex flex-col md:flex-row justify-between items-start md:items-baseline gap-4">
+                  <div className="space-y-1">
+                    <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.25em] font-extrabold block">
+                      Arcscape Capital // Private Register
+                    </span>
+                    <h2 className="font-serif text-3xl font-light text-stone-900 tracking-tight">Partner Support Desk</h2>
+                  </div>
+                  <span className="font-mono text-[9px] text-stone-400 uppercase tracking-widest bg-stone-100/60 px-3 py-1 rounded border border-stone-200/50">
+                    Ref: AC-SUPPORT
+                  </span>
+                </div>
               </div>
 
-              <div className="bg-white rounded-2xl border border-stone-200/85 p-6 sm:p-8 shadow-sm">
-                <AnimatePresence mode="wait">
-                  {!supportIsRevealed ? (
-                    <motion.div
-                      key="verification-gate"
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      className="space-y-6"
-                    >
-                      <div className="space-y-2 text-center sm:text-left">
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#7D123D]/5 border border-[#7D123D]/10 text-[#7D123D] font-mono text-[9px] uppercase tracking-wider font-bold">
-                          <Lock className="h-3 w-3" />
-                          <span>Identity Verification Gate</span>
-                        </div>
-                        <h3 className="font-serif text-xl font-bold text-stone-900">Partner Communication Channel</h3>
-                        <p className="text-xs text-stone-550 leading-relaxed font-sans">
-                          To protect our advisory desk and partner directories from automated network scrapers and email harvesting bots, please solve this simple equation to reveal our direct communication address.
-                        </p>
-                      </div>
+              <AnimatePresence mode="wait">
+                {!inquirySubmitted ? (
+                  <motion.div
+                    key="support-form-state"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="space-y-6"
+                  >
+                    <p className="text-stone-650 text-sm leading-relaxed font-sans">
+                      Our direct client partner line is strictly monitored. To initiate a secure routing request, lodge a prospectus, or enquire about Limited Partner status, please fill out this formal form.
+                    </p>
 
-                      <form onSubmit={handleSupportVerify} className="space-y-4">
-                        <div className="flex items-center gap-3 bg-stone-50 border border-stone-200 p-4 rounded-xl justify-center max-w-sm mx-auto">
-                          <span className="font-mono font-black text-base text-stone-700">
-                            {supportNum1} + {supportNum2} =
-                          </span>
+                    <form 
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        if (supportFormData.name && supportFormData.email && supportFormData.message) {
+                          setInquirySubmitted(true);
+                        }
+                      }} 
+                      className="space-y-5 bg-white p-8 rounded-2xl border border-stone-200/60 shadow-xs"
+                    >
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div className="space-y-1.5">
+                          <label className="font-mono text-[9px] uppercase tracking-wider text-stone-500 font-bold block">
+                            Full Name
+                          </label>
                           <input
                             type="text"
-                            pattern="[0-9]*"
-                            inputMode="numeric"
                             required
-                            placeholder="?"
-                            value={supportUserAnswer}
-                            onChange={(e) => {
-                              setSupportUserAnswer(e.target.value);
-                              setSupportErrorStatus(null);
-                            }}
-                            className="w-16 bg-white border border-stone-300 rounded-lg text-center py-2 text-sm font-bold text-[#7D123D] focus:outline-none focus:ring-2 focus:ring-[#7D123D]/20 focus:border-[#7D123D]"
+                            placeholder="e.g. Dr. Marcus Vance"
+                            value={supportFormData.name}
+                            onChange={(e) => setSupportFormData({ ...supportFormData, name: e.target.value })}
+                            className="w-full bg-stone-50/50 border border-stone-200 rounded px-3.5 py-2 text-xs font-serif placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-[#7D123D] focus:border-[#7D123D] focus:bg-white transition-all duration-200"
                           />
-                          <button
-                            type="button"
-                            onClick={resetSupportMathChallenge}
-                            title="Generate new equation"
-                            className="p-1.5 text-stone-400 hover:text-[#7D123D] transition-colors rounded-md hover:bg-stone-100"
-                          >
-                            <RefreshCw className="h-4 w-4" />
-                          </button>
                         </div>
 
-                        {supportErrorStatus && (
-                          <div className="flex items-center gap-2 justify-center text-xs font-mono text-red-600 font-bold bg-red-50 py-2 px-4 rounded-lg border border-red-200 max-w-sm mx-auto">
-                            <AlertCircle className="h-4 w-4 shrink-0" />
-                            <span>{supportErrorStatus}</span>
-                          </div>
-                        )}
+                        <div className="space-y-1.5">
+                          <label className="font-mono text-[9px] uppercase tracking-wider text-stone-500 font-bold block">
+                            Institutional Affiliation
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Vance Research Labs"
+                            value={supportFormData.affiliation}
+                            onChange={(e) => setSupportFormData({ ...supportFormData, affiliation: e.target.value })}
+                            className="w-full bg-stone-50/50 border border-stone-200 rounded px-3.5 py-2 text-xs font-serif placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-[#7D123D] focus:border-[#7D123D] focus:bg-white transition-all duration-200"
+                          />
+                        </div>
+                      </div>
 
-                        <button
-                          type="submit"
-                          className="w-full max-w-sm mx-auto py-3 bg-[#7D123D] hover:bg-[#9E1D51] text-white font-mono text-xs font-bold uppercase tracking-wider rounded-lg transition-all duration-300 shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+                      <div className="space-y-1.5">
+                        <label className="font-mono text-[9px] uppercase tracking-wider text-stone-500 font-bold block">
+                          Secure Email Address
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          placeholder="mvance@vancelabs.com"
+                          value={supportFormData.email}
+                          onChange={(e) => setSupportFormData({ ...supportFormData, email: e.target.value })}
+                          className="w-full bg-stone-50/50 border border-stone-200 rounded px-3.5 py-2 text-xs font-mono placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-[#7D123D] focus:border-[#7D123D] focus:bg-white transition-all duration-200"
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="font-mono text-[9px] uppercase tracking-wider text-stone-500 font-bold block">
+                          Inquiry Classification
+                        </label>
+                        <select
+                          value={supportFormData.classification}
+                          onChange={(e) => setSupportFormData({ ...supportFormData, classification: e.target.value })}
+                          className="w-full bg-stone-50/50 border border-stone-200 rounded px-3.5 py-2 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-[#7D123D] focus:border-[#7D123D] focus:bg-white transition-all duration-200 cursor-pointer"
                         >
-                          <span>Verify &amp; Reveal Channel</span>
-                        </button>
-                      </form>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="verification-revealed"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="space-y-6 text-center"
-                    >
+                          <option value="LP Inquiry">Limited Partner (LP) Inquiry</option>
+                          <option value="Venture Proposal">Stealth Venture Pitch</option>
+                          <option value="Advisory Nomination">Advisory Network Nomination</option>
+                          <option value="General Correspondence">General Executive Correspondence</option>
+                        </select>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="font-mono text-[9px] uppercase tracking-wider text-stone-500 font-bold block">
+                          Detailed Message Body
+                        </label>
+                        <textarea
+                          required
+                          rows={5}
+                          placeholder="Please formulate your correspondence. Outline key venture metrics or credential inquiries clearly."
+                          value={supportFormData.message}
+                          onChange={(e) => setSupportFormData({ ...supportFormData, message: e.target.value })}
+                          className="w-full bg-stone-50/50 border border-stone-200 rounded px-3.5 py-2.5 text-xs font-serif placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-[#7D123D] focus:border-[#7D123D] focus:bg-white transition-all duration-200 leading-relaxed"
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="w-full py-3 bg-[#7D123D] hover:bg-[#9E1D51] text-white font-mono text-[10px] font-bold uppercase tracking-widest rounded transition-all duration-300 shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+                      >
+                        <Send className="h-3 w-3" />
+                        <span>Transmit Secure Correspondence</span>
+                      </button>
+                    </form>
+
+                    <div className="text-center pt-2">
+                      <span className="text-[10px] font-mono text-stone-400">
+                        Primary secure backup mail route: <span className="text-stone-600 font-bold select-all">desk@arcscape.com</span>
+                      </span>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="support-success-state"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="space-y-6 text-center max-w-md mx-auto"
+                  >
+                    <div className="bg-white p-8 rounded-2xl border border-stone-200/80 shadow-xs space-y-6">
+                      <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600">
+                        <Check className="h-5 w-5" />
+                      </div>
+                      
                       <div className="space-y-2">
-                        <div className="inline-flex items-center gap-1 text-xs font-mono text-emerald-700 font-bold tracking-wider bg-emerald-50 border border-emerald-200 px-3.5 py-1 rounded-full uppercase mx-auto">
-                          <Check className="h-3.5 w-3.5" />
-                          <span>Human Verification Successful</span>
-                        </div>
-                        <h3 className="font-serif text-xl font-bold text-stone-900">
-                          Direct Communication Channel
-                        </h3>
-                        <p className="text-xs text-stone-500 leading-relaxed max-w-md mx-auto">
-                          Our secure partner communication route is revealed below. You can copy the clean address directly or click to launch your local email client.
+                        <h3 className="font-serif text-2xl font-light text-stone-900 leading-tight">Inquiry Registered</h3>
+                        <p className="text-stone-500 text-xs sm:text-sm leading-relaxed font-serif italic">
+                          Thank you, {supportFormData.name}. Your private transmission has been successfully processed and logged into our private directory queue.
                         </p>
                       </div>
 
-                      {/* THE MUNGED EMAIL ADDRESS DISPLAYED IN MASSIVE BOLD TEXT */}
-                      <div className="bg-stone-50 border-2 border-stone-200/80 p-5 rounded-2xl max-w-md mx-auto space-y-4">
+                      <div className="bg-stone-50 p-4 rounded-xl border border-stone-200/50 text-left space-y-2.5">
+                        <div className="flex justify-between items-baseline text-[9px] font-mono text-stone-400">
+                          <span>SECURITY PROTOCOL</span>
+                          <span className="text-emerald-700 font-bold uppercase">SECURELY ENCRYPTED</span>
+                        </div>
                         <div className="space-y-1">
-                          <span className="font-mono text-[9px] uppercase tracking-wider text-stone-400 font-bold block">Protected Address (Munged)</span>
-                          <div className="font-mono text-lg sm:text-xl font-black text-[#7D123D] select-all tracking-wide">
-                            info [at] arcscape.com
-                          </div>
+                          <span className="font-mono text-[9px] text-stone-500 uppercase block font-bold">Secure Ref Key</span>
+                          <span className="font-mono text-[10px] text-stone-700 select-all block break-all font-semibold bg-white border border-stone-200 px-2.5 py-1 rounded">
+                            ARC-TX-048291-LPR
+                          </span>
                         </div>
-
-                        <div className="flex flex-col sm:flex-row items-center gap-2 justify-center pt-2 border-t border-stone-200/40">
-                          <a
-                            href="mailto:info@arcscape.com"
-                            className="w-full sm:w-auto px-4 py-2 bg-[#7D123D] hover:bg-[#9E1D51] text-white font-mono text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
-                          >
-                            <Mail className="h-4 w-4" />
-                            <span>Launch Email Client</span>
-                          </a>
-
-                          <button
-                            onClick={handleSupportCopy}
-                            className="w-full sm:w-auto flex items-center justify-center gap-1.5 py-2 px-4 text-xs font-mono font-bold uppercase tracking-wider rounded-lg border-2 border-stone-200 text-stone-700 hover:bg-stone-50 transition-all cursor-pointer bg-white"
-                          >
-                            {supportCopied ? (
-                              <>
-                                <Check className="h-4 w-4 text-emerald-600" />
-                                <span className="text-emerald-600">Copied!</span>
-                              </>
-                            ) : (
-                              <>
-                                <Copy className="h-4 w-4 text-stone-500" />
-                                <span>Copy Clean Email</span>
-                              </>
-                            )}
-                          </button>
-                        </div>
+                        <p className="text-[10px] text-stone-400 font-sans leading-normal pt-1 border-t border-stone-200/35">
+                          A partner representative from the classified desk will initiate secure contact within one standard business cycle.
+                        </p>
                       </div>
 
                       <button
                         type="button"
                         onClick={() => {
-                          setSupportIsRevealed(false);
-                          setSupportUserAnswer('');
-                          resetSupportMathChallenge();
+                          setSupportFormData({ name: '', affiliation: '', email: '', classification: 'LP Inquiry', message: '' });
+                          setInquirySubmitted(false);
                         }}
-                        className="text-stone-400 hover:text-stone-700 font-mono text-[10px] uppercase tracking-wider transition-all cursor-pointer block mx-auto font-bold"
+                        className="px-5 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200 rounded font-mono text-[9px] uppercase tracking-wider font-bold transition-all cursor-pointer"
                       >
-                        Reset &amp; Lock Channel
+                        File New Correspondence
                       </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Accordion FAQ Area */}
-              <div className="space-y-3 pt-4">
-                <h3 className="font-serif text-lg text-stone-900">Desk Guidelines FAQ</h3>
-                <div className="space-y-2.5">
-                  <div className="bg-stone-50 p-4 rounded-xl border border-stone-200/50 space-y-1">
-                    <h4 className="font-serif font-bold text-stone-800 text-xs">How do I obtain an access token?</h4>
-                    <p className="text-xs text-stone-500 leading-relaxed">
-                      Tokens are issued exclusively via formal partner invitations or direct Limited Partner distributions. We do not distribute credentials publicly.
-                    </p>
-                  </div>
-                  <div className="bg-stone-50 p-4 rounded-xl border border-stone-200/50 space-y-1">
-                    <h4 className="font-serif font-bold text-stone-800 text-xs">Can anyone pitch our incubation cohorts?</h4>
-                    <p className="text-xs text-stone-500 leading-relaxed">
-                      Yes. While invite-led teams receive automatic routing priority, any venture focusing on deep design optimization, materials engineering, or computational logic may submit pitches here.
-                    </p>
-                  </div>
-                </div>
-              </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.section>
           )}
 
-          {/* VIEW: LOGIN HELP (DIAGNOSTIC TEST) */}
+          {/* VIEW: LOGIN HELP */}
           {activeView === 'login-help' && (
             <motion.section 
               key="login-help-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="max-w-2xl mx-auto w-full space-y-12 py-6 text-left"
             >
-              <div className="space-y-2">
+              {/* Unified Header */}
+              <div className="space-y-6">
                 <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  onClick={() => {
+                    setActiveView('portal');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="group font-mono text-[10px] text-stone-400 hover:text-[#7D123D] transition-colors flex items-center gap-1.5 uppercase cursor-pointer tracking-widest font-semibold"
                 >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
+                  <ArrowLeft className="h-3 w-3 group-hover:-translate-x-0.5 transition-transform duration-200" />
+                  <span>Return to Access</span>
                 </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Onboarding &amp; Login Support</h2>
-                <p className="text-xs text-stone-500">Solve local credential token loading, handshake latency, or secure schema mismatches.</p>
+                
+                <div className="border-t border-b border-stone-200/40 py-6 flex flex-col md:flex-row justify-between items-start md:items-baseline gap-4">
+                  <div className="space-y-1">
+                    <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.25em] font-extrabold block">
+                      Arcscape Capital // Partner Services
+                    </span>
+                    <h2 className="font-serif text-3xl font-light text-stone-900 tracking-tight">Access Support</h2>
+                  </div>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="bg-white p-6 rounded-xl border border-stone-200/80 space-y-3">
-                  <h3 className="font-serif font-semibold text-stone-900 text-sm">Step-by-Step Recovery</h3>
-                  <ul className="space-y-3 font-mono text-[11px] text-stone-500">
-                    <li className="flex items-start gap-2">
-                      <span className="h-4 w-4 rounded-full bg-stone-100 text-[#7D123D] flex items-center justify-center font-bold text-[9px] shrink-0 mt-0.5">1</span>
-                      <span>Locate the 12-digit security code distributed in your original LP onboarding packet.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="h-4 w-4 rounded-full bg-stone-100 text-[#7D123D] flex items-center justify-center font-bold text-[9px] shrink-0 mt-0.5">2</span>
-                      <span>Verify that secure cookie handshakes and javascript sessions are enabled on your browser settings.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="h-4 w-4 rounded-full bg-stone-100 text-[#7D123D] flex items-center justify-center font-bold text-[9px] shrink-0 mt-0.5">3</span>
-                      <span>Ensure you aren&apos;t behind severe corporate VPN blocks that intercept client schema handshakes.</span>
-                    </li>
-                  </ul>
-                </div>
+              <div className="space-y-6">
+                <p className="font-serif text-lg text-stone-700 leading-relaxed font-light">
+                  If you are experiencing difficulty accessing the partner portal or viewing your active venture allocations, please review these standard guidelines.
+                </p>
+              </div>
 
-                {/* Diagnostic Run Module */}
-                <div className="bg-white p-6 rounded-xl border border-stone-200/80 flex flex-col justify-between">
-                  <div className="space-y-2">
-                    <h3 className="font-serif font-semibold text-stone-900 text-sm">Connection Diagnostic</h3>
-                    <p className="text-xs text-stone-400 leading-relaxed">
-                      Evaluate local networking state and secure browser environment variables.
-                    </p>
-                  </div>
-
-                  {!diagnosticRun ? (
-                    <button
-                      type="button"
-                      onClick={runDiagnostics}
-                      className="w-full mt-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 font-mono text-[9px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer text-center"
-                    >
-                      Run Local Diagnostics
-                    </button>
-                  ) : (
-                    <div className="space-y-3 mt-4">
-                      <div className="flex justify-between font-mono text-[10px] text-stone-500">
-                        <span>Running tests...</span>
-                        <span>{diagnosticProgress}%</span>
-                      </div>
-                      <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-[#7D123D] transition-all duration-300" style={{ width: `${diagnosticProgress}%` }} />
-                      </div>
-                      
-                      {diagnosticProgress >= 100 && (
-                        <div className="bg-stone-50 p-3 rounded-lg font-mono text-[9px] text-stone-500 space-y-1">
-                          <div className="flex justify-between"><span className="text-stone-400">Cookie Protocol:</span><span className="text-emerald-600 font-bold">READY</span></div>
-                          <div className="flex justify-between"><span className="text-stone-400">HTTPS Encryption:</span><span className="text-emerald-600 font-bold">ACTIVE</span></div>
-                          <div className="flex justify-between"><span className="text-stone-400">Handshake Frame:</span><span className="text-stone-800 font-bold">STANDBY</span></div>
-                        </div>
-                      )}
+              {/* Handshake FAQ Accordion */}
+              <div className="space-y-4">
+                <h3 className="font-mono text-[10px] font-bold text-stone-400 uppercase tracking-widest border-b border-stone-200/40 pb-2">
+                  Access Troubleshooting FAQs
+                </h3>
+                
+                <div className="space-y-3.5">
+                  {[
+                    {
+                      q: "I forgot my partner portal credentials. How do I request a reset?",
+                      a: "For security and privacy reasons, credential resets cannot be performed automatically. Please contact your dedicated Arcscape advisory partner directly to verify your identity and generate a new secure connection link."
+                    },
+                    {
+                      q: "Who is authorized to access the partner dashboard?",
+                      a: "Access is restricted strictly to active Limited Partners, syndicate members, and authorized venture founders who have completed our formal onboarding and verification protocols."
+                    },
+                    {
+                      q: "Does the partner portal use browser session cookies?",
+                      a: "Yes. We use standard secure, encrypted session cookies solely to authenticate your login. These cookies contain no tracking or personal data, and are automatically cleared from your browser when you log out or after 12 hours of inactivity."
+                    }
+                  ].map((item, idx) => (
+                    <div key={idx} className="bg-white p-5 rounded-xl border border-stone-200/55 space-y-2">
+                      <h4 className="font-serif font-semibold text-stone-900 text-xs sm:text-sm leading-snug">
+                        {item.q}
+                      </h4>
+                      <p className="text-stone-555 text-xs leading-relaxed font-sans">
+                        {item.a}
+                      </p>
                     </div>
-                  )}
+                  ))}
                 </div>
+              </div>
+
+              <div className="pt-2 text-center">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveView('support');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="text-xs font-mono text-[#7D123D] hover:underline uppercase tracking-wider font-bold"
+                >
+                  Need Direct Assistance? Open Direct Communication Channel &rarr;
+                </button>
               </div>
             </motion.section>
           )}
@@ -2488,54 +2575,78 @@ export default function LandingPage() {
           {activeView === 'seed-incubator' && (
             <motion.section 
               key="seed-incubator-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="max-w-3xl mx-auto w-full space-y-10 py-6 text-left"
             >
-              <div className="space-y-1">
+              {/* Unified Header */}
+              <div className="space-y-6">
                 <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  onClick={() => {
+                    setActiveView('portal');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="group font-mono text-[10px] text-stone-400 hover:text-[#7D123D] transition-colors flex items-center gap-1.5 uppercase cursor-pointer tracking-widest font-bold"
                 >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
+                  <ArrowLeft className="h-3 w-3 group-hover:-translate-x-0.5 transition-transform duration-200" />
+                  <span>Return to Access</span>
                 </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Stealth Seed Incubator</h2>
-                <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-widest font-bold">Zero-to-One Program Blueprint</span>
+                
+                <div className="border-t border-b border-stone-200/40 py-6 flex flex-col md:flex-row justify-between items-start md:items-baseline gap-4">
+                  <div className="space-y-1">
+                    <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.25em] font-extrabold block">
+                      Arcscape Capital // Private Register
+                    </span>
+                    <h2 className="font-serif text-3xl font-light text-stone-900 tracking-tight">Stealth Seed Incubator</h2>
+                  </div>
+                  <span className="font-mono text-[9px] text-stone-400 uppercase tracking-widest bg-stone-100/60 px-3 py-1 rounded border border-stone-200/50">
+                    Ref: AC-INCUBATOR
+                  </span>
+                </div>
               </div>
 
-              <div className="prose prose-stone text-xs leading-relaxed space-y-4 text-stone-600">
-                <p>
-                  Arcscape&apos;s seed incubator focuses on scaling highly specific digital consumer brands and computational hardware labs. We bring in 2 to 3 early teams per cohort, providing high-touch visual strategy, strict compliance support, and unhurried design loops.
-                </p>
-                <p>
-                  Rather than pushing teams to expand team size rapidly, we prioritize extreme efficiency, helping founders remain highly capitalized while focusing purely on perfect engineering.
-                </p>
+              {/* Content Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                <div className="md:col-span-2 space-y-6">
+                  <p className="font-serif text-lg text-stone-800 leading-relaxed font-light">
+                    Arcscape&apos;s seed incubator focuses on scaling highly specific digital consumer brands and computational hardware labs. We bring in 2 to 3 early teams per cohort, providing high-touch visual strategy, strict compliance support, and unhurried design loops.
+                  </p>
+                  <p className="text-stone-650 text-sm leading-relaxed font-sans">
+                    Rather than pushing teams to expand team size rapidly, we prioritize extreme efficiency, helping founders remain highly capitalized while focusing purely on perfect engineering.
+                  </p>
+                </div>
+
+                <div className="bg-stone-50 p-5 rounded-xl border border-stone-250/60 space-y-4">
+                  <h4 className="font-mono text-[9px] font-bold text-stone-400 uppercase tracking-widest border-b border-stone-200/40 pb-2">Cohort Focus</h4>
+                  <p className="text-[11px] text-stone-500 leading-relaxed font-sans">
+                    Limited to 3 stealth initiatives per annual cycle. Bespoke capital and structural support guaranteed.
+                  </p>
+                </div>
               </div>
 
               {/* Cohort Journey Timeline */}
-              <div className="space-y-4 pt-4">
-                <h3 className="font-serif text-base text-stone-800">The 3-Phase Development Loop</h3>
-                <div className="space-y-3 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-stone-100">
-                  <div className="relative pl-7 space-y-1">
+              <div className="space-y-5 pt-4">
+                <h3 className="font-serif text-lg font-normal text-stone-900">The 3-Phase Development Loop</h3>
+                <div className="space-y-4 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-stone-200">
+                  <div className="relative pl-8 space-y-1">
                     <span className="absolute left-1.5 top-1.5 h-3 w-3 rounded-full bg-[#7D123D]" />
-                    <h4 className="font-serif font-semibold text-stone-900 text-xs">Phase 1: First-Principles Alignment</h4>
-                    <p className="text-[11px] text-stone-500 leading-relaxed">
+                    <h4 className="font-serif font-semibold text-stone-900 text-xs uppercase tracking-wider">Phase 1: First-Principles Alignment</h4>
+                    <p className="text-[11px] text-stone-500 leading-relaxed font-sans">
                       We dismantle the product to its most basic physical or mathematical formulas, designing a proprietary market category.
                     </p>
                   </div>
-                  <div className="relative pl-7 space-y-1">
+                  <div className="relative pl-8 space-y-1">
                     <span className="absolute left-1.5 top-1.5 h-3 w-3 rounded-full bg-[#7D123D]" />
-                    <h4 className="font-serif font-semibold text-stone-900 text-xs">Phase 2: Layout &amp; Interface Precision</h4>
-                    <p className="text-[11px] text-stone-500 leading-relaxed">
+                    <h4 className="font-serif font-semibold text-stone-900 text-xs uppercase tracking-wider">Phase 2: Layout &amp; Interface Precision</h4>
+                    <p className="text-[11px] text-stone-500 leading-relaxed font-sans">
                       Our in-house design studio engineers every brand element, packaging layer, and digital layout for sensory clarity.
                     </p>
                   </div>
-                  <div className="relative pl-7 space-y-1">
+                  <div className="relative pl-8 space-y-1">
                     <span className="absolute left-1.5 top-1.5 h-3 w-3 rounded-full bg-[#7D123D]" />
-                    <h4 className="font-serif font-semibold text-stone-900 text-xs">Phase 3: Tactical Resource Matching</h4>
-                    <p className="text-[11px] text-stone-500 leading-relaxed">
+                    <h4 className="font-serif font-semibold text-stone-900 text-xs uppercase tracking-wider">Phase 3: Tactical Resource Matching</h4>
+                    <p className="text-[11px] text-stone-500 leading-relaxed font-sans">
                       We inject the final seed capital and establish strategic syndicates with verified co-investment partners.
                     </p>
                   </div>
@@ -2548,78 +2659,92 @@ export default function LandingPage() {
           {activeView === 'target-arbitrage' && (
             <motion.section 
               key="target-arbitrage-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="max-w-3xl mx-auto w-full space-y-10 py-6 text-left"
             >
-              <div className="space-y-1">
+              {/* Unified Header */}
+              <div className="space-y-6">
                 <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  onClick={() => {
+                    setActiveView('portal');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="group font-mono text-[10px] text-stone-400 hover:text-[#7D123D] transition-colors flex items-center gap-1.5 uppercase cursor-pointer tracking-widest font-bold"
                 >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
+                  <ArrowLeft className="h-3 w-3 group-hover:-translate-x-0.5 transition-transform duration-200" />
+                  <span>Return to Access</span>
                 </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Arbitrage Mechanics</h2>
-                <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-widest font-bold">Capital Risk Hedging Models</span>
-              </div>
-
-              <div className="prose prose-stone text-xs leading-relaxed space-y-3 text-stone-600">
-                <p>
-                  Our Target Arbitrage framework matches early-stage pricing mismatches with long-term capital structures. By leveraging short-term consumer traction statistics against multi-year institutional asset cycles, we preserve equity structures for founders.
-                </p>
-                <p>
-                  Use the calculator below to evaluate estimated monthly arbitrage liquidity parameters based on committed pre-seed capital injections.
-                </p>
-              </div>
-
-              {/* Dynamic interactive calculator widget */}
-              <div className="bg-white p-5 rounded-xl border border-stone-200/80 shadow-xs space-y-5">
-                <h3 className="font-serif text-sm font-semibold text-stone-900 border-b border-stone-100 pb-2">Arbitrage Efficiency Calculator</h3>
                 
-                <div className="space-y-4">
+                <div className="border-t border-b border-stone-200/40 py-6 flex flex-col md:flex-row justify-between items-start md:items-baseline gap-4">
                   <div className="space-y-1">
-                    <div className="flex justify-between font-mono text-[10px] text-stone-500">
-                      <span>Committed Capital Fund</span>
-                      <span className="text-stone-900 font-bold">${calcCapital.toLocaleString()}</span>
-                    </div>
-                    <input 
-                      type="range" 
-                      min="50000" 
-                      max="1000000" 
-                      step="25000"
-                      value={calcCapital}
-                      onChange={(e) => setCalcCapital(Number(e.target.value))}
-                      className="w-full accent-[#7D123D]"
-                    />
+                    <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.25em] font-extrabold block">
+                      Arcscape Capital // Private Register
+                    </span>
+                    <h2 className="font-serif text-3xl font-light text-stone-900 tracking-tight">Computational Arbitrage</h2>
                   </div>
+                  <span className="font-mono text-[9px] text-stone-400 uppercase tracking-widest bg-stone-100/60 px-3 py-1 rounded border border-stone-200/50">
+                    Ref: AC-ARBITRAGE
+                  </span>
+                </div>
+              </div>
 
-                  <div className="space-y-1">
-                    <div className="flex justify-between font-mono text-[10px] text-stone-500">
-                      <span>Monthly Arbitrage Spread</span>
-                      <span className="text-stone-900 font-bold">{calcArbitrageRate}%</span>
-                    </div>
-                    <input 
-                      type="range" 
-                      min="1.5" 
-                      max="8.0" 
-                      step="0.1"
-                      value={calcArbitrageRate}
-                      onChange={(e) => setCalcArbitrageRate(Number(e.target.value))}
-                      className="w-full accent-[#7D123D]"
-                    />
-                  </div>
+              {/* Content Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                <div className="md:col-span-2 space-y-6">
+                  <p className="font-serif text-lg text-stone-800 leading-relaxed font-light">
+                    Our Target Arbitrage framework matches early-stage pricing mismatches with long-term capital structures. By leveraging short-term consumer traction statistics against multi-year institutional asset cycles, we preserve equity structures for founders.
+                  </p>
+                  <p className="text-stone-650 text-sm leading-relaxed font-sans">
+                    Use the calculator below to evaluate estimated monthly arbitrage liquidity parameters based on committed pre-seed capital injections.
+                  </p>
                 </div>
 
-                <div className="bg-stone-50 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-center gap-3 font-mono">
-                  <div className="text-center sm:text-left">
-                    <span className="text-[9px] text-stone-400 uppercase tracking-widest block">Estimated Cash Yield / Mo</span>
-                    <span className="text-xl font-bold text-[#7D123D]">${Math.round((calcCapital * (calcArbitrageRate / 100))).toLocaleString()}</span>
+                {/* Dynamic interactive calculator widget */}
+                <div className="bg-white p-5 rounded-xl border border-stone-250/60 shadow-xs space-y-5 w-full">
+                  <h3 className="font-mono text-[9px] font-bold text-stone-450 uppercase tracking-widest border-b border-stone-200/40 pb-2">Arbitrage Efficiency</h3>
+                  
+                  <div className="space-y-4">
+                    <div className="space-y-1">
+                      <div className="flex justify-between font-mono text-[9px] text-stone-400 uppercase font-semibold">
+                        <span>Capital Fund</span>
+                        <span className="text-stone-900 font-bold">${calcCapital.toLocaleString()}</span>
+                      </div>
+                      <input 
+                        type="range" 
+                        min="50000" 
+                        max="1000000" 
+                        step="25000"
+                        value={calcCapital}
+                        onChange={(e) => setCalcCapital(Number(e.target.value))}
+                        className="w-full accent-[#7D123D]"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between font-mono text-[9px] text-stone-400 uppercase font-semibold">
+                        <span>Spread</span>
+                        <span className="text-stone-900 font-bold">{calcArbitrageRate}%</span>
+                      </div>
+                      <input 
+                        type="range" 
+                        min="1.5" 
+                        max="8.0" 
+                        step="0.1"
+                        value={calcArbitrageRate}
+                        onChange={(e) => setCalcArbitrageRate(Number(e.target.value))}
+                        className="w-full accent-[#7D123D]"
+                      />
+                    </div>
                   </div>
-                  <div className="text-center sm:text-right">
-                    <span className="text-[9px] text-stone-400 uppercase tracking-widest block">Capital Buffer Coverage</span>
-                    <span className="text-sm font-bold text-stone-800">{(calcArbitrageRate * 1.85).toFixed(1)}x</span>
+
+                  <div className="bg-stone-50 p-4 rounded-lg flex flex-col justify-center items-center gap-2 font-mono text-center">
+                    <span className="text-[8px] text-stone-400 uppercase tracking-widest block font-bold">Estimated Yield / Mo</span>
+                    <span className="text-lg font-bold text-[#7D123D]">${Math.round((calcCapital * (calcArbitrageRate / 100))).toLocaleString()}</span>
+                    <div className="text-[8px] text-stone-400 uppercase tracking-widest block font-bold mt-1 pt-1.5 border-t border-stone-200/50 w-full">
+                      Buffer: <span className="text-stone-800">{(calcArbitrageRate * 1.85).toFixed(1)}x</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2630,45 +2755,69 @@ export default function LandingPage() {
           {activeView === 'strategic-partnerships' && (
             <motion.section 
               key="strategic-partnerships-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="max-w-3xl mx-auto w-full space-y-10 py-6 text-left"
             >
-              <div className="space-y-1">
+              {/* Unified Header */}
+              <div className="space-y-6">
                 <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  onClick={() => {
+                    setActiveView('portal');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="group font-mono text-[10px] text-stone-400 hover:text-[#7D123D] transition-colors flex items-center gap-1.5 uppercase cursor-pointer tracking-widest font-bold"
                 >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
+                  <ArrowLeft className="h-3 w-3 group-hover:-translate-x-0.5 transition-transform duration-200" />
+                  <span>Return to Access</span>
                 </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Institutional Syndicates</h2>
-                <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-widest font-bold">Global Strategic Alliances</span>
+                
+                <div className="border-t border-b border-stone-200/40 py-6 flex flex-col md:flex-row justify-between items-start md:items-baseline gap-4">
+                  <div className="space-y-1">
+                    <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.25em] font-extrabold block">
+                      Arcscape Capital // Private Register
+                    </span>
+                    <h2 className="font-serif text-3xl font-light text-stone-900 tracking-tight">Institutional Syndicates</h2>
+                  </div>
+                  <span className="font-mono text-[9px] text-stone-400 uppercase tracking-widest bg-stone-100/60 px-3 py-1 rounded border border-stone-200/50">
+                    Ref: AC-SYNDICATES
+                  </span>
+                </div>
               </div>
 
-              <div className="prose prose-stone text-xs leading-relaxed space-y-4 text-stone-600">
-                <p>
-                  Arcscape aligns strictly with established global investment syndicates, technology laboratories, and academic networks. These deep connections give our incubated ventures immediate doors into distribution networks, hardware prototyping facilities, and regulatory advising systems.
-                </p>
-                <p>
-                  Our partners operate under strict confidentiality clauses, facilitating smooth corporate handshakes during crucial seed and scale iterations.
-                </p>
+              {/* Content Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                <div className="md:col-span-2 space-y-6">
+                  <p className="font-serif text-lg text-stone-800 leading-relaxed font-light">
+                    Arcscape aligns strictly with established global investment syndicates, technology laboratories, and academic networks. These deep connections give our incubated ventures immediate doors into distribution networks, hardware prototyping facilities, and regulatory advising systems.
+                  </p>
+                  <p className="text-stone-650 text-sm leading-relaxed font-sans">
+                    Our partners operate under strict confidentiality clauses, facilitating smooth corporate handshakes during crucial seed and scale iterations.
+                  </p>
+                </div>
+
+                <div className="bg-stone-50 p-5 rounded-xl border border-stone-250/60 space-y-4">
+                  <h4 className="font-mono text-[9px] font-bold text-stone-400 uppercase tracking-widest border-b border-stone-200/40 pb-2">Security Rules</h4>
+                  <p className="text-[11px] text-stone-500 leading-relaxed font-sans">
+                    All syndicate partner identities are encrypted within client-side sessions to guarantee strict privacy.
+                  </p>
+                </div>
               </div>
 
               {/* Partners Directory Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                <div className="bg-white p-4 rounded-xl border border-stone-200/80 space-y-1.5">
-                  <span className="font-mono text-[8px] uppercase tracking-wider text-stone-400 font-bold block">Academic Core</span>
-                  <h4 className="font-serif font-bold text-stone-900 text-sm">Zurich Materials Labs</h4>
-                  <p className="text-[11px] text-stone-500 leading-relaxed">
+                <div className="bg-white p-5 rounded-xl border border-stone-200/80 space-y-2">
+                  <span className="font-mono text-[8px] uppercase tracking-[0.15em] text-[#7D123D] font-black block">ACADEMIC CORE UNIT</span>
+                  <h4 className="font-serif font-bold text-stone-900 text-sm leading-none">Zurich Materials Labs</h4>
+                  <p className="text-[11px] text-stone-500 leading-relaxed font-sans">
                     Collaborative technical testing for carbon-capture silicones and facade-related glass panels.
                   </p>
                 </div>
-                <div className="bg-white p-4 rounded-xl border border-stone-200/80 space-y-1.5">
-                  <span className="font-mono text-[8px] uppercase tracking-wider text-stone-400 font-bold block">Co-Investment Desk</span>
-                  <h4 className="font-serif font-bold text-stone-900 text-sm">Valkyrie Holdings</h4>
-                  <p className="text-[11px] text-stone-500 leading-relaxed">
+                <div className="bg-white p-5 rounded-xl border border-stone-200/80 space-y-2">
+                  <span className="font-mono text-[8px] uppercase tracking-[0.15em] text-[#7D123D] font-black block">CO-INVESTMENT DESK</span>
+                  <h4 className="font-serif font-bold text-stone-900 text-sm leading-none">Valkyrie Holdings</h4>
+                  <p className="text-[11px] text-stone-500 leading-relaxed font-sans">
                     A multi-family office providing deep liquidity during early-scale Series A transitions.
                   </p>
                 </div>
@@ -2676,40 +2825,91 @@ export default function LandingPage() {
             </motion.section>
           )}
 
-          {/* VIEW: LEGAL NETWORK */}
-          {activeView === 'legal-network' && (
+          {/* VIEW: SEED-NETWORK */}
+          {activeView === 'seed-network' && (
             <motion.section 
-              key="legal-network-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full font-serif"
+              key="seed-network-view"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="max-w-3xl mx-auto w-full space-y-12 py-6 text-left"
             >
-              <div className="space-y-1">
+              {/* Unified Header */}
+              <div className="space-y-6">
                 <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  onClick={() => {
+                    setActiveView('portal');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="group font-mono text-[10px] text-stone-400 hover:text-[#7D123D] transition-colors flex items-center gap-1.5 uppercase cursor-pointer tracking-widest font-semibold"
                 >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
+                  <ArrowLeft className="h-3 w-3 group-hover:-translate-x-0.5 transition-transform duration-200" />
+                  <span>Return to Access</span>
                 </button>
-                <h2 className="font-serif text-2xl text-stone-900 font-normal">Regulatory &amp; Legal Network</h2>
-                <span className="font-mono text-[9px] uppercase text-stone-400 tracking-wider block">Institutional Compliance Advisory</span>
+                
+                <div className="border-t border-b border-stone-200/40 py-6 flex flex-col md:flex-row justify-between items-start md:items-baseline gap-4">
+                  <div className="space-y-1">
+                    <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.25em] font-extrabold block">
+                      Arcscape Capital // Private Register
+                    </span>
+                    <h2 className="font-serif text-3xl font-light text-stone-900 tracking-tight">Incubation Advisor Network</h2>
+                  </div>
+                  <span className="font-mono text-[9px] text-stone-400 uppercase tracking-widest bg-stone-100/60 px-3 py-1 rounded border border-stone-200/50">
+                    Ref: AC-SEED-NET
+                  </span>
+                </div>
               </div>
 
-              <div className="prose prose-stone text-xs leading-relaxed space-y-4 text-stone-600 font-sans">
-                <p>
-                  Arcscape Capital and its associated ventures operate strictly within global security structures. This portal is provided as an information network strictly for accredited and limited partners.
+              <div className="space-y-4">
+                <p className="font-serif text-lg text-stone-700 leading-relaxed font-light max-w-2xl">
+                  Our portfolio companies are supported by an elite circle of multi-disciplinary experts spanning materials physics, logic computing, and aesthetic design.
                 </p>
-                <p>
-                  Nothing contained within this portal should be construed as an invitation to invest or a public offering of securities. Complete offering documents are only distributed following strict partner validation protocols and formal General Partner sign-offs.
-                </p>
-                <div className="bg-stone-50 p-4 rounded-xl border border-stone-200/50 space-y-1">
-                  <span className="font-mono text-[9px] uppercase font-bold text-[#7D123D] block">Governance Policy Notice</span>
-                  <p className="text-[11px] text-stone-500">
-                    All compliance parameters are overseen by our independent audit board. Detailed quarterly investment statements are archived in our secure Swiss server register.
-                  </p>
-                </div>
+              </div>
+
+              {/* Advisory Board Directory */}
+              <div className="space-y-1 border-t border-stone-200/40">
+                {[
+                  {
+                    name: "Dr. Marcus Vance",
+                    role: "Principal, Materials Science & Solid Mechanics",
+                    details: "Former Director of Zurich Materials Lab. Advises portfolio ventures on computational metallurgy, advanced thermal design, and physical materials testing."
+                  },
+                  {
+                    name: "Elena Rostova",
+                    role: "Managing Partner, Interface Architecture & Human Factors",
+                    details: "Formerly Design Partner at Tokyo Studio. Leads the firm's strict typographic standards, responsive user interaction research, and cognitive design integrity."
+                  },
+                  {
+                    name: "Julius Vane",
+                    role: "Partner, Capital Structures & Quantitative Arbitrage",
+                    details: "Expert in capitalization models, risk hedging strategies, and long-term Limited Partner compliance. Guides early stage companies through structuring mechanics."
+                  }
+                ].map((adv, idx) => (
+                  <div key={idx} className="py-6 border-b border-stone-200/40 flex flex-col md:flex-row gap-4 items-start justify-between">
+                    <div className="space-y-1 md:max-w-[240px] w-full">
+                      <h4 className="font-serif text-lg font-medium text-stone-900 leading-tight">{adv.name}</h4>
+                      <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-wider block font-bold">
+                        {adv.role}
+                      </span>
+                    </div>
+                    <p className="text-stone-600 text-xs sm:text-sm leading-relaxed max-w-lg font-serif">
+                      {adv.details}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-4 flex justify-between items-center text-xs text-stone-400 font-mono">
+                <span>Total Advisors Registered: 12</span>
+                <button 
+                  onClick={() => {
+                    setActiveView('support');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="text-[#7D123D] hover:underline font-bold uppercase tracking-wider text-[10px]"
+                >
+                  Submit Advisory Nomination
+                </button>
               </div>
             </motion.section>
           )}
@@ -2717,31 +2917,98 @@ export default function LandingPage() {
           {/* VIEW: COMPLIANCE BOARD */}
           {activeView === 'compliance-board' && (
             <motion.section 
-              key="compliance-board-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full"
+              key="compliance-view"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="max-w-3xl mx-auto w-full space-y-12 py-6 text-left"
             >
-              <div className="space-y-1">
+              {/* Unified Header */}
+              <div className="space-y-6">
                 <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  onClick={() => {
+                    setActiveView('portal');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="group font-mono text-[10px] text-stone-400 hover:text-[#7D123D] transition-colors flex items-center gap-1.5 uppercase cursor-pointer tracking-widest font-semibold"
                 >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
+                  <ArrowLeft className="h-3 w-3 group-hover:-translate-x-0.5 transition-transform duration-200" />
+                  <span>Return to Access</span>
                 </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Governance Board</h2>
-                <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-widest font-bold">Risk Management &amp; Oversight</span>
+                
+                <div className="border-t border-b border-stone-200/40 py-6 flex flex-col md:flex-row justify-between items-start md:items-baseline gap-4">
+                  <div className="space-y-1">
+                    <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.25em] font-extrabold block">
+                      Arcscape Capital // Partner Services
+                    </span>
+                    <h2 className="font-serif text-3xl font-light text-stone-900 tracking-tight">Governance &amp; LP Standards</h2>
+                  </div>
+                  <span className="font-mono text-[9px] text-stone-400 uppercase tracking-widest bg-stone-100/60 px-3 py-1 rounded border border-stone-200/50">
+                    Ref: AC-GOVERNANCE
+                  </span>
+                </div>
               </div>
 
-              <div className="prose prose-stone text-xs leading-relaxed space-y-4 text-stone-600">
-                <p>
-                  Our independent Compliance Board enforces risk management benchmarks across all incubated projects and partner portfolios. By conducting regular audits and keeping clear ledger registries, we guarantee capital safety.
-                </p>
-                <p>
-                  The board meets monthly to evaluate asset allocations, risk buffers, and general cohort compliance variables under standard international guidelines.
-                </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                <div className="md:col-span-2 space-y-6">
+                  <p className="font-serif text-lg text-stone-700 leading-relaxed font-light">
+                    To protect partner capital and incubated venture intellectual property, Arcscape Capital maintains a high standard of operational governance.
+                  </p>
+                  
+                  <div className="space-y-6 border-t border-stone-200/40 pt-6">
+                    <div className="space-y-1.5">
+                      <span className="font-mono text-[9px] uppercase text-[#7D123D] font-bold tracking-wider">GOVERNANCE STANDARD I</span>
+                      <h4 className="font-serif font-medium text-base text-stone-900">Partner Accreditation</h4>
+                      <p className="text-stone-600 text-xs sm:text-sm leading-relaxed font-sans">
+                        All prospective limited partners undergo thorough eligibility and regulatory accreditation checks. All communications and documentation are kept strictly confidential.
+                      </p>
+                    </div>
+
+                    <div className="space-y-1.5 border-t border-stone-150/50 pt-4">
+                      <span className="font-mono text-[9px] uppercase text-[#7D123D] font-bold tracking-wider">GOVERNANCE STANDARD II</span>
+                      <h4 className="font-serif font-medium text-base text-stone-900">Capital Deployment Control</h4>
+                      <p className="text-stone-600 text-xs sm:text-sm leading-relaxed font-sans">
+                        Deployments to incubated portfolio companies follow a structured stage-gate approach. Independent accounting reviews are performed regularly to ensure appropriate fiscal stewardship.
+                      </p>
+                    </div>
+
+                    <div className="space-y-1.5 border-t border-stone-150/50 pt-4">
+                      <span className="font-mono text-[9px] uppercase text-[#7D123D] font-bold tracking-wider">GOVERNANCE STANDARD III</span>
+                      <h4 className="font-serif font-medium text-base text-stone-900">Intellectual Property Protection</h4>
+                      <p className="text-stone-600 text-xs sm:text-sm leading-relaxed font-sans">
+                        Research and technical implementations generated within our active stealth cohorts are protected by robust unilateral non-disclosure agreements and secure physical operations.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Swiss Custodian Registry Info */}
+                <div className="bg-stone-50 border border-stone-200/60 rounded-xl p-5 space-y-4">
+                  <h4 className="font-mono text-[10px] font-bold text-stone-400 uppercase tracking-widest border-b border-stone-200/40 pb-2">
+                    Company Details
+                  </h4>
+                  
+                  <div className="space-y-3.5">
+                    <div className="space-y-0.5">
+                      <span className="font-mono text-[9px] text-stone-400 block uppercase tracking-wider">Primary Jurisdiction</span>
+                      <span className="font-serif text-xs text-stone-800 font-semibold block">Zug, Switzerland</span>
+                    </div>
+                    <div className="space-y-0.5">
+                      <span className="font-mono text-[9px] text-stone-400 block uppercase tracking-wider">Accountability Board</span>
+                      <span className="font-serif text-xs text-stone-800 font-semibold block">Independent Financial Board</span>
+                    </div>
+                    <div className="space-y-0.5">
+                      <span className="font-mono text-[9px] text-stone-400 block uppercase tracking-wider">Reporting Cycle</span>
+                      <span className="font-serif text-xs text-stone-800 font-semibold block">Quarterly Partner Valuations</span>
+                    </div>
+                    <div className="space-y-0.5">
+                      <span className="font-mono text-[9px] text-stone-400 block uppercase tracking-wider">Last Review Status</span>
+                      <span className="font-mono text-[10px] text-emerald-700 font-bold bg-emerald-50 border border-emerald-300/20 px-2 py-0.5 rounded inline-block uppercase">
+                        Q2 2026 // Complete
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.section>
           )}
@@ -2750,392 +3017,255 @@ export default function LandingPage() {
           {activeView === 'hr-advisory' && (
             <motion.section 
               key="hr-advisory-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="max-w-3xl mx-auto w-full space-y-12 py-6 text-left"
             >
-              <div className="space-y-1">
+              {/* Unified Header */}
+              <div className="space-y-6">
                 <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
+                  onClick={() => {
+                    setActiveView('portal');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="group font-mono text-[10px] text-stone-400 hover:text-[#7D123D] transition-colors flex items-center gap-1.5 uppercase cursor-pointer tracking-widest font-semibold"
                 >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
+                  <ArrowLeft className="h-3 w-3 group-hover:-translate-x-0.5 transition-transform duration-200" />
+                  <span>Return to Access</span>
                 </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Talent &amp; Advisors</h2>
-                <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-widest font-bold">Human Capital Network</span>
-              </div>
-
-              <div className="prose prose-stone text-xs leading-relaxed space-y-4 text-stone-600">
-                <p>
-                  We believe beautiful companies are built by hyper-focused individuals. Arcscape maintains an exclusive roster of engineering advisors, structural materials experts, and legal strategists who are deployed dynamically to help our portfolio companies.
-                </p>
-                <p>
-                  If you are a builder looking for deep alignment and unhurried focus, we are always recruiting Partners-in-Residence.
-                </p>
-              </div>
-            </motion.section>
-          )}
-
-          {/* VIEW: GLOBAL NODE REGISTER (INTERACTIVE SIMULATED MAP WIDGET) */}
-          {activeView === 'node-register' && (
-            <motion.section 
-              key="node-register-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full"
-            >
-              <div className="space-y-1">
-                <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
-                >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
-                </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Portal Network Registry</h2>
-                <span className="font-mono text-[9px] uppercase text-stone-400 tracking-wider block">Global Server and Secure Data Hubs</span>
-              </div>
-
-              <div className="prose prose-stone text-xs leading-relaxed space-y-3 text-stone-600">
-                <p>
-                  Arcscape&apos;s digital infrastructure is distributed across four private hosting registers to ensure zero downtime and perfect layout transmission.
-                </p>
-                <p>
-                  Click any global registry below to simulate real-time synchronization checks with our main network.
-                </p>
-              </div>
-
-              {/* Simulated Map / Node List Widget */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                <div className="bg-white p-5 rounded-xl border border-stone-200/80 shadow-xs flex justify-between items-center">
+                
+                <div className="border-t border-b border-stone-200/40 py-6 flex flex-col md:flex-row justify-between items-start md:items-baseline gap-4">
                   <div className="space-y-1">
-                    <span className="font-mono text-[9px] text-stone-400 block">NODE_A // TOKYO</span>
-                    <h4 className="font-serif font-bold text-stone-900 text-sm">APAC East Register</h4>
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-600">
-                      <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                      <span>{nodePingStates.tokyo === 'synced' ? 'Synchronized' : 'Syncing...'}</span>
+                    <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.25em] font-extrabold block">
+                      Arcscape Capital // Private Register
                     </span>
+                    <h2 className="font-serif text-3xl font-light text-stone-900 tracking-tight">Human Capital Advisory</h2>
                   </div>
-                  <button
-                    type="button"
-                    disabled={nodePingStates.tokyo === 'syncing'}
-                    onClick={() => triggerPingNode('tokyo')}
-                    className="p-2 bg-stone-50 hover:bg-stone-100 rounded-lg border border-stone-200 cursor-pointer"
-                  >
-                    <RefreshCw className={`h-4 w-4 text-stone-600 ${nodePingStates.tokyo === 'syncing' ? 'animate-spin' : ''}`} />
-                  </button>
-                </div>
-
-                <div className="bg-white p-5 rounded-xl border border-stone-200/80 shadow-xs flex justify-between items-center">
-                  <div className="space-y-1">
-                    <span className="font-mono text-[9px] text-stone-400 block">NODE_B // GENEVA</span>
-                    <h4 className="font-serif font-bold text-stone-900 text-sm">Europe West Register</h4>
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-600">
-                      <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                      <span>{nodePingStates.geneva === 'synced' ? 'Synchronized' : 'Syncing...'}</span>
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    disabled={nodePingStates.geneva === 'syncing'}
-                    onClick={() => triggerPingNode('geneva')}
-                    className="p-2 bg-stone-50 hover:bg-stone-100 rounded-lg border border-stone-200 cursor-pointer"
-                  >
-                    <RefreshCw className={`h-4 w-4 text-stone-600 ${nodePingStates.geneva === 'syncing' ? 'animate-spin' : ''}`} />
-                  </button>
-                </div>
-
-                <div className="bg-white p-5 rounded-xl border border-stone-200/80 shadow-xs flex justify-between items-center">
-                  <div className="space-y-1">
-                    <span className="font-mono text-[9px] text-stone-400 block">NODE_C // LONDON</span>
-                    <h4 className="font-serif font-bold text-stone-900 text-sm">UK Capital Register</h4>
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-600">
-                      <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                      <span>{nodePingStates.london === 'synced' ? 'Synchronized' : 'Syncing...'}</span>
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    disabled={nodePingStates.london === 'syncing'}
-                    onClick={() => triggerPingNode('london')}
-                    className="p-2 bg-stone-50 hover:bg-stone-100 rounded-lg border border-stone-200 cursor-pointer"
-                  >
-                    <RefreshCw className={`h-4 w-4 text-stone-600 ${nodePingStates.london === 'syncing' ? 'animate-spin' : ''}`} />
-                  </button>
-                </div>
-
-                <div className="bg-white p-5 rounded-xl border border-stone-200/80 shadow-xs flex justify-between items-center">
-                  <div className="space-y-1">
-                    <span className="font-mono text-[9px] text-stone-400 block">NODE_D // NEW YORK</span>
-                    <h4 className="font-serif font-bold text-stone-900 text-sm">US East Register</h4>
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-600">
-                      <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                      <span>{nodePingStates.new_york === 'synced' ? 'Synchronized' : 'Syncing...'}</span>
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    disabled={nodePingStates.new_york === 'syncing'}
-                    onClick={() => triggerPingNode('new_york')}
-                    className="p-2 bg-stone-50 hover:bg-stone-100 rounded-lg border border-stone-200 cursor-pointer"
-                  >
-                    <RefreshCw className={`h-4 w-4 text-stone-600 ${nodePingStates.new_york === 'syncing' ? 'animate-spin' : ''}`} />
-                  </button>
+                  <span className="font-mono text-[9px] text-stone-400 uppercase tracking-widest bg-stone-100/60 px-3 py-1 rounded border border-stone-200/50">
+                    Ref: AC-HUMAN-CAP
+                  </span>
                 </div>
               </div>
-            </motion.section>
-          )}
 
-          {/* VIEW: TOKEN DTD (DOCUMENT TYPE DEFINITIONS) */}
-          {activeView === 'token-dtd' && (
-            <motion.section 
-              key="token-dtd-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full font-mono text-xs"
-            >
-              <div className="space-y-1 font-sans">
-                <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-xs font-bold text-stone-500 hover:text-stone-850 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
-                >
-                  <ArrowLeft className="h-3.5 w-3.5" />
-                  <span>Back to Access</span>
-                </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Security Token XML Schema</h2>
-                <span className="text-xs text-[#7D123D] font-mono font-bold uppercase tracking-wider block">Metadata Validation Specifications</span>
-              </div>
-
-              <div className="prose prose-stone font-sans text-stone-600 text-sm leading-relaxed mb-4">
-                <p>
-                  To secure client state during browser transactions, Arcscape platform tokens validate against strict XML Document Type Definitions (DTD). This guarantees that credentials match layout requirements precisely prior to decryption.
+              <div className="space-y-6">
+                <p className="font-serif text-lg text-stone-700 leading-relaxed font-light">
+                  A beautiful venture is defined not by scale, but by the focus of its operators. We act as private talent scouts and placement coordinators for our incubated stealth companies.
+                </p>
+                <p className="text-[#555] text-sm leading-relaxed font-sans">
+                  We look for practitioners who reject standard industry larping and instead focus on deep mastery—from systems engineering and kernel design to Swiss typographic layouts and material mechanics.
                 </p>
               </div>
 
-              <div className="bg-white border-2 border-stone-250/80 p-5 rounded-2xl text-stone-800 space-y-2 overflow-x-auto leading-relaxed shadow-xs">
-                <pre className="font-mono text-xs text-stone-700">{`<!-- Arcscape Token Validation DTD -->
-<!ELEMENT securityToken (credential, clientInfo, metadata)>
-<!ATTLIST securityToken
-          id ID #REQUIRED
-          version CDATA #FIXED "1.0">
-<!ELEMENT credential (#PCDATA)>
-<!ELEMENT clientInfo (timestamp, environment)>
-<!ELEMENT timestamp (#PCDATA)>
-<!ELEMENT environment (#PCDATA)>
-<!ELEMENT metadata (partnerLevel, deskRouting)>
-<!ELEMENT partnerLevel (#PCDATA)>
-<!ELEMENT deskRouting (#PCDATA)>`}</pre>
-              </div>
-            </motion.section>
-          )}
-
-          {/* VIEW: XHTML SCHEMAS */}
-          {activeView === 'xhtml-schemas' && (
-            <motion.section 
-              key="xhtml-schemas-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full font-mono text-xs"
-            >
-              <div className="space-y-1 font-sans">
-                <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-xs font-bold text-stone-500 hover:text-stone-850 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
-                >
-                  <ArrowLeft className="h-3.5 w-3.5" />
-                  <span>Back to Access</span>
-                </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">XHTML Strict Compliance</h2>
-                <span className="text-xs text-[#7D123D] font-mono font-bold uppercase tracking-wider block">Rendering Architecture Standards</span>
-              </div>
-
-              <p className="font-sans text-stone-600 leading-relaxed text-sm">
-                XHTML Strict compliance is not an old legacy standard for us; it is a chosen philosophy. Closing every tag, keeping lowercase elements, and adhering to strict nesting principles forces our development studio to build lightweight, fast-loading visual portals that compile cleanly across decades of browser technology.
-              </p>
-
-              <div className="bg-white border-2 border-stone-250/80 p-5 rounded-2xl text-stone-800 space-y-2 overflow-x-auto leading-relaxed shadow-xs">
-                <pre className="font-mono text-xs text-stone-700">{`<!-- Structural compliance nesting tests -->
-<div class="validator-node">
-  <p class="strict-block">
-    <strong>Verification Loop:</strong> Approved rendering structures must be closed.
-  </p>
-</div>`}</pre>
-              </div>
-            </motion.section>
-          )}
-
-          {/* VIEW: REGISTERED PARTNERS */}
-          {activeView === 'registered-partners' && (
-            <motion.section 
-              key="registered-partners-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full"
-            >
-              <div className="space-y-1">
-                <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
-                >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
-                </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Onboarding Desk</h2>
-                <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-widest font-bold">New Partner Checklist</span>
-              </div>
-
-              <div className="bg-white p-6 rounded-xl border border-stone-200/80 shadow-xs space-y-4">
-                <p className="text-xs text-stone-500 leading-relaxed">
-                  Welcome to Arcscape. Verified portfolio founders and Limited Partners receive automatic onboarding materials. Below is the primary checklist to establish access nodes.
-                </p>
-
-                <div className="space-y-3 pt-2">
-                  <div className="flex items-start gap-3">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-serif font-bold text-stone-900 text-xs">Credential Token Provision</h4>
-                      <p className="text-[11px] text-stone-500">Your venture lead will issue a private token in person or via offline keys.</p>
+              {/* Active Career Placements */}
+              <div className="space-y-4">
+                <h4 className="font-mono text-[10px] font-bold text-stone-400 uppercase tracking-widest border-b border-stone-200/40 pb-2">
+                  Stealth Venture Fellowships &amp; Roles
+                </h4>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {[
+                    {
+                      title: "Venture Architect (In-Residence)",
+                      location: "Zurich / Hybrid",
+                      desc: "Work directly alongside our general partners to map capital structures, secure IP paths, and build early customer-facing MVPs for stealth cohort ventures."
+                    },
+                    {
+                      title: "Principal Protocol Engineer",
+                      location: "Tokyo / Remote",
+                      desc: "Lead kernel level implementation and secure distributed routing layers for a stealth security-first enterprise communications company."
+                    },
+                    {
+                      title: "Lead Visual & UX Designer",
+                      location: "Geneva / On-Site",
+                      desc: "Responsible for establishing strict typographic systems, custom icon libraries, and pristine web views. Absolute design precision mandatory."
+                    },
+                    {
+                      title: "Materials Optimization Researcher",
+                      location: "Munich / Labs",
+                      desc: "Analyze thermal characteristics and crystalline structures for next-generation tactile hardware interfaces. PhD in Material Science preferred."
+                    }
+                  ].map((job, jIdx) => (
+                    <div key={jIdx} className="p-6 rounded-xl border border-stone-200/55 bg-white space-y-3 hover:border-stone-400/60 transition-all duration-300">
+                      <div className="space-y-1">
+                        <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-wider font-bold">{job.location}</span>
+                        <h5 className="font-serif text-base font-medium text-stone-900 leading-tight">{job.title}</h5>
+                      </div>
+                      <p className="text-[#555] text-xs leading-relaxed font-sans">
+                        {job.desc}
+                      </p>
+                      <button
+                        onClick={() => {
+                          setActiveView('support');
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        className="text-[9px] font-mono uppercase tracking-wider font-bold text-stone-800 hover:text-[#7D123D] transition-colors pt-1 block"
+                      >
+                        Inquire About Role &rarr;
+                      </button>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-serif font-bold text-stone-900 text-xs">Regulatory Document Signature</h4>
-                      <p className="text-[11px] text-stone-500">Submit signed Limited Partner disclosures through our legal routing desks.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-serif font-bold text-stone-900 text-xs">Technical Syncing</h4>
-                      <p className="text-[11px] text-stone-500">Establish encrypted endpoints with our Zurich or New York registry nodes.</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
-            </motion.section>
-          )}
 
-          {/* VIEW: PORTAL DTD */}
-          {activeView === 'portal-dtd' && (
-            <motion.section 
-              key="portal-dtd-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full font-mono text-xs"
-            >
-              <div className="space-y-1 font-sans">
-                <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-xs font-bold text-stone-500 hover:text-stone-850 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
-                >
-                  <ArrowLeft className="h-3.5 w-3.5" />
-                  <span>Back to Access</span>
-                </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Portal DTD Schemas</h2>
-                <span className="text-xs text-[#7D123D] font-mono font-bold uppercase tracking-wider block">Interface Structural Definitions</span>
-              </div>
-
-              <p className="font-sans text-stone-600 leading-relaxed text-sm">
-                To guarantee zero layout shift, our portal&apos;s UI grids are validated against rigid Document Type Definitions specifying pixel coordinates, grid flex values, and typography hierarchies.
-              </p>
-
-              <div className="bg-white border-2 border-stone-250/80 p-5 rounded-2xl text-stone-800 space-y-2 overflow-x-auto leading-relaxed shadow-xs">
-                <pre className="font-mono text-xs text-stone-700">{`<!-- Portal Layout Rules -->
-<!ELEMENT portalView (header, heroArea, footerRegistry)>
-<!ATTLIST portalView
-          theme (light|warm) "warm">
-<!ELEMENT header (logo, navBar)>
-<!ELEMENT heroArea (badge, heading, inputField)>
-<!ELEMENT footerRegistry (logoContainer, linksGrid, copyrights)>`}</pre>
-              </div>
-            </motion.section>
-          )}
-
-          {/* VIEW: SEED NETWORK */}
-          {activeView === 'seed-network' && (
-            <motion.section 
-              key="seed-network-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full"
-            >
-              <div className="space-y-1">
-                <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-[10px] text-stone-400 hover:text-stone-800 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
-                >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>Back to Access</span>
-                </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">Venture Advisors</h2>
-                <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-widest font-bold">Incubation Mentor List</span>
-              </div>
-
-              <p className="text-xs text-stone-500 leading-relaxed">
-                Our seed advisor network links active founders with veteran materials scientists, software architects, and product strategists who help with zero-to-one design hurdles.
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="bg-white p-4 rounded-xl border border-stone-200/80 space-y-1">
-                  <h4 className="font-serif font-bold text-stone-900 text-sm">Marcus Vance</h4>
-                  <span className="font-mono text-[9px] uppercase text-stone-400 block">Lead Advisor // Systems</span>
-                  <p className="text-[11px] text-stone-500 leading-relaxed pt-1">Helping founders deploy clean municipal grids and micro-acoustic models.</p>
-                </div>
-                <div className="bg-white p-4 rounded-xl border border-stone-200/80 space-y-1">
-                  <h4 className="font-serif font-bold text-stone-900 text-sm">Elena Rostova</h4>
-                  <span className="font-mono text-[9px] uppercase text-stone-400 block">Partner // Design Studio</span>
-                  <p className="text-[11px] text-stone-500 leading-relaxed pt-1">Overseeing first-principles brand development and user-interface optimization.</p>
-                </div>
-              </div>
-            </motion.section>
-          )}
-
-          {/* VIEW: XHTML SPECIFICATION VIEWER */}
-          {activeView === 'xhtml-spec' && (
-            <motion.section 
-              key="xhtml-spec-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6 max-w-2xl mx-auto w-full"
-            >
-              <div className="space-y-2">
-                <button 
-                  onClick={() => setActiveView('portal')}
-                  className="font-mono text-xs font-bold text-stone-500 hover:text-stone-850 transition-colors flex items-center gap-1.5 uppercase cursor-pointer"
-                >
-                  <ArrowLeft className="h-3.5 w-3.5" />
-                  <span>Back to Access</span>
-                </button>
-                <h2 className="font-serif text-3xl font-normal text-stone-900 tracking-tight">XHTML Specification</h2>
-                <p className="text-sm text-stone-600 leading-relaxed">
-                  Inspect the rigid, strict compliant W3C XHTML source document structured for this portal. Strict lowercase declarations and closed nesting ensure perfect cross-platform stability.
-                </p>
-              </div>
-
-              <div className="relative">
-                <pre className="text-xs font-mono text-stone-700 bg-white p-5 rounded-2xl border-2 border-stone-250/80 overflow-x-auto max-h-96 leading-relaxed shadow-xs">
-                  {xhtmlCodeString}
-                </pre>
+              <div className="pt-6 border-t border-stone-200/40 text-center">
+                <p className="text-xs text-stone-500 font-serif italic mb-4">Are you a hyper-focused practitioner ready for first-principles venture architecture?</p>
                 <button
                   type="button"
                   onClick={() => {
-                    navigator.clipboard.writeText(xhtmlCodeString);
-                    alert('Strict XHTML specifications copied to clipboard!');
+                    setActiveView('support');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className="absolute top-4 right-4 bg-stone-100 text-stone-700 hover:bg-[#7D123D] hover:text-white border border-stone-300 rounded px-3 py-1.5 text-xs font-mono transition-all cursor-pointer font-bold"
+                  className="px-6 py-3 bg-[#7D123D] hover:bg-[#9E1D51] text-white font-mono text-[10px] font-bold uppercase tracking-widest rounded transition-all shadow-sm cursor-pointer"
                 >
-                  Copy Specification
+                  Submit Private CV
                 </button>
+              </div>
+            </motion.section>
+          )}
+
+          {/* VIEW: REGISTERED-PARTNERS */}
+          {activeView === 'registered-partners' && (
+            <motion.section 
+              key="partners-checklist-view"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="max-w-2xl mx-auto w-full space-y-12 py-6 text-left"
+            >
+              {/* Unified Header */}
+              <div className="space-y-6">
+                <button 
+                  onClick={() => {
+                    setActiveView('portal');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="group font-mono text-[10px] text-stone-400 hover:text-[#7D123D] transition-colors flex items-center gap-1.5 uppercase cursor-pointer tracking-widest font-semibold"
+                >
+                  <ArrowLeft className="h-3 w-3 group-hover:-translate-x-0.5 transition-transform duration-200" />
+                  <span>Return to Access</span>
+                </button>
+                
+                <div className="border-t border-b border-stone-200/40 py-6 flex flex-col md:flex-row justify-between items-start md:items-baseline gap-4">
+                  <div className="space-y-1">
+                    <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.25em] font-extrabold block">
+                      Arcscape Capital // Partner Services
+                    </span>
+                    <h2 className="font-serif text-3xl font-light text-stone-900 tracking-tight">Onboarding LP Checklist</h2>
+                  </div>
+                  <span className="font-mono text-[9px] text-stone-400 uppercase tracking-widest bg-stone-100/60 px-3 py-1 rounded border border-stone-200/50">
+                    Ref: AC-LP-CHECKLIST
+                  </span>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <p className="font-serif text-lg text-stone-700 leading-relaxed font-light">
+                  Welcome to Arcscape Capital. To complete your registration as a verified Limited Partner (LP), please review and complete the following four standard onboarding steps.
+                </p>
+                <p className="text-stone-550 text-xs font-serif italic">
+                  Onboarding Tracker: Mark each step as you complete the requirements.
+                </p>
+              </div>
+
+              {/* Steps Checklist Card */}
+              <div className="bg-white rounded-2xl border border-stone-200/60 shadow-xs divide-y divide-stone-150/50 overflow-hidden">
+                {[
+                  {
+                    id: 'step1',
+                    num: '01',
+                    title: "Partner Verification",
+                    desc: "Verify your identity and contact information with your dedicated Arcscape relationship lead."
+                  },
+                  {
+                    id: 'step2',
+                    num: '02',
+                    title: "Limited Partner Agreement",
+                    desc: "Review, execute, and submit the confidential Limited Partner Master Agreement."
+                  },
+                  {
+                    id: 'step3',
+                    num: '03',
+                    title: "Accreditation Confirmation",
+                    desc: "Confirm your accredited investor or institutional status in compliance with local regulations."
+                  },
+                  {
+                    id: 'step4',
+                    num: '04',
+                    title: "Account Activation",
+                    desc: "Receive your verification link and configure your credentials for secure portal access."
+                  }
+                ].map((step) => {
+                  const isChecked = checkedSteps[step.id];
+                  return (
+                    <div 
+                      key={step.id} 
+                      onClick={() => setCheckedSteps({ ...checkedSteps, [step.id]: !isChecked })}
+                      className="p-6 flex gap-5 items-start cursor-pointer hover:bg-stone-50/40 transition-colors group select-none"
+                    >
+                      <button
+                        type="button"
+                        className={`h-6 w-6 shrink-0 rounded-full border flex items-center justify-center transition-all duration-200 mt-0.5 ${
+                          isChecked 
+                            ? 'bg-[#7D123D] border-[#7D123D] text-white' 
+                            : 'bg-white border-stone-300 text-transparent group-hover:border-[#7D123D]/50'
+                        }`}
+                      >
+                        <Check className="h-3.5 w-3.5 stroke-[2.5]" />
+                      </button>
+
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-[9px] text-[#7D123D] font-bold tracking-wider">{step.num}</span>
+                          <h4 className={`font-serif text-base font-medium transition-colors ${isChecked ? 'text-stone-400 line-through font-light' : 'text-stone-900 font-medium'}`}>
+                            {step.title}
+                          </h4>
+                        </div>
+                        <p className={`text-xs leading-relaxed font-sans transition-colors ${isChecked ? 'text-stone-300' : 'text-stone-550'}`}>
+                          {step.desc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Progress Summary */}
+              <div className="p-5 rounded-xl bg-stone-50 border border-stone-200/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="font-mono text-xs font-bold text-stone-500 uppercase tracking-wider">
+                    COMPLETION PROGRESS
+                  </div>
+                  <div className="h-2 w-32 bg-stone-200 rounded-full overflow-hidden border border-stone-300/20">
+                    <div 
+                      className="h-full bg-[#7D123D] transition-all duration-500" 
+                      style={{ 
+                        width: `${(Object.values(checkedSteps).filter(Boolean).length / 4) * 100}%` 
+                      }} 
+                    />
+                  </div>
+                  <span className="font-mono text-xs font-black text-stone-850">
+                    {Object.values(checkedSteps).filter(Boolean).length} / 4
+                  </span>
+                </div>
+
+                {Object.values(checkedSteps).filter(Boolean).length === 4 ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsLoginOpen(true);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="px-4 py-2 bg-[#7D123D] text-white hover:bg-[#9E1D51] font-mono text-[10px] font-bold uppercase tracking-wider rounded transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                  >
+                    <Lock className="h-3 w-3" />
+                    <span>Proceed to Login</span>
+                  </button>
+                ) : (
+                  <span className="font-mono text-[9px] uppercase text-stone-400 tracking-wider font-bold">
+                    Complete all 4 steps to proceed
+                  </span>
+                )}
               </div>
             </motion.section>
           )}
@@ -3156,336 +3286,140 @@ export default function LandingPage() {
         </AnimatePresence>
       </div>
 
-      {/* 3. MULTI-COLUMN PREMIUM FOOTER SITE DIRECTORY */}
-      <footer className="w-full max-w-5xl mx-auto pt-12 pb-8 border-t border-stone-200/50 relative z-10 space-y-12 px-4">
+      {/* 3. ELEGANT INVESTMENT DIRECTORY FOOTER */}
+      <footer className="w-full max-w-5xl mx-auto pt-16 pb-12 border-t border-stone-250/60 relative z-10 space-y-12 px-4 sm:px-10 md:px-16">
         
-        {/* Arcscape Ventures Collapsible Section */}
-        <div className="border border-stone-200/65 rounded-2xl bg-stone-50/50 overflow-hidden transition-all duration-300 shadow-xs">
-          <button
-            type="button"
-            onClick={() => setIsVenturesExpanded(!isVenturesExpanded)}
-            className="w-full flex items-center justify-between p-4 px-6 font-mono text-xs uppercase tracking-wider text-stone-950 font-black hover:bg-stone-100/30 transition-colors cursor-pointer text-left"
-          >
-            <div className="flex items-center gap-2">
-              <span className={`h-2 w-2 rounded-full bg-[#7D123D] ${isVenturesExpanded ? 'animate-pulse' : ''}`} />
-              <span>ARCSCAPE VENTURES ({projectsData.length})</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-stone-500 font-sans text-xs lowercase font-bold tracking-normal normal-case">
-              <span>{isVenturesExpanded ? 'click to hide active portfolio' : 'click to expand active portfolio'}</span>
-              <motion.span
-                animate={{ rotate: isVenturesExpanded ? 180 : 0 }}
-                transition={{ duration: 0.2 }}
-                className="inline-block text-stone-700 font-bold font-mono text-xs"
-              >
-                ↓
-              </motion.span>
-            </div>
-          </button>
-
-          <AnimatePresence initial={false}>
-            {isVenturesExpanded && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="border-t border-stone-200/40"
-              >
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 p-6 px-8 text-left bg-white/50">
-                  {/* Column 1: Networks & Directories */}
-                  <div className="space-y-3">
-                    <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2">
-                      Networks &amp; Directories
-                    </h4>
-                    <ul className="space-y-2.5 text-xs font-sans text-stone-600">
-                      {projectsData.slice(0, 5).map((project) => (
-                        <li key={project.domain}>
-                          <button 
-                            onClick={() => { setActiveView(project.viewState as any); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                            className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left font-medium block"
-                          >
-                            {project.domain}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Column 2: AI & FinTech Labs */}
-                  <div className="space-y-3">
-                    <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2">
-                      AI &amp; FinTech Labs
-                    </h4>
-                    <ul className="space-y-2.5 text-xs font-sans text-stone-600">
-                      {projectsData.slice(5, 10).map((project) => (
-                        <li key={project.domain}>
-                          <button 
-                            onClick={() => { setActiveView(project.viewState as any); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                            className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left font-medium block"
-                          >
-                            {project.domain}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Column 3: Protocols & Sciences */}
-                  <div className="space-y-3">
-                    <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2">
-                      Protocols &amp; Sciences
-                    </h4>
-                    <ul className="space-y-2.5 text-xs font-sans text-stone-600">
-                      {projectsData.slice(10, 15).map((project) => (
-                        <li key={project.domain}>
-                          <button 
-                            onClick={() => { setActiveView(project.viewState as any); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                            className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left font-medium block"
-                          >
-                            {project.domain}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Column 4: Enterprise & Performance */}
-                  <div className="space-y-3">
-                    <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2">
-                      Enterprise &amp; Performance
-                    </h4>
-                    <ul className="space-y-2.5 text-xs font-sans text-stone-600">
-                      {projectsData.slice(15).map((project) => (
-                        <li key={project.domain}>
-                          <button 
-                            onClick={() => { setActiveView(project.viewState as any); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                            className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left font-medium block"
-                          >
-                            {project.domain}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Traditional Exploded Sitemap Footer */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-left pt-6 border-t border-stone-200/30">
-          {/* Column 1: INVESTMENT CAPITAL */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 text-left">
+          
+          {/* Column 1: OFFICES & CONTACT */}
           <div className="space-y-4">
-            <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2.5">
-              Investment Capital
+            <h4 className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-400 font-extrabold pb-2.5 border-b border-stone-200/50">
+              Offices &amp; Contact
             </h4>
-            <ul className="space-y-3 text-xs font-sans text-stone-600">
+            <div className="space-y-3 text-xs text-stone-600 leading-relaxed font-serif">
+              <p className="font-sans font-bold text-[11px] text-stone-900 tracking-wider uppercase">
+                ARCSCAPE CAPITAL
+              </p>
+              <p>
+                Zug: Poststrasse 14, 6300 Zug, Switzerland
+              </p>
+              <p>
+                Zürich: Talstrasse 83, 8001 Zürich, Switzerland
+              </p>
+              <div className="space-y-1 pt-1.5 font-mono text-[9px] text-stone-400 uppercase leading-normal">
+                <p>partners@arcscape.capital</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2: INVESTMENT SECTORS & STAGES */}
+          <div className="space-y-4">
+            <h4 className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-400 font-extrabold pb-2.5 border-b border-stone-200/50">
+              Venture Portfolios
+            </h4>
+            <ul className="space-y-2.5 text-xs font-sans text-stone-600">
+              {[
+                { label: "AI & Deep Tech", category: "AI & Deep Tech" },
+                { label: "Wellness & Life", category: "Wellness & Life" },
+                { label: "Enterprise & Tools", category: "Enterprise & Tools" }
+              ].map((sector) => (
+                <li key={sector.label}>
+                  <button 
+                    onClick={() => {
+                      setActiveView('portal');
+                      setSelectedCategory(sector.category as any);
+                      setTimeout(() => {
+                        const section = document.getElementById('portfolio-section');
+                        if (section) section.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
+                    }}
+                    className="hover:text-[#7D123D] transition-colors cursor-pointer text-left block font-medium group flex items-center gap-1.5"
+                  >
+                    <span>{sector.label}</span>
+                    <span className="text-[9px] text-[#7D123D] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-350">→</span>
+                  </button>
+                </li>
+              ))}
               <li>
                 <button 
-                  onClick={() => { setActiveView('portal'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                  onClick={() => {
+                    setActiveView('portal');
+                    setSelectedCategory('All');
+                    setTimeout(() => {
+                      const section = document.getElementById('portfolio-section');
+                      if (section) section.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                  }}
+                  className="hover:text-[#7D123D] transition-colors cursor-pointer text-left block font-medium group flex items-center gap-1.5"
                 >
-                  Portfolio Registry
+                  <span>All Active Holdings</span>
+                  <span className="text-[9px] text-[#7D123D] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-350">→</span>
                 </button>
               </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('seed-incubator'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  Seed &amp; Early Stage
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('strategic-partnerships'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  Strategic Alliances
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('legal-network'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  Jurisdiction &amp; Trust Law
-                </button>
-              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: LP SUPPORT */}
+          <div className="space-y-4">
+            <h4 className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-400 font-extrabold pb-2.5 border-b border-stone-200/50">
+              Partner Channels
+            </h4>
+            <ul className="space-y-2.5 text-xs font-sans text-stone-600">
               <li>
                 <button 
                   onClick={() => { setActiveView('registered-partners'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                  className="hover:text-[#7D123D] transition-colors cursor-pointer text-left block font-medium flex items-center gap-1.5"
                 >
-                  Accredited Register
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#7D123D]/30" />
+                  <span>Onboarding LP Checklist</span>
                 </button>
               </li>
-            </ul>
-          </div>
-
-          {/* Column 2: STUDIO INITIATIVES */}
-          <div className="space-y-4">
-            <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2.5">
-              Studio Initiatives
-            </h4>
-            <ul className="space-y-3 text-xs font-sans text-stone-600">
-              <li>
-                <button 
-                  onClick={() => { setActiveView('about'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  About the Firm
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('target-arbitrage'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  Computational Arbitrage
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('seed-network'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  Venture Advisors
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('hr-advisory'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  HR &amp; Executive Counsel
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('node-register'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  Global Node Registry
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: STRUCTURAL RULES */}
-          <div className="space-y-4">
-            <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2.5">
-              Structural Rules
-            </h4>
-            <ul className="space-y-3 text-xs font-sans text-stone-600">
-              <li>
-                <button 
-                  onClick={() => { setActiveView('xhtml-spec'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  XHTML Strict Specs
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('portal-dtd'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  Portal Layout DTD
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('token-dtd'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  Credential Tokens DTD
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('xhtml-schemas'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  XML Document Schemas
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { setActiveView('compliance-board'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  Compliance Board
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: ACCESS & SUPPORT */}
-          <div className="space-y-4">
-            <h4 className="font-mono text-xs uppercase tracking-wider text-stone-850 font-black border-b border-stone-200 pb-2.5">
-              Access &amp; Support
-            </h4>
-            <ul className="space-y-3 text-xs font-sans text-stone-600">
               <li>
                 <button 
                   onClick={() => { setActiveView('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                  className="hover:text-[#7D123D] transition-colors cursor-pointer text-left block font-medium flex items-center gap-1.5"
                 >
-                  Partner Support Desk
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#7D123D]/30" />
+                  <span>Partner Support Desk</span>
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => { setActiveView('login-help'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
+                  className="hover:text-[#7D123D] transition-colors cursor-pointer text-left block font-medium flex items-center gap-1.5"
                 >
-                  Cookie Handshake Help
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#7D123D]/30" />
+                  <span>Access Support</span>
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => { setIsLoginOpen(true); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-semibold"
+                  className="hover:text-[#7D123D] transition-colors cursor-pointer text-left block font-bold text-[#7D123D] flex items-center gap-1.5"
                 >
-                  Partner Portal Access
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { showToast('Sitemap location: /sitemap.xml'); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  sitemap.xml
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => { showToast('Robots rules location: /robots.txt'); }}
-                  className="hover:text-[#7D123D] hover:underline transition-colors cursor-pointer text-left block font-medium"
-                >
-                  robots.txt
+                  <Lock className="h-3 w-3" />
+                  <span>Partner Portal Entry</span>
                 </button>
               </li>
             </ul>
           </div>
+
         </div>
 
-        {/* Bottom footer row with small logo and small grey text */}
-        <div className="flex flex-col sm:flex-row justify-between items-center text-center gap-4 text-[10px] font-mono text-stone-400 pt-8 border-t border-stone-100/60">
+        {/* Bottom footer row with small logo and clean metadata */}
+        <div className="flex flex-col sm:flex-row justify-between items-center text-center gap-4 text-[9px] font-mono text-stone-400 pt-8 border-t border-stone-200/30">
           <div className="flex items-center gap-3">
             <a 
               href="https://evu.com" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="hover:text-stone-800 transition-colors cursor-pointer flex items-center"
+              className="hover:text-stone-850 transition-colors cursor-pointer flex items-center"
               title="EVU Venture Studio"
             >
-              <EvuLogo className="h-3 w-auto text-stone-500 opacity-85 hover:opacity-100 transition-opacity" />
+              <EvuLogo className="h-3 w-auto text-stone-400 opacity-80 hover:opacity-100 transition-opacity" />
             </a>
             <span>•</span>
-            <span>Venture Capital &amp; Incubation Studio</span>
+            <span>Venture Partners</span>
           </div>
 
           <div className="flex items-center gap-4 text-stone-400">
@@ -3493,20 +3427,20 @@ export default function LandingPage() {
               type="button"
               className="hover:text-stone-850 transition-colors cursor-pointer text-stone-400 font-medium" 
               onClick={() => {
-                showToast('Privacy Protocol: SEC and GDPR Compliant');
+                showToast('Qualified Partners Only');
               }}
             >
-              Privacy Protocol
+              Disclosures
             </button>
             <span>•</span>
             <button 
               type="button"
               className="hover:text-stone-850 transition-colors cursor-pointer text-stone-400 font-medium" 
               onClick={() => {
-                showToast('Terms of Engagement: Strictly Advisory');
+                showToast('Terms of Service: Authorized Partners Only');
               }}
             >
-              Terms of Engagement
+              Terms of Service
             </button>
             <span>•</span>
             <button
