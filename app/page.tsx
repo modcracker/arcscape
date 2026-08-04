@@ -203,40 +203,28 @@ function ArcscapeCurvedLogo({ size = "normal" }: { size?: "normal" | "small" | "
   );
 }
 
-// Geometric EVU logo matching user design
-function EvuLogo({ className = "h-4" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 82 28" className={`${className} fill-current`} xmlns="http://www.w3.org/2000/svg">
-      {/* E: 3 horizontal bars */}
-      <rect x="0" y="2" width="22" height="5.5" rx="1.5" />
-      <rect x="0" y="11.25" width="17" height="5.5" rx="1.5" />
-      <rect x="0" y="20.5" width="22" height="5.5" rx="1.5" />
-      
-      {/* V */}
-      <polygon points="27,2 32.5,2 39.5,18.5 46.5,2 52,2 39.5,26" />
-      
-      {/* U */}
-      <path d="M 56,2 L 61.5,2 L 61.5,16 C 61.5,20.5 68.5,20.5 68.5,16 L 68.5,2 L 74,2 L 74,16 C 74,26 56,26 56,16 Z" />
-    </svg>
-  );
-}
-
-// Geometric Arcscape emblem
+// Geometric Arcscape architectural emblem
 function ArcscapeEmblem({ size = "normal" }: { size?: "normal" | "small" | "large" }) {
   const scale = size === "small" ? 0.75 : size === "large" ? 1.5 : 1;
-  const dimension = 40 * scale;
+  const dimension = 24 * scale;
 
   return (
-    <div className="flex items-center justify-center select-none pointer-events-none">
+    <div className="flex items-center justify-center select-none pointer-events-none shrink-0">
       <svg 
-        viewBox="0 0 40 40" 
+        viewBox="0 0 32 32" 
         style={{ width: `${dimension}px`, height: `${dimension}px` }}
-        className="text-[#7D123D] drop-shadow-sm"
+        className="text-[#7D123D]"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" strokeWidth="1.5" className="opacity-20" />
-        <path d="M 8 26 C 8 15, 32 15, 32 26" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-        <line x1="6" y1="26" x2="34" y2="26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="12" y1="30" x2="28" y2="30" stroke="currentColor" strokeWidth="1" strokeLinecap="round" className="opacity-60" />
+        {/* Subtle geometric outer frame */}
+        <rect x="3" y="3" width="26" height="26" rx="5" stroke="currentColor" strokeWidth="1.2" className="opacity-30" />
+        {/* Architectural A-frame apex */}
+        <path d="M 9 22 L 16 8 L 23 22" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+        {/* Upward architectural arc crossbar */}
+        <path d="M 11.5 17 Q 16 14.5 20.5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        {/* Subtle geometric apex pillar dot */}
+        <circle cx="16" cy="11.5" r="1" fill="currentColor" />
       </svg>
     </div>
   );
@@ -420,21 +408,6 @@ function ProjectVisualMockup({ slug }: { slug: string }) {
       readinessLabel: "Decentralization Score",
       readinessPercentage: 80
     },
-    'project-holograph': {
-      title: "Holograph Spatial",
-      subtitle: "Volumetric AR/VR Interface Design",
-      sector: "Immersive User Interfaces",
-      demographic: "Hardware manufacturers & VR developers",
-      businessModel: "SDK & Operating System Licensing",
-      accent: "amber",
-      metrics: [
-        { label: "SUPPORTED HEADSETS", value: "8 Key Devices", detail: "Cross-platform compatibility" },
-        { label: "VOLUMETRIC RENDERING", value: "120 FPS", detail: "Buttery smooth viewport refresh" },
-        { label: "UX IMMERSIVENESS", value: "96% Rating", detail: "Tested spatial usability" }
-      ],
-      readinessLabel: "SDK Maturity",
-      readinessPercentage: 75
-    },
     'project-protosquad': {
       title: "ProtoSquad CAD",
       subtitle: "Rapid CAD & Additive Prototyping Laboratory",
@@ -494,21 +467,6 @@ function ProjectVisualMockup({ slug }: { slug: string }) {
       ],
       readinessLabel: "Capital Deployment",
       readinessPercentage: 83
-    },
-    'project-jailsoft': {
-      title: "JailSoft Systems",
-      subtitle: "CJIS-Compliant Corrections Administration",
-      sector: "GovTech Public Safety Software",
-      demographic: "County sheriffs & correctional agencies",
-      businessModel: "Annual Government Enterprise Licensing",
-      accent: "red",
-      metrics: [
-        { label: "ACTIVE FACILITIES", value: "42 Agencies", detail: "Running correctional platforms" },
-        { label: "CONTINUOUS UPTIME", value: "100.00%", detail: "SLA critical database uptime" },
-        { label: "FEDERAL AUDITING", value: "CJIS Certified", detail: "Meets DOJ security policies" }
-      ],
-      readinessLabel: "Security Accreditation",
-      readinessPercentage: 100
     },
     'project-plano': {
       title: "Plano Layouts",
@@ -872,12 +830,10 @@ type ViewType =
   | 'project-trueinheritor'
   | 'project-grzu'
   | 'project-rp2p'
-  | 'project-holograph'
   | 'project-protosquad'
   | 'project-izpe'
   | 'project-bridge'
   | 'project-aleph'
-  | 'project-jailsoft'
   | 'project-plano'
   | 'project-humandemo'
   | 'project-biotrojan';
@@ -1060,22 +1016,6 @@ const projectsData = [
     readiness: 85
   },
   {
-    viewState: 'project-holograph' as const,
-    domain: 'holograph.cc',
-    category: 'SPATIAL TECH',
-    tagline: 'A stealth-mode spatial technology enterprise interface built around immersive volumetric realities.',
-    type: 'SPATIAL SYSTEMS',
-    url: 'https://www.holograph.cc/',
-    image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=600&q=80',
-    accentBg: 'group-hover:bg-violet-600',
-    accentBorder: 'group-hover:border-violet-500/40',
-    accentText: 'group-hover:text-violet-300',
-    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(139,92,246,0.25)]',
-    accentBar: 'bg-violet-500',
-    status: 'Incubating' as const,
-    readiness: 60
-  },
-  {
     viewState: 'project-protosquad' as const,
     domain: 'protosquad.com',
     category: 'ENGINEERING',
@@ -1138,22 +1078,6 @@ const projectsData = [
     accentBar: 'bg-stone-500',
     status: 'Incubating' as const,
     readiness: 78
-  },
-  {
-    viewState: 'project-jailsoft' as const,
-    domain: 'jailsoft.com',
-    category: 'GOVERNMENT TECH',
-    tagline: 'High-uptime jail management software (JMS), secure prisoner records, and CJIS-compliant corrections technology platforms.',
-    type: 'JAIL MANAGEMENT SYSTEMS',
-    url: 'https://www.jailsoft.com/',
-    image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=600&q=80',
-    accentBg: 'group-hover:bg-red-600',
-    accentBorder: 'group-hover:border-red-500/40',
-    accentText: 'group-hover:text-red-300',
-    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(220,38,38,0.25)]',
-    accentBar: 'bg-red-500',
-    status: 'Ready' as const,
-    readiness: 96
   },
   {
     viewState: 'project-plano' as const,
@@ -1230,8 +1154,6 @@ function getProjectIcon(domain: string) {
       return <Terminal className={cn} />;
     case 'rp2p.com':
       return <Share2 className={cn} />;
-    case 'holograph.cc':
-      return <Fingerprint className={cn} />;
     case 'protosquad.com':
       return <Printer className={cn} />;
     case 'izpe.com':
@@ -1240,8 +1162,6 @@ function getProjectIcon(domain: string) {
       return <GitMerge className={cn} />;
     case 'aleph.cc':
       return <Brain className={cn} />;
-    case 'jailsoft.com':
-      return <ShieldCheck className={cn} />;
     case 'plano.cc':
       return <CalendarDays className={cn} />;
     case 'humandemo.com':
@@ -1256,7 +1176,7 @@ function getProjectIcon(domain: string) {
 // Helper to classify project domains into human-meaningful categories
 function getCategoryGroup(domain: string): 'AI & Deep Tech' | 'Wellness & Life' | 'Enterprise & Tools' {
   const d = domain.toLowerCase();
-  if (d.includes('clonecraft') || d.includes('exoshape') || d.includes('aleph') || d.includes('holograph') || d.includes('repulink') || d.includes('biotrojan')) {
+  if (d.includes('clonecraft') || d.includes('exoshape') || d.includes('aleph') || d.includes('repulink') || d.includes('biotrojan')) {
     return 'AI & Deep Tech';
   }
   if (d.includes('muzcast') || d.includes('kundalink') || d.includes('humandemo') || d.includes('rp2p') || d.includes('chosenspot')) {
@@ -1310,12 +1230,10 @@ function getProjectTech(domain: string): string[] {
   if (d.includes('trueinheritor')) return ['Cryptography', 'Secure Vault', 'Next.js'];
   if (d.includes('grzu')) return ['API Monitor', 'Uptime Alerts', 'React'];
   if (d.includes('rp2p')) return ['P2P Protocol', 'WebRTC', 'Anonymous Mail'];
-  if (d.includes('holograph')) return ['WebGL', 'Immersive UI', 'Three.js'];
   if (d.includes('protosquad')) return ['SolidWorks CAD', 'Additive Mfg', 'React'];
   if (d.includes('izpe')) return ['Quantum Sandbox', 'D3 Simulation', 'HTML5'];
   if (d.includes('bridge')) return ['Verified Ledger', 'Directory React', 'Tailwind'];
   if (d.includes('aleph')) return ['Knowledge Graph', 'Cognitive AI', 'Next.js'];
-  if (d.includes('jailsoft')) return ['Jail Monitor', 'Secure Records', 'CJIS'];
   if (d.includes('plano')) return ['Interactive Canvas', 'Local Storage', 'HTML5'];
   if (d.includes('humandemo')) return ['Focus SaaS', 'Bio Rhythms', 'Chart.js'];
   return ['TypeScript', 'Next.js', 'Tailwind'];
@@ -1717,12 +1635,32 @@ export default function LandingPage() {
       {/* Subtle pure aesthetic background grids */}
       <div className="absolute inset-0 bg-[radial-gradient(#E5E5DE_1px,transparent_1px)] [background-size:32px_32px] opacity-25 pointer-events-none z-0" />
 
-      {/* Beautiful, ultra-premium geometric architectural blueprint graphic stretching full screen width at the top of the portal page */}
+      {/* Full-width Startup Tech Background Image Layer - Edge to Edge in a luminous bright silver & platinum screen tone */}
       {activeView === 'portal' && (
-        <div className="absolute top-0 left-0 right-0 h-[480px] md:h-[540px] z-0 select-none pointer-events-none overflow-hidden flex items-center justify-center">
-          {/* Soft ambient backdrops */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#FAF9F5] via-[#F4F3ED]/80 to-[#FAF9F5]" />
-          <div className="absolute w-[800px] h-[360px] top-12 rounded-full bg-[#E5DFD3]/40 blur-[120px] mix-blend-multiply" />
+        <div className="absolute top-0 left-0 right-0 w-full h-[680px] sm:h-[720px] md:h-[760px] z-0 overflow-hidden pointer-events-none select-none">
+          {/* High-definition startup tech hardware compute image with bright silver & platinum filter */}
+          <img 
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2400&q=80" 
+            alt="Startup tech hardware compute" 
+            className="w-full h-full object-cover object-center filter grayscale contrast-[0.95] brightness-[1.7] opacity-45 mix-blend-multiply"
+          />
+          
+          {/* Luminous Silver & Platinum Metallic Screen Overlay */}
+          <div className="absolute inset-0 bg-[#E2E8F0]/50 mix-blend-screen" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-100/70 via-slate-200/40 to-transparent mix-blend-overlay" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-200/30 via-[#F1F5F9]/40 to-slate-200/30" />
+
+          {/* Smooth bottom fade into light canvas right above the category tags bar */}
+          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#FAF9F5] via-[#FAF9F5]/90 to-transparent" />
+        </div>
+      )}
+
+      {/* Geometric architectural blueprint graphic overlay stretching full screen width */}
+      {activeView === 'portal' && (
+        <div className="absolute top-0 left-0 right-0 h-[480px] md:h-[540px] z-0 select-none pointer-events-none overflow-hidden flex items-center justify-center opacity-40">
+          {/* Soft ambient backdrops - semi transparent to let tech background show through */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#F4F3ED]/30 to-transparent" />
+          <div className="absolute w-[800px] h-[360px] top-12 rounded-full bg-[#E5DFD3]/20 blur-[120px] mix-blend-multiply" />
 
           {/* Architectural Blueprint SVG spanning full-width */}
           <svg className="w-full h-full min-w-[1440px] overflow-visible" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1797,7 +1735,7 @@ export default function LandingPage() {
 
       {/* Modern Top Header Row */}
       <div className="w-full z-20 px-4 sm:px-10 md:px-16 pt-4 sm:pt-6 md:pt-8">
-        <header className="w-full flex justify-between items-center pb-4 border-b border-stone-200/40">
+        <header className="w-full flex justify-between items-center pb-4 border-b border-stone-200/50">
           <div 
             onClick={() => {
               setActiveView('portal');
@@ -1810,7 +1748,7 @@ export default function LandingPage() {
           
           <div className="flex items-center gap-4 sm:gap-6">
             {/* Highly readable, ultra-clean horizontal navigation */}
-            <nav className="flex items-center gap-4 sm:gap-6 text-stone-500 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.18em]">
+            <nav className="flex items-center gap-4 sm:gap-6 text-stone-700 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.18em]">
               <button
                 onClick={() => {
                   setActiveView('portal');
@@ -1821,13 +1759,13 @@ export default function LandingPage() {
                     }
                   }, 50);
                 }}
-                className={`hover:text-stone-900 transition-all cursor-pointer relative py-1 ${activeView === 'portal' ? 'text-stone-900 font-extrabold font-semibold' : 'font-medium'}`}
+                className={`hover:text-stone-950 transition-all cursor-pointer relative py-1 ${activeView === 'portal' ? 'text-stone-950 font-extrabold' : 'font-semibold'}`}
               >
                 <span>Ventures</span>
                 {activeView === 'portal' && (
                   <motion.span 
                     layoutId="headerNavUnderline"
-                    className="absolute -bottom-[17px] left-0 right-0 h-[1.5px] bg-[#7D123D]" 
+                    className="absolute -bottom-[12px] left-0 right-0 h-[1.5px] bg-[#7D123D]" 
                   />
                 )}
               </button>
@@ -1836,13 +1774,13 @@ export default function LandingPage() {
                   setActiveView('about');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className={`hover:text-stone-900 transition-all cursor-pointer relative py-1 ${activeView === 'about' ? 'text-stone-900 font-extrabold font-semibold' : 'font-medium'}`}
+                className={`hover:text-stone-950 transition-all cursor-pointer relative py-1 ${activeView === 'about' ? 'text-stone-950 font-extrabold' : 'font-semibold'}`}
               >
                 <span>About</span>
                 {activeView === 'about' && (
                   <motion.span 
                     layoutId="headerNavUnderline"
-                    className="absolute -bottom-[17px] left-0 right-0 h-[1.5px] bg-[#7D123D]" 
+                    className="absolute -bottom-[12px] left-0 right-0 h-[1.5px] bg-[#7D123D]" 
                   />
                 )}
               </button>
@@ -1851,13 +1789,13 @@ export default function LandingPage() {
                   setActiveView('support');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className={`hover:text-stone-900 transition-all cursor-pointer relative py-1 ${activeView === 'support' ? 'text-stone-900 font-extrabold font-semibold' : 'font-medium'}`}
+                className={`hover:text-stone-950 transition-all cursor-pointer relative py-1 ${activeView === 'support' ? 'text-stone-950 font-extrabold' : 'font-semibold'}`}
               >
                 <span>Support</span>
                 {activeView === 'support' && (
                   <motion.span 
                     layoutId="headerNavUnderline"
-                    className="absolute -bottom-[17px] left-0 right-0 h-[1.5px] bg-[#7D123D]" 
+                    className="absolute -bottom-[12px] left-0 right-0 h-[1.5px] bg-[#7D123D]" 
                   />
                 )}
               </button>
@@ -1913,14 +1851,18 @@ export default function LandingPage() {
               className="flex flex-col items-center justify-center w-full py-2 relative"
             >
               
-              {/* Hero Banner - Majestic, high-end Swiss-gallery style layout */}
-              <div className="w-full max-w-5xl mx-auto relative flex flex-col items-center pt-8 pb-10 mb-8 text-center z-10 px-4">
+              {/* Hero Header - Open, unconstrained Swiss-gallery layout over full-width background */}
+              <div className="w-full max-w-5xl mx-auto relative flex flex-col items-center pt-4 pb-8 mb-4 text-center z-10 px-4 min-h-[360px] justify-center">
+                
+                {/* Subtle warm burgundy central ambient glow */}
+                <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#7D123D]/10 rounded-full blur-3xl pointer-events-none" />
+
                 {/* 1. Large Curvature Logo - Elegant, cinematic static entrance */}
                 <motion.div 
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-full max-w-[550px] sm:max-w-[750px] flex justify-center overflow-visible select-none pointer-events-none relative"
+                  className="w-full max-w-[550px] sm:max-w-[750px] flex justify-center overflow-visible select-none pointer-events-none relative z-10"
                 >
                   <ArcscapeCurvedLogo size="large" />
                 </motion.div>
@@ -1930,7 +1872,7 @@ export default function LandingPage() {
                   initial={{ scaleY: 0, opacity: 0 }}
                   animate={{ scaleY: 1, opacity: 0.3 }}
                   transition={{ delay: 0.4, duration: 1 }}
-                  className="h-10 w-[1px] bg-gradient-to-b from-[#7D123D] to-transparent my-6 origin-top"
+                  className="h-8 w-[1px] bg-gradient-to-b from-[#7D123D] to-transparent my-5 origin-top relative z-10"
                 />
 
                 {/* 3. Hero Content Frame */}
@@ -1938,7 +1880,7 @@ export default function LandingPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative z-10 max-w-2xl mx-auto text-center space-y-6"
+                  className="relative z-10 max-w-2xl mx-auto text-center space-y-5"
                 >
                   <span className="font-mono text-[9px] uppercase text-[#7D123D] tracking-[0.3em] font-extrabold block">
                     {"// ADVISORY PARTNERS AG // EST. ZUG, SWITZERLAND"}
@@ -1952,6 +1894,7 @@ export default function LandingPage() {
                     A boutique investment syndicate and design house organizing high-end, mathematically compliant consumer brands and deep computational tech laboratories.
                   </p>
                 </motion.div>
+
               </div>
 
               {/* Category Filter Tab Bar - zero slop, extremely crisp design */}
@@ -3409,15 +3352,18 @@ export default function LandingPage() {
         {/* Bottom footer row with small logo and clean metadata */}
         <div className="flex flex-col sm:flex-row justify-between items-center text-center gap-4 text-[9px] font-mono text-stone-400 pt-8 border-t border-stone-200/30">
           <div className="flex items-center gap-3">
-            <a 
-              href="https://evu.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:text-stone-850 transition-colors cursor-pointer flex items-center"
-              title="EVU Venture Studio"
+            <button 
+              type="button"
+              onClick={() => {
+                setActiveView('portal');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="hover:text-stone-850 transition-colors cursor-pointer flex items-center gap-1.5 font-serif font-bold tracking-widest text-[#7D123D] uppercase text-[10px]"
+              title="Arcscape Capital"
             >
-              <EvuLogo className="h-3 w-auto text-stone-400 opacity-80 hover:opacity-100 transition-opacity" />
-            </a>
+              <ArcscapeEmblem size="small" />
+              <span>ARCSCAPE</span>
+            </button>
             <span>•</span>
             <span>Venture Partners</span>
           </div>
