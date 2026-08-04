@@ -453,21 +453,6 @@ function ProjectVisualMockup({ slug }: { slug: string }) {
       readinessLabel: "Registrant Backlog",
       readinessPercentage: 91
     },
-    'project-aleph': {
-      title: "Aleph Accelerator",
-      subtitle: "AI Ventures & Equity Exchange Hub",
-      sector: "Venture Capital & Corporate Incubation",
-      demographic: "Early-stage AI founders & seed investors",
-      businessModel: "Equity Stakes & Incubator Support Fees",
-      accent: "amber",
-      metrics: [
-        { label: "PORTFOLIO STARTUPS", value: "16 Active AI", detail: "Incubating cognitive products" },
-        { label: "EQUITY UNDER MGMT", value: "$12 Million", detail: "Early-stage valuation book" },
-        { label: "KNOWLEDGE GRAPHING", value: "94% Accuracy", detail: "Integrated Knowledge Atlas" }
-      ],
-      readinessLabel: "Capital Deployment",
-      readinessPercentage: 83
-    },
     'project-plano': {
       title: "Plano Layouts",
       subtitle: "Web-Based No-Login Floor Plan Designer",
@@ -833,7 +818,6 @@ type ViewType =
   | 'project-protosquad'
   | 'project-izpe'
   | 'project-bridge'
-  | 'project-aleph'
   | 'project-plano'
   | 'project-humandemo'
   | 'project-biotrojan';
@@ -1064,22 +1048,6 @@ const projectsData = [
     readiness: 91
   },
   {
-    viewState: 'project-aleph' as const,
-    domain: 'aleph.cc',
-    category: 'AI INCUBATOR',
-    tagline: 'A high-performance incubator for AI transformation, strategic equity exchange, and cognitive Knowledge Atlas.',
-    type: 'AI ACCELERATOR PLATFORM',
-    url: 'https://www.aleph.cc/',
-    image: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=600&q=80',
-    accentBg: 'group-hover:bg-stone-600',
-    accentBorder: 'group-hover:border-stone-500/40',
-    accentText: 'group-hover:text-stone-300',
-    glowColor: 'group-hover:shadow-[0_15px_30px_rgba(120,113,108,0.25)]',
-    accentBar: 'bg-stone-500',
-    status: 'Incubating' as const,
-    readiness: 78
-  },
-  {
     viewState: 'project-plano' as const,
     domain: 'plano.cc',
     category: 'ROOM DESIGNER',
@@ -1160,8 +1128,6 @@ function getProjectIcon(domain: string) {
       return <Atom className={cn} />;
     case 'bridge.ws':
       return <GitMerge className={cn} />;
-    case 'aleph.cc':
-      return <Brain className={cn} />;
     case 'plano.cc':
       return <CalendarDays className={cn} />;
     case 'humandemo.com':
@@ -1176,7 +1142,7 @@ function getProjectIcon(domain: string) {
 // Helper to classify project domains into human-meaningful categories
 function getCategoryGroup(domain: string): 'AI & Deep Tech' | 'Wellness & Life' | 'Enterprise & Tools' {
   const d = domain.toLowerCase();
-  if (d.includes('clonecraft') || d.includes('exoshape') || d.includes('aleph') || d.includes('repulink') || d.includes('biotrojan')) {
+  if (d.includes('clonecraft') || d.includes('exoshape') || d.includes('repulink') || d.includes('biotrojan')) {
     return 'AI & Deep Tech';
   }
   if (d.includes('muzcast') || d.includes('kundalink') || d.includes('humandemo') || d.includes('rp2p') || d.includes('chosenspot')) {
@@ -1233,7 +1199,6 @@ function getProjectTech(domain: string): string[] {
   if (d.includes('protosquad')) return ['SolidWorks CAD', 'Additive Mfg', 'React'];
   if (d.includes('izpe')) return ['Quantum Sandbox', 'D3 Simulation', 'HTML5'];
   if (d.includes('bridge')) return ['Verified Ledger', 'Directory React', 'Tailwind'];
-  if (d.includes('aleph')) return ['Knowledge Graph', 'Cognitive AI', 'Next.js'];
   if (d.includes('plano')) return ['Interactive Canvas', 'Local Storage', 'HTML5'];
   if (d.includes('humandemo')) return ['Focus SaaS', 'Bio Rhythms', 'Chart.js'];
   return ['TypeScript', 'Next.js', 'Tailwind'];
