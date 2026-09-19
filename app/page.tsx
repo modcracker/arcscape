@@ -1277,16 +1277,6 @@ export default function LandingPage() {
   };
   const [searchQuery, setSearchQuery] = useState('');
   const [dashboardSearch, setDashboardSearch] = useState('');
-  
-  // Interactive feature states for redesigned de-slopped pages
-  const [inquirySubmitted, setInquirySubmitted] = useState(false);
-  const [supportFormData, setSupportFormData] = useState({
-    name: '',
-    affiliation: '',
-    email: '',
-    classification: 'LP Inquiry',
-    message: ''
-  });
   const [checkedSteps, setCheckedSteps] = useState<Record<string, boolean>>({
     step1: false,
     step2: false,
@@ -1426,55 +1416,6 @@ export default function LandingPage() {
       </div>
     );
   };
-
-  // Support Page Math Puzzle States
-  const [supportHasInitiated, setSupportHasInitiated] = useState(false);
-  const [supportNum1, setSupportNum1] = useState(0);
-  const [supportNum2, setSupportNum2] = useState(0);
-  const [supportUserAnswer, setSupportUserAnswer] = useState('');
-  const [supportErrorStatus, setSupportErrorStatus] = useState<string | null>(null);
-  const [supportIsRevealed, setSupportIsRevealed] = useState(false);
-  const [supportCopied, setSupportCopied] = useState(false);
-
-  const resetSupportMathChallenge = () => {
-    setSupportNum1(Math.floor(Math.random() * 8) + 3); // 3 to 10
-    setSupportNum2(Math.floor(Math.random() * 7) + 2); // 2 to 8
-    setSupportUserAnswer('');
-    setSupportErrorStatus(null);
-  };
-
-  const handleSupportVerify = (e: React.FormEvent) => {
-    e.preventDefault();
-    const parsed = parseInt(supportUserAnswer.trim(), 10);
-    
-    if (isNaN(parsed)) {
-      setSupportErrorStatus('Please enter a valid numeric answer');
-      return;
-    }
-
-    if (parsed === supportNum1 + supportNum2) {
-      setSupportIsRevealed(true);
-      setSupportErrorStatus(null);
-    } else {
-      setSupportErrorStatus('Incorrect answer. Please try again.');
-    }
-  };
-
-  const handleSupportCopy = () => {
-    navigator.clipboard.writeText('info@arcscape.com');
-    setSupportCopied(true);
-    setTimeout(() => setSupportCopied(false), 2000);
-  };
-
-  // Generate math equation when active view changes to support
-  useEffect(() => {
-    if (activeView === 'support') {
-      const timer = setTimeout(() => {
-        resetSupportMathChallenge();
-      }, 0);
-      return () => clearTimeout(timer);
-    }
-  }, [activeView]);
 
   // Diagnostic checklist state for Help Page
   const [diagnosticRun, setDiagnosticRun] = useState(false);
@@ -2230,166 +2171,42 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <AnimatePresence mode="wait">
-                {!inquirySubmitted ? (
-                  <motion.div
-                    key="support-form-state"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="space-y-6"
-                  >
-                    <p className="text-stone-650 text-sm leading-relaxed font-sans">
-                      Our direct client partner line is strictly monitored. To initiate a secure routing request, lodge a prospectus, or enquire about Limited Partner status, please fill out this formal form.
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="space-y-6"
+              >
+                <p className="text-stone-650 text-sm leading-relaxed font-sans">
+                  For all questions, proposals, partnership requests, or general correspondence, please contact us directly by email.
+                </p>
+
+                <div className="bg-white p-8 rounded-2xl border border-stone-200/60 shadow-xs text-center space-y-5">
+                  <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-[#FAF4F6] border border-[#EBE1E4] text-[#7D123D]">
+                    <Mail className="h-5 w-5" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <h3 className="font-serif text-2xl font-light text-stone-900 leading-tight">
+                      Contact Us Directly
+                    </h3>
+                    <p className="text-stone-500 text-sm leading-relaxed font-serif">
+                      We no longer use an online contact form. Please reach out directly and we will get back to you.
                     </p>
+                  </div>
 
-                    <form 
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        if (supportFormData.name && supportFormData.email && supportFormData.message) {
-                          setInquirySubmitted(true);
-                        }
-                      }} 
-                      className="space-y-5 bg-white p-8 rounded-2xl border border-stone-200/60 shadow-xs"
-                    >
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div className="space-y-1.5">
-                          <label className="font-mono text-[9px] uppercase tracking-wider text-stone-500 font-bold block">
-                            Full Name
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            placeholder="e.g. Dr. Marcus Vance"
-                            value={supportFormData.name}
-                            onChange={(e) => setSupportFormData({ ...supportFormData, name: e.target.value })}
-                            className="w-full bg-stone-50/50 border border-stone-200 rounded px-3.5 py-2 text-xs font-serif placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-[#7D123D] focus:border-[#7D123D] focus:bg-white transition-all duration-200"
-                          />
-                        </div>
-
-                        <div className="space-y-1.5">
-                          <label className="font-mono text-[9px] uppercase tracking-wider text-stone-500 font-bold block">
-                            Institutional Affiliation
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="e.g. Vance Research Labs"
-                            value={supportFormData.affiliation}
-                            onChange={(e) => setSupportFormData({ ...supportFormData, affiliation: e.target.value })}
-                            className="w-full bg-stone-50/50 border border-stone-200 rounded px-3.5 py-2 text-xs font-serif placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-[#7D123D] focus:border-[#7D123D] focus:bg-white transition-all duration-200"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <label className="font-mono text-[9px] uppercase tracking-wider text-stone-500 font-bold block">
-                          Secure Email Address
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          placeholder="mvance@vancelabs.com"
-                          value={supportFormData.email}
-                          onChange={(e) => setSupportFormData({ ...supportFormData, email: e.target.value })}
-                          className="w-full bg-stone-50/50 border border-stone-200 rounded px-3.5 py-2 text-xs font-mono placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-[#7D123D] focus:border-[#7D123D] focus:bg-white transition-all duration-200"
-                        />
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <label className="font-mono text-[9px] uppercase tracking-wider text-stone-500 font-bold block">
-                          Inquiry Classification
-                        </label>
-                        <select
-                          value={supportFormData.classification}
-                          onChange={(e) => setSupportFormData({ ...supportFormData, classification: e.target.value })}
-                          className="w-full bg-stone-50/50 border border-stone-200 rounded px-3.5 py-2 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-[#7D123D] focus:border-[#7D123D] focus:bg-white transition-all duration-200 cursor-pointer"
-                        >
-                          <option value="LP Inquiry">Limited Partner (LP) Inquiry</option>
-                          <option value="Venture Proposal">Stealth Venture Pitch</option>
-                          <option value="Advisory Nomination">Advisory Network Nomination</option>
-                          <option value="General Correspondence">General Executive Correspondence</option>
-                        </select>
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <label className="font-mono text-[9px] uppercase tracking-wider text-stone-500 font-bold block">
-                          Detailed Message Body
-                        </label>
-                        <textarea
-                          required
-                          rows={5}
-                          placeholder="Please formulate your correspondence. Outline key venture metrics or credential inquiries clearly."
-                          value={supportFormData.message}
-                          onChange={(e) => setSupportFormData({ ...supportFormData, message: e.target.value })}
-                          className="w-full bg-stone-50/50 border border-stone-200 rounded px-3.5 py-2.5 text-xs font-serif placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-[#7D123D] focus:border-[#7D123D] focus:bg-white transition-all duration-200 leading-relaxed"
-                        />
-                      </div>
-
-                      <button
-                        type="submit"
-                        className="w-full py-3 bg-[#7D123D] hover:bg-[#9E1D51] text-white font-mono text-[10px] font-bold uppercase tracking-widest rounded transition-all duration-300 shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
-                      >
-                        <Send className="h-3 w-3" />
-                        <span>Transmit Secure Correspondence</span>
-                      </button>
-                    </form>
-
-                    <div className="text-center pt-2">
-                      <span className="text-[10px] font-mono text-stone-400">
-                        Primary secure backup mail route: <span className="text-stone-600 font-bold select-all">desk@arcscape.com</span>
-                      </span>
-                    </div>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="support-success-state"
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="space-y-6 text-center max-w-md mx-auto"
+                  <a
+                    href="mailto:tito@arcscape.com"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#7D123D] hover:bg-[#9E1D51] text-white font-mono text-[10px] font-bold uppercase tracking-widest rounded transition-all duration-300 shadow-sm"
                   >
-                    <div className="bg-white p-8 rounded-2xl border border-stone-200/80 shadow-xs space-y-6">
-                      <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600">
-                        <Check className="h-5 w-5" />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <h3 className="font-serif text-2xl font-light text-stone-900 leading-tight">Inquiry Registered</h3>
-                        <p className="text-stone-500 text-xs sm:text-sm leading-relaxed font-serif italic">
-                          Thank you, {supportFormData.name}. Your private transmission has been successfully processed and logged into our private directory queue.
-                        </p>
-                      </div>
+                    <Mail className="h-3.5 w-3.5" />
+                    <span>Email tito@arcscape.com</span>
+                  </a>
 
-                      <div className="bg-stone-50 p-4 rounded-xl border border-stone-200/50 text-left space-y-2.5">
-                        <div className="flex justify-between items-baseline text-[9px] font-mono text-stone-400">
-                          <span>SECURITY PROTOCOL</span>
-                          <span className="text-emerald-700 font-bold uppercase">SECURELY ENCRYPTED</span>
-                        </div>
-                        <div className="space-y-1">
-                          <span className="font-mono text-[9px] text-stone-500 uppercase block font-bold">Secure Ref Key</span>
-                          <span className="font-mono text-[10px] text-stone-700 select-all block break-all font-semibold bg-white border border-stone-200 px-2.5 py-1 rounded">
-                            ARC-TX-048291-LPR
-                          </span>
-                        </div>
-                        <p className="text-[10px] text-stone-400 font-sans leading-normal pt-1 border-t border-stone-200/35">
-                          A partner representative from the classified desk will initiate secure contact within one standard business cycle.
-                        </p>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSupportFormData({ name: '', affiliation: '', email: '', classification: 'LP Inquiry', message: '' });
-                          setInquirySubmitted(false);
-                        }}
-                        className="px-5 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200 rounded font-mono text-[9px] uppercase tracking-wider font-bold transition-all cursor-pointer"
-                      >
-                        File New Correspondence
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  <p className="text-[10px] font-mono text-stone-400">
+                    <span className="text-stone-600 font-bold select-all">tito@arcscape.com</span>
+                  </p>
+                </div>
+              </motion.div>
             </motion.section>
           )}
 
@@ -3215,7 +3032,7 @@ export default function LandingPage() {
                 Zürich: Talstrasse 83, 8001 Zürich, Switzerland
               </p>
               <div className="space-y-1 pt-1.5 font-mono text-[9px] text-stone-400 uppercase leading-normal">
-                <p>partners@arcscape.capital</p>
+                <p>tito@arcscape.com</p>
               </div>
             </div>
           </div>
