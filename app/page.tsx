@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import DomainTabs from "./components/domain-tabs";
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ShieldAlert, 
@@ -1890,6 +1891,9 @@ export default function LandingPage() {
               </div>
 
               {/* PROJECTS GRID INDEX - Redesigned, clean card architecture */}
+              <div className="w-full px-4 mb-10">
+  <DomainTabs />
+</div>
               <div id="portfolio-section" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full z-10 px-4 mb-16">
                 {filteredProjects.map((project, idx) => {
                   const isFailed = failedImages[project.domain];
