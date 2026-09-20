@@ -1,23 +1,23 @@
 import type {Metadata} from 'next';
-import { Plus_Jakarta_Sans, Playfair_Display, JetBrains_Mono } from 'next/font/google';
-import './globals.css'; // Global styles
+import { Outfit, Syne, Space_Mono } from 'next/font/google';
+import './globals.css';
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const outfit = Outfit({
   subsets: ['latin'],
   variable: '--font-sans',
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['300', '400', '500', '600', '700'],
 });
 
-const playfairDisplay = Playfair_Display({
+const syne = Syne({
   subsets: ['latin'],
   variable: '--font-serif',
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700', '800'],
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const spaceMono = Space_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
-  weight: ['400', '500', '600'],
+  weight: ['400', '700'],
 });
 
 export const metadata: Metadata = {
@@ -64,8 +64,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} ${playfairDisplay.variable} ${jetbrainsMono.variable}`}>
-      <body suppressHydrationWarning className="bg-[#FFF5F8] text-[#2C1820] antialiased">
+    <html lang="en" className={`${outfit.variable} ${syne.variable} ${spaceMono.variable}`}>
+      <body suppressHydrationWarning className="bg-[#0C0B09] text-[#E8E2D6] antialiased transition-colors duration-300">
         {children}
       </body>
     </html>

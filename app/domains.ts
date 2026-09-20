@@ -109,3 +109,122 @@ export const brandingDomains: DomainData[] = [
     imageSeed: "coastal"
   }
 ];
+export interface PortfolioDomain {
+  domain: string;
+  description: string;
+  comingSoon?: boolean;
+  hidden?: boolean;
+}
+
+export const portfolioDomains: PortfolioDomain[] = [
+  {
+    domain: "DentalGigs",
+    description:
+      "Connect dental professionals with dental offices needing staff, shifts and opportunities.",
+  },
+  {
+    domain: "APTMATE",
+    description:
+      "Help tenants find compatible roommates and help landlords find available rooms.",
+  },
+  {
+    domain: "Razor.NYC",
+    description:
+      "Connect customers with barbers for discovery and appointment booking.",
+  },
+  {
+    domain: "Hyper.NYC",
+    description:
+      "Connect people to play pickleball and other recreational sports through matchmaking, games, tournaments, rankings and championships. Start with pickleball.",
+  },
+  {
+    domain: "Brat.cc",
+    description:
+      "Profile successful women and female founders, giving them visibility, recognition and promotional opportunities.",
+  },
+  {
+    domain: "Suds.cc",
+    description:
+      "Provide convenient laundry pickup, cleaning and delivery for busy New Yorkers through partner laundromats.",
+  },
+  {
+    domain: "SiteBae.com",
+    description:
+      "Build fast, affordable websites for small businesses and professionals, with ongoing maintenance.",
+  },
+  {
+    domain: "Muse.NYC",
+    description:
+      "Curate premium museum, cultural, dining, dating and private experiences for individuals, couples and corporate clients.",
+  },
+  {
+    domain: "Hemup",
+    description:
+      "Connect people needing tailoring, alterations or sewing work with local tailors and seamstresses who offer the service.",
+  },
+  {
+    domain: "Broplem",
+    description: "Coming Soon",
+    comingSoon: true,
+  },
+  {
+    domain: "ApplianceCraft",
+    description:
+      "Provide appliance repair, maintenance and installation services.",
+  },
+  {
+    domain: "CannaChef",
+    description:
+      "Develop cannabis-focused culinary and educational experiences where legally permitted.",
+  },
+  {
+    domain: "Kushgram",
+    description:
+      "Help users discover and review legal cannabis products, brands and experiences where permitted.",
+  },
+  {
+    domain: "TrueInheritor",
+    description: "Coming Soon",
+    comingSoon: true,
+  },
+  {
+    domain: "Plano.com",
+    description: "Excluded / Pending",
+    hidden: true,
+  },
+  {
+    domain: "Queap.com",
+    description: "Coming Soon",
+    comingSoon: true,
+  },
+  {
+    domain: "Orangite.com",
+    description:
+      "A discovery and commerce platform dedicated to orange products, fashion, accessories and lifestyle.",
+  },
+  {
+    domain: "Stir.cc",
+    description:
+      "Connect cyclists for organized rides, friendships, food and social experiences.",
+  },
+  {
+    domain: "BLK.cc",
+    description:
+      "Help people discover and support Black-owned businesses, services, products and events.",
+  },
+  {
+    domain: "DynaSpace.com",
+    description:
+      "Make it easier to find and book coworking, meeting, creative and event spaces.",
+  },
+  {
+    domain: "Swan.NYC",
+    description:
+      "Create memorable proposals, date nights, birthdays, anniversaries and premium celebrations in New York.",
+  },
+  {
+    domain: "AquaMarvel",
+    description:
+      "Connect aquarium owners with aquarium cleaning and maintenance providers who offer the service.",
+  },
+];
